@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>กองพันนักศึกษาวิชาทหาร โรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Sarabun', sans-serif; }
+        .military-bg {
+            background: linear-gradient(rgba(10, 25, 12, 0.88), rgba(5, 15, 8, 0.92)), 
+                        url('https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body class="military-bg min-h-screen text-white flex flex-col justify-between">
+
+    <!-- Intro Page -->
+    <div id="introPage" class="flex flex-col min-h-screen justify-between p-4 md:p-6">
+        <!-- Top Header -->
+        <div class="flex justify-between items-center w-full">
+            <div class="flex items-center space-x-3">
+                <div class="w-12 h-12 md:w-16 md:h-16 bg-yellow-500 rounded-full flex items-center justify-center border-2 border-white shadow-lg overflow-hidden">
+                    <span class="text-xs font-bold text-black text-center">พัน.นศท. รร.บบ.</span>
+                </div>
+                <div>
+                    <h1 class="text-base md:text-xl font-bold text-yellow-300">bbu-army</h1>
+                    <p class="text-xs text-gray-300">กองพันนักศึกษาวิชาทหาร รร.บ้านบึง "อุตสาหกรรมมนุเคราะห์"</p>
+                </div>
+            </div>
+            <button onclick="openAdminLogin()" class="bg-red-700 hover:bg-red-800 text-white text-xs md:text-sm px-3 py-2 rounded-lg font-semibold shadow transition border border-red-500">
+                เข้าสู่ระบบ Admin
+            </button>
+        </div>
+
+        <!-- Center Content -->
+        <div class="text-center my-auto py-8">
+            <div class="inline-block p-2 bg-white/10 backdrop-blur-md rounded-2xl border border-yellow-500/50 shadow-2xl mb-6">
+                <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=300&q=80" alt="ธสถิตในดวงใจ" class="w-36 h-48 md:w-48 md:h-64 object-cover rounded-xl border border-yellow-400">
+                <p class="text-sm md:text-base font-semibold text-yellow-300 mt-3">ธสถิตในดวงใจตราบนิจนิรันดร์</p>
+            </div>
+            <h2 class="text-xl md:text-3xl font-bold text-yellow-400 mb-6 drop-shadow-md">
+                กองพันนักศึกษาวิชาทหาร โรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"
+            </h2>
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                <button onclick="enterMainSite()" class="bg-green-600 hover:bg-green-700 text-white text-base md:text-lg font-bold px-8 py-3 rounded-xl shadow-xl transition transform hover:scale-105 border border-green-400">
+                    เข้าสู่เว็บไซต์หลัก
+                </button>
+                <button onclick="openRegisterPage()" class="bg-blue-600 hover:bg-blue-700 text-white text-base md:text-lg font-bold px-8 py-3 rounded-xl shadow-xl transition transform hover:scale-105 border border-blue-400">
+                    สมัครเข้าเป็นนักศึกษาวิชาทหาร
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer Credit -->
+        <div class="text-center text-xs md:text-sm text-gray-400 py-2">
+            จัดทำโดย ฝ่ายอำนวยการ 4 | Project: bbu-army
+        </div>
+    </div>
+
+    <!-- Main Website -->
+    <div id="mainSite" class="hidden min-h-screen flex flex-col justify-between bg-zinc-900/95 text-white">
+        <div>
+            <!-- Header Nav -->
+            <header class="bg-zinc-950 border-b border-zinc-800 p-4 flex flex-col md:flex-row justify-between items-center shadow-lg">
+                <div class="flex items-center space-x-3 mb-3 md:mb-0">
+                    <button onclick="goToIntro()" class="flex items-center space-x-2 bg-zinc-800 hover:bg-zinc-700 px-3 py-1.5 rounded-lg text-sm text-yellow-400 border border-zinc-700 transition">
+                        <span>⬅ กลับหน้าแรก</span>
+                    </button>
+                    <div class="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center font-bold text-black text-xs">
+                        BBU
+                    </div>
+                    <span class="font-bold text-sm md:text-base text-yellow-400">bbu-army</span>
+                </div>
+                <nav class="flex flex-wrap justify-center gap-2 md:gap-4 text-sm md:text-base">
+                    <button onclick="showSection('home')" class="hover:text-yellow-400 px-3 py-1 rounded transition">หน้าหลัก</button>
+                    <button onclick="showSection('command')" class="hover:text-yellow-400 px-3 py-1 rounded transition">บอร์ดการบังคับบัญชา</button>
+                    <button onclick="showSection('motto')" class="hover:text-yellow-400 px-3 py-1 rounded transition">คำขวัญประจำกองพัน</button>
+                    <button onclick="showSection('news')" class="hover:text-yellow-400 px-3 py-1 rounded transition">ข่าวสาร</button>
+                    <button onclick="showSection('contact')" class="hover:text-yellow-400 px-3 py-1 rounded transition">ช่องทางติดต่อ</button>
+                    <span id="adminNavTab" class="hidden"><button onclick="showAdminPanel()" class="bg-red-600 px-3 py-1 rounded text-white font-bold">⚙ Admin Dashboard</button></span>
+                </nav>
+            </header>
+
+            <!-- Content Area -->
+            <main class="p-6 md:p-10 max-w-5xl mx-auto w-full">
+                <!-- Home Section -->
+                <div id="sec-home" class="content-section text-center py-10">
+                    <h2 class="text-2xl md:text-4xl font-bold text-yellow-400 mb-6">
+                        ยินดีต้อนรับเข้าสู่เว็บไซต์ของกองพันนักศึกษาวิชาทหารโรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"
+                    </h2>
+                    <p class="text-gray-300 text-base md:text-lg max-w-2xl mx-auto">
+                        เว็บไซต์ทางการสำหรับประชาสัมพันธ์ข้อมูลข่าวสาร การบังคับบัญชา และระเบียบปฏิบัติของนักศึกษาวิชาทหาร โรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์" (bbu-army)
+                    </p>
+                </div>
+
+                <!-- Command Board -->
+                <div id="sec-command" class="content-section hidden py-6">
+                    <h3 class="text-2xl font-bold text-yellow-400 mb-4 border-b border-zinc-700 pb-2">บอร์ดการบังคับบัญชา</h3>
+                    <p class="text-gray-300">กำลังปรับปรุงข้อมูลบอร์ดการบังคับบัญชา...</p>
+                </div>
+
+                <!-- Motto -->
+                <div id="sec-motto" class="content-section hidden py-6">
+                    <h3 class="text-2xl font-bold text-yellow-400 mb-4 border-b border-zinc-700 pb-2">คำขวัญประจำกองพัน</h3>
+                    <div class="bg-zinc-800 p-6 rounded-xl border border-zinc-700 text-center">
+                        <p class="text-xl text-yellow-300 font-semibold">"มีวินัย ใฝ่ศึกษา เสียสละเพื่อส่วนรวม"</p>
+                    </div>
+                </div>
+
+                <!-- News -->
+                <div id="sec-news" class="content-section hidden py-6">
+                    <h3 class="text-2xl font-bold text-yellow-400 mb-4 border-b border-zinc-700 pb-2">ข่าวสารและประกาศ</h3>
+                    <div id="newsList" class="space-y-4">
+                        <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700">
+                            <h4 class="font-bold text-yellow-300">เปิดรับสมัครนักศึกษาวิชาทหาร ประจำปีการศึกษา</h4>
+                            <p class="text-sm text-gray-300 mt-1">สามารถตรวจสอบรายละเอียดการสมัครผ่านหน้าสมัคร นศท. ได้ทันที</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact -->
+                <div id="sec-contact" class="content-section hidden py-6">
+                    <h3 class="text-2xl font-bold text-yellow-400 mb-4 border-b border-zinc-700 pb-2">ช่องทางติดต่อ</h3>
+                    <p class="text-gray-300">ติดต่อสอบถามข้อมูลเพิ่มเติมได้ที่ห้องบังคับการกองพันนักศึกษาวิชาทหาร</p>
+                </div>
+
+                <!-- Admin Dashboard -->
+                <div id="sec-admin" class="content-section hidden py-6">
+                    <h3 class="text-2xl font-bold text-red-500 mb-4 border-b border-zinc-700 pb-2">⚙ แผงควบคุมผู้ดูแลระบบ (Admin Dashboard - bbu-army)</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700">
+                            <h4 class="font-bold text-yellow-400 mb-2">สถิติเว็บไซต์</h4>
+                            <p class="text-gray-300">จำนวนผู้เข้าชมเว็บไซต์ทั้งหมด: <span id="visitorCount" class="font-bold text-green-400">142</span> ครั้ง</p>
+                        </div>
+                        <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700">
+                            <h4 class="font-bold text-yellow-400 mb-2">จัดการข่าวสาร</h4>
+                            <input type="text" id="newNewsTitle" placeholder="หัวข้อข่าวสารใหม่..." class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm mb-2">
+                            <button onclick="addNews()" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded text-sm font-bold text-white w-full">เพิ่มข่าวสาร</button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Footer -->
+        <footer class="bg-zinc-950 border-t border-zinc-800 text-center p-4 text-xs md:text-sm text-gray-400">
+            หากต้องการติดต่อราชการต่างๆ ให้ติดต่อได้ที่ห้องบังคับการกองพันนักศึกษาวิชาทหารโรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์" (ห้องธนาคารโรงเรียนเก่า)
+        </footer>
+    </div>
+
+    <!-- Registration Page -->
+    <div id="registerPage" class="hidden min-h-screen flex flex-col justify-between bg-zinc-900 text-white p-6">
+        <div class="max-w-xl mx-auto w-full py-8">
+            <button onclick="goToIntro()" class="mb-4 bg-zinc-800 hover:bg-zinc-700 px-3 py-1.5 rounded text-sm text-yellow-400">⬅ กลับหน้าแรก</button>
+            <h2 class="text-2xl font-bold text-yellow-400 mb-4">สมัครเข้าเป็นนักศึกษาวิชาทหาร โรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"</h2>
+            <form onsubmit="submitRegister(event)" class="space-y-4 bg-zinc-800 p-6 rounded-xl border border-zinc-700">
+                <div>
+                    <label class="block text-sm text-gray-300 mb-1">ชื่อ - สกุล</label>
+                    <input type="text" required class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white">
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-300 mb-1">ชั้นปีที่สมัคร</label>
+                    <select class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white">
+                        <option>นศท. ชั้นปีที่ 1</option>
+                        <option>นศท. ชั้นปีที่ 2</option>
+                        <option>นศท. ชั้นปีที่ 3</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg">ยืนยันการสมัคร</button>
+            </form>
+        </div>
+        <footer class="text-center text-xs text-gray-500">จัดทำโดย ฝ่ายอำนวยการ 4 | bbu-army</footer>
+    </div>
+
+    <script>
+        function enterMainSite() {
+            document.getElementById('introPage').classList.add('hidden');
+            document.getElementById('mainSite').classList.remove('hidden');
+            showSection('home');
+        }
+        function goToIntro() {
+            document.getElementById('mainSite').classList.add('hidden');
+            document.getElementById('registerPage').classList.add('hidden');
+            document.getElementById('introPage').classList.remove('hidden');
+        }
+        function openRegisterPage() {
+            document.getElementById('introPage').classList.add('hidden');
+            document.getElementById('registerPage').classList.remove('hidden');
+        }
+        function showSection(secId) {
+            document.querySelectorAll('.content-section').forEach(el => el.classList.add('hidden'));
+            document.getElementById('sec-' + secId).classList.remove('hidden');
+        }
+        function openAdminLogin() {
+            let pass = prompt("กรุณากรอกรหัสผ่าน Admin:");
+            if (pass === "พัน.นศท.รร.บบ.") {
+                alert("เข้าสู่ระบบ Admin สำเร็จ!");
+                document.getElementById('adminNavTab').classList.remove('hidden');
+                enterMainSite();
+                showSection('admin');
+            } else if (pass !== null) {
+                alert("รหัสผ่านไม่ถูกต้อง!");
+            }
+        }
+        function showAdminPanel() {
+            showSection('admin');
+        }
+        function addNews() {
+            let title = document.getElementById('newNewsTitle').value;
+            if(title) {
+                let list = document.getElementById('newsList');
+                let item = document.createElement('div');
+                item.className = "bg-zinc-800 p-4 rounded-xl border border-zinc-700 mt-2";
+                item.innerHTML = `<h4 class="font-bold text-yellow-300">${title}</h4><p class="text-sm text-gray-300 mt-1">ประกาศใหม่โดยผู้ดูแลระบบ (bbu-army)</p>`;
+                list.prepend(item);
+                document.getElementById('newNewsTitle').value = '';
+                alert("เพิ่มข่าวสารสำเร็จ!");
+            }
+        }
+        function submitRegister(e) {
+            e.preventDefault();
+            alert("บันทึกข้อมูลการสมัครเรียบร้อยแล้ว!");
+            goToIntro();
+        }
+    </script>
+</body>
+</html>
