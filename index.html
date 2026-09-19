@@ -185,7 +185,21 @@
                             <input type="hidden" id="editNewsIndex" value="-1">
                             <input type="text" id="newsTitleInput" placeholder="1. หัวข้อข่าว..." class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm mb-2">
                             <textarea id="newsDescInput" placeholder="2. เนื้อหาข่าว..." class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm mb-2 h-20"></textarea>
-                            <input type="text" id="newsImageInput" placeholder="3. ลิงก์รูปภาพข่าว (ถ้ามี)..." class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm mb-2">
+                            
+                            <div class="bg-zinc-900 p-2.5 rounded border border-zinc-700 mb-2 text-xs">
+                                <span class="text-yellow-300 font-semibold block mb-1">3. รูปภาพประกอบข่าว (เลือกอย่างใดอย่างหนึ่ง หรือเว้นว่างได้)</span>
+                                <div class="space-y-2">
+                                    <div>
+                                        <span class="text-gray-400 block mb-0.5">3.1 ใส่ลิงก์รูปภาพ (URL)</span>
+                                        <input type="text" id="newsImageInput" placeholder="https://..." class="w-full bg-zinc-800 border border-zinc-700 rounded p-1.5 text-white text-xs">
+                                    </div>
+                                    <div>
+                                        <span class="text-gray-400 block mb-0.5">3.2 เลือกรูปภาพจากในเครื่อง</span>
+                                        <input type="file" id="newsFile}_{\}" accept="image/*" class="w-full text-gray-300 text-xs file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-zinc-700 file:text-white hover:file:bg-zinc-600">
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="flex gap-2">
                                 <button onclick="saveNews()" id="saveNewsBtn" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded text-sm font-bold text-white w-full">บันทึกข่าวสาร</button>
                                 <button onclick="resetNewsForm()" id="cancelNewsBtn" class="hidden bg-zinc-700 hover:bg-zinc-600 px-3 py-2 rounded text-sm font-bold text-white">ยกเลิก</button>
@@ -199,11 +213,25 @@
                         <div class="bg-zinc-900 p-3 rounded-lg border border-zinc-700 mb-4">
                             <h5 id="commandFormTitle" class="text-sm font-bold text-yellow-300 mb-2">เพิ่มกำลังพลในบอร์ด</h5>
                             <input type="hidden" id="editCommandIndex" value="-1">
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2">
                                 <input type="text" id="cmdRankName" placeholder="1. ยศ - ชื่อ (เช่น ว่าที่ ...)" class="bg-zinc-800 border border-zinc-700 rounded p-2 text-white text-sm">
                                 <input type="text" id="cmdPosition" placeholder="2. ตำแหน่ง (เช่น ผู้บังคับกองพัน)" class="bg-zinc-800 border border-zinc-700 rounded p-2 text-white text-sm">
-                                <input type="text" id="cmdImage" placeholder="3. ลิงก์รูปภาพ (URL)" class="bg-zinc-800 border border-zinc-700 rounded p-2 text-white text-sm">
                             </div>
+                            
+                            <div class="bg-zinc-800 p-2.5 rounded border border-zinc-700 mb-2 text-xs">
+                                <span class="text-yellow-300 font-semibold block mb-1">3. รูปภาพกำลังพล (เลือกอย่างใดอย่างหนึ่ง หรือเว้นว่างได้)</span>
+                                <div class="space-y-2">
+                                    <div>
+                                        <span class="text-gray-400 block mb-0.5">3.1 ใส่ลิงก์รูปภาพ (URL)</span>
+                                        <input type="text" id="cmdImage" placeholder="https://..." class="w-full bg-zinc-900 border border-zinc-700 rounded p-1.5 text-white text-xs">
+                                    </div>
+                                    <div>
+                                        <span class="text-gray-400 block mb-0.5">3.2 เลือกรูปภาพจากในเครื่อง</span>
+                                        <input type="file" id="cmdFile" accept="image/*" class="w-full text-gray-300 text-xs file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-zinc-700 file:text-white hover:file:bg-zinc-600">
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="flex gap-2">
                                 <button onclick="saveCommandStaff()" id="saveCommandBtn" class="bg-blue-600 hover:bg-blue-700 px-4 py-1.5 rounded text-xs font-bold text-white">บันทึกข้อมูลกำลังพล</button>
                                 <button onclick="resetCommandForm()" id="cancelCommandBtn" class="hidden bg-zinc-700 hover:bg-zinc-600 px-3 py-1.5 rounded text-xs font-bold text-white">ยกเลิก</button>
@@ -286,13 +314,11 @@
         ];
         let applicants = JSON.parse(localStorage.getItem('bbu_applicants')) || [];
         
-        // Command Staff Data
         let commandData = JSON.parse(localStorage.getItem('bbu_command')) || [
             { rankName: "ร.อ. ตัวอย่าง รักษาดินแดน", position: "ผู้บังคับกองพันนักศึกษาวิชาทหาร", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80" },
             { rankName: "ร.ท. สมชาย ใจมั่น", position: "นายทหารฝ่ายยุทธการ", image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80" }
         ];
 
-        // Check initial admin state on load
         if (isAdmin) {
             document.getElementById('adminNavTab').classList.remove('hidden');
             document.getElementById('adminBtn').innerText = "⚙ แดชบอร์ด Admin";
@@ -309,7 +335,6 @@
             }
 
             commandData.forEach((item, index) => {
-                // Public View
                 if (grid) {
                     let card = document.createElement('div');
                     card.className = "bg-zinc-800 p-4 rounded-xl border border-zinc-700 text-center flex flex-col items-center shadow-md";
@@ -321,7 +346,6 @@
                     grid.appendChild(card);
                 }
 
-                // Admin View
                 if (adminList) {
                     let row = document.createElement('div');
                     row.className = "flex justify-between items-center bg-zinc-900 p-2.5 rounded border border-zinc-700 text-xs";
@@ -439,27 +463,45 @@
             goToIntro();
         }
 
+        // Helper to handle image input (3.1 URL or 3.2 File)
+        function processImageInput(urlInputId, fileInputId, callback) {
+            let urlVal = document.getElementById(urlInputId).value.trim();
+            let fileInput = document.getElementById(fileInputId);
+
+            if (fileInput.files && fileInput.files[0]) {
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    callback(e.target.result);
+                }
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                callback(urlVal); // Can be empty or string URL
+            }
+        }
+
         // Command Management Functions
         function saveCommandStaff() {
             let rankName = document.getElementById('cmdRankName').value;
             let position = document.getElementById('cmdPosition').value;
-            let image = document.getElementById('cmdImage').value;
             let editIndex = parseInt(document.getElementById('editCommandIndex').value);
 
             if (rankName && position) {
-                if (editIndex === -1) {
-                    commandData.push({ rankName, position, image });
-                    alert("เพิ่มข้อมูลกำลังพลสำเร็จ!");
-                } else {
-                    commandData[editIndex] = { rankName, position, image };
-                    alert("แก้ไขข้อมูลกำลังพลสำเร็จ!");
-                    resetCommandForm();
-                }
-                localStorage.setItem('bbu_command', JSON.stringify(commandData));
-                renderCommandBoard();
-                document.getElementById('cmdRankName').value = '';
-                document.getElementById('cmdPosition').value = '';
-                document.getElementById('cmdImage').value = '';
+                processImageInput('cmdImage', 'cmdFile', function(imageResult) {
+                    if (editIndex === -1) {
+                        commandData.push({ rankName, position, image: imageResult });
+                        alert("เพิ่มข้อมูลกำลังพลสำเร็จ!");
+                    } else {
+                        commandData[editIndex] = { rankName, position, image: imageResult || commandData[editIndex].image };
+                        alert("แก้ไขข้อมูลกำลังพลสำเร็จ!");
+                        resetCommandForm();
+                    }
+                    localStorage.setItem('bbu_command', JSON.stringify(commandData));
+                    renderCommandBoard();
+                    document.getElementById('cmdRankName').value = '';
+                    document.getElementById('cmdPosition').value = '';
+                    document.getElementById('cmdImage').value = '';
+                    document.getElementById('cmdFile').value = '';
+                });
             } else {
                 alert("กรุณากรอกยศ-ชื่อ และตำแหน่ง");
             }
@@ -469,7 +511,8 @@
             let item = commandData[index];
             document.getElementById('cmdRankName').value = item.rankName;
             document.getElementById('cmdPosition').value = item.position;
-            document.getElementById('cmdImage').value = item.image || '';
+            document.getElementById('cmdImage').value = item.image && !item.image.startsWith('data:') ? item.image : '';
+            document.getElementById('cmdFile').value = '';
             document.getElementById('editCommandIndex').value = index;
             document.getElementById('commandFormTitle').innerText = "แก้ไขข้อมูลกำลังพล";
             document.getElementById('saveCommandBtn').innerText = "อัปเดตข้อมูล";
@@ -480,6 +523,7 @@
             document.getElementById('cmdRankName').value = '';
             document.getElementById('cmdPosition').value = '';
             document.getElementById('cmdImage').value = '';
+            document.getElementById('cmdFile').value = '';
             document.getElementById('editCommandIndex').value = '-1';
             document.getElementById('commandFormTitle').innerText = "เพิ่มกำลังพลในบอร์ด";
             document.getElementById('saveCommandBtn').innerText = "บันทึกข้อมูลกำลังพล";
@@ -500,24 +544,26 @@
         function saveNews() {
             let title = document.getElementById('newsTitleInput').value;
             let desc = document.getElementById('newsDescInput').value;
-            let image = document.getElementById('newsImageInput').value;
             let editIndex = parseInt(document.getElementById('editNewsIndex').value);
 
             if (title && desc) {
-                if (editIndex === -1) {
-                    newsData.unshift({ title, desc, image });
-                    alert("เพิ่มข่าวสารสำเร็จ!");
-                } else {
-                    newsData[editIndex] = { title, desc, image };
-                    alert("แก้ไขข่าวสารสำเร็จ!");
-                    resetNewsForm();
-                }
-                localStorage.setItem('bbu_news', JSON.stringify(newsData));
-                renderNews();
-                document.getElementById('newsTitleInput').value = '';
-                document.getElementById('newsDescInput').value = '';
-                document.getElementById('newsImageInput').value = '';
-                updateAdminStats();
+                processImageInput('newsImageInput', 'newsFile', function(imageResult) {
+                    if (editIndex === -1) {
+                        newsData.unshift({ title, desc, image: imageResult });
+                        alert("เพิ่มข่าวสารสำเร็จ!");
+                    } else {
+                        newsData[editIndex] = { title, desc, image: imageResult || newsData[editIndex].image };
+                        alert("แก้ไขข่าวสารสำเร็จ!");
+                        resetNewsForm();
+                    }
+                    localStorage.setItem('bbu_news', JSON.stringify(newsData));
+                    renderNews();
+                    document.getElementById('newsTitleInput').value = '';
+                    document.getElementById('newsDescInput').value = '';
+                    document.getElementById('newsImageInput').value = '';
+                    document.getElementById('newsFile').value = '';
+                    updateAdminStats();
+                });
             } else {
                 alert("กรุณากรอกหัวข้อและเนื้อหาข่าวสาร");
             }
@@ -527,7 +573,8 @@
             let item = newsData[index];
             document.getElementById('newsTitleInput').value = item.title;
             document.getElementById('newsDescInput').value = item.desc;
-            document.getElementById('newsImageInput').value = item.image || '';
+            document.getElementById('newsImageInput').value = item.image && !item.image.startsWith('data:') ? item.image : '';
+            document.getElementById('newsFile').value = '';
             document.getElementById('editNewsIndex').value = index;
             document.getElementById('newsFormTitle').innerText = "แก้ไขข่าวสาร";
             document.getElementById('saveNewsBtn').innerText = "อัปเดตข่าวสาร";
@@ -538,6 +585,7 @@
             document.getElementById('newsTitleInput').value = '';
             document.getElementById('newsDescInput').value = '';
             document.getElementById('newsImageInput').value = '';
+            document.getElementById('newsFile').value = '';
             document.getElementById('editNewsIndex').value = '-1';
             document.getElementById('newsFormTitle').innerText = "เพิ่มข่าวสารใหม่";
             document.getElementById('saveNewsBtn').innerText = "บันทึกข่าวสาร";
@@ -580,7 +628,6 @@
         function updateAdminStats() {
             document.getElementById('applicantCount').innerText = applicants.length;
             
-            // Calculate stats for chart
             let y1Count = applicants.filter(a => a.year.includes('ปีที่ 1')).length;
             let y2Count = applicants.filter(a => a.year.includes('ปีที่ 2')).length;
             let y3Count = applicants.filter(a => a.year.includes('ปีที่ 3')).length;
