@@ -297,7 +297,6 @@
         let applicants = JSON.parse(localStorage.getItem('bbu_applicants')) || [];
         let commandData = JSON.parse(localStorage.getItem('bbu_command')) || defaultCommand;
 
-        // ตัวแปรสำหรับเก็บภาพที่ถูกครอบตัดชั่วคราว
         let activeCropData = null;
 
         function previewAndCrop(input, canvasId, containerId) {
@@ -315,7 +314,6 @@
                         canvas.height = img.height * scale;
                         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-                        // ระบบให้ผู้ใช้ลากครอบเลือกส่วนที่ต้องการ
                         let isDragging = false, startX, startY;
                         let cropBox = { x: 0, y: 0, w: canvas.width, h: canvas.height };
 
@@ -354,7 +352,6 @@
 
                         canvas.onmouseup = canvas.ontouchend = function() {
                             isDragging = false;
-                            // ตัดภาพตามส่วนที่เลือก
                             let tempCanvas = document.createElement('canvas');
                             let tempCtx = tempCanvas.getContext('2d');
                             tempCanvas.width = 300;
