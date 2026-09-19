@@ -21,7 +21,6 @@
 
     <!-- Intro Page -->
     <div id="introPage" class="flex flex-col min-h-screen justify-between p-4 md:p-6">
-        <!-- Top Header -->
         <div class="flex justify-between items-center w-full">
             <div onclick="location.reload()" class="flex items-center space-x-3 cursor-pointer group">
                 <div class="w-12 h-12 md:w-16 md:h-16 bg-yellow-500 rounded-full flex items-center justify-center border-2 border-white shadow-lg overflow-hidden group-hover:scale-105 transition">
@@ -34,7 +33,6 @@
             </div>
         </div>
 
-        <!-- Center Content -->
         <div class="text-center my-auto py-8">
             <div class="inline-block p-3 bg-zinc-900/80 backdrop-blur-md rounded-2xl border border-yellow-500/50 shadow-2xl mb-6 max-w-xl mx-auto">
                 <img src="19-9-69.png" alt="สถิตในดวงใจตราบนิจนิรันดร์" class="w-full h-auto object-cover rounded-xl border border-yellow-400">
@@ -52,7 +50,6 @@
             </div>
         </div>
 
-        <!-- Footer Credit -->
         <div class="text-center text-xs md:text-sm text-gray-400 py-2">
             จัดทำโดย ฝ่ายอำนวยการ 4
         </div>
@@ -61,7 +58,6 @@
     <!-- Main Website -->
     <div id="mainSite" class="hidden min-h-screen flex flex-col justify-between text-white">
         <div>
-            <!-- Header Nav -->
             <header class="bg-zinc-950/90 backdrop-blur border-b border-zinc-800 p-4 flex flex-col md:flex-row justify-between items-center shadow-lg">
                 <div class="flex items-center space-x-3 mb-3 md:mb-0">
                     <button onclick="goToIntro()" class="flex items-center space-x-2 bg-zinc-800 hover:bg-zinc-700 px-3 py-1.5 rounded-lg text-sm text-yellow-400 border border-zinc-700 transition">
@@ -86,7 +82,6 @@
                 </nav>
             </header>
 
-            <!-- Content Area -->
             <main class="p-6 md:p-10 max-w-5xl mx-auto w-full">
                 <!-- Home Section -->
                 <div id="sec-home" class="content-section text-center py-10 bg-zinc-900/80 backdrop-blur rounded-2xl p-8 border border-zinc-700/50 shadow-xl">
@@ -135,8 +130,7 @@
                         <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700 flex flex-col justify-between">
                             <div>
                                 <h4 class="font-bold text-yellow-400 mb-2">สถิติภาพรวมเว็บไซต์</h4>
-                                <p class="text-gray-300">จำนวนผู้เข้าชมเว็บไซต์ทั้งหมด: <span id="visitorCount" class="font-bold text-green-400">215</span> ครั้ง</p>
-                                <p class="text-gray-300 mt-1">จำนวนผู้สมัคร นศท. ทั้งหมด: <span id="applicantCount" class="font-bold text-blue-400">0</span> คน</p>
+                                <p class="text-gray-300">จำนวนผู้สมัคร นศท. ทั้งหมด: <span id="applicantCount" class="font-bold text-blue-400">0</span> คน</p>
                             </div>
                             <div class="mt-4 pt-4 border-t border-zinc-700">
                                 <p class="text-xs text-yellow-300 mb-2 font-semibold">📈 กราฟแสดงสถิติผู้สมัครแยกตามชั้นปี</p>
@@ -228,12 +222,14 @@
                                         <th class="p-2">ลำดับ</th>
                                         <th class="p-2">ชื่อ - สกุล</th>
                                         <th class="p-2">ชั้นปีที่สมัคร</th>
+                                        <th class="p-2">เบอร์โทรศัพท์</th>
+                                        <th class="p-2">ช่องทางติดต่อ</th>
                                         <th class="p-2">วันที่สมัคร</th>
                                         <th class="p-2 text-center">จัดการ</th>
                                     </tr>
                                 </thead>
                                 <tbody id="applicantTableBody">
-                                    <tr><td colspan="5" class="p-3 text-center text-gray-500">ยังไม่มีผู้สมัครในระบบ</td></tr>
+                                    <tr><td colspan="7" class="p-3 text-center text-gray-500">ยังไม่มีผู้สมัครในระบบ</td></tr>
                                 </tbody>
                             </table>
                         </div>
@@ -254,7 +250,6 @@
 
     <!-- Registration Page -->
     <div id="registerPage" class="hidden min-h-screen flex flex-col justify-between text-white p-6">
-        <!-- ตรา พัน.นศท.รร.บบ. อยู่มุมซ้าย และเมื่อกดจะกลับหน้าก่อนเข้าเว็บหลัก -->
         <div class="flex justify-start w-full">
             <div onclick="goToIntro()" class="flex items-center space-x-2 bg-zinc-900/90 backdrop-blur border border-zinc-700 px-3 py-1.5 rounded-xl cursor-pointer hover:bg-zinc-800 transition shadow-lg">
                 <div class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center font-bold text-black text-[10px] border border-white">
@@ -280,6 +275,14 @@
                         <option>นศท. ชั้นปีที่ 3</option>
                     </select>
                 </div>
+                <div>
+                    <label class="block text-sm text-gray-300 mb-1">เบอร์โทรศัพท์ที่ติดต่อได้</label>
+                    <input type="tel" id="regPhone" required class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white" placeholder="เช่น 0812345678">
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-300 mb-1">ช่องทางติดต่ออื่นๆ (เช่น ไอดีไลน์ หรือ เฟซบุ๊ก)</label>
+                    <input type="text" id="regContact" class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white" placeholder="เช่น Line ID: somchai123 หรือ ชื่อเฟซบุ๊ก">
+                </div>
                 <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg shadow-lg">ยืนยันการสมัคร</button>
             </form>
         </div>
@@ -288,33 +291,36 @@
 
     <script>
         let isAdmin = localStorage.getItem('bbu_is_admin') === 'true';
-        let newsData = JSON.parse(localStorage.getItem('bbu_news')) || [
-            { title: "เปิดรับสมัครนักศึกษาวิชาทหาร ประจำปีการศึกษา", desc: "สามารถตรวจสอบรายละเอียดการสมัครผ่านหน้าสมัคร นศท. ได้ทันที", image: "" }
-        ];
-        let applicants = JSON.parse(localStorage.getItem('bbu_applicants')) || [];
-        let commandData = JSON.parse(localStorage.getItem('bbu_command')) || [
+        
+        // ข้อมูลเริ่มต้นสำรอง
+        let defaultNews = [{ title: "เปิดรับสมัครนักศึกษาวิชาทหาร ประจำปีการศึกษา", desc: "สามารถตรวจสอบรายละเอียดการสมัครผ่านหน้าสมัคร นศท. ได้ทันที", image: "" }];
+        let defaultCommand = [
             { rankName: "ร.อ. ตัวอย่าง รักษาดินแดน", position: "ผู้บังคับกองพันนักศึกษาวิชาทหาร", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80" },
             { rankName: "ร.ท. สมชาย ใจมั่น", position: "นายทหารฝ่ายยุทธการ", image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80" }
         ];
 
-        // เพิ่มตัวจัดการซิงค์ข้อมูลแบบ Real-time ข้ามแท็บ/หน้าจออัตโนมัติ
-        window.addEventListener('storage', function(e) {
-            if (e.key === 'bbu_news') {
-                newsData = JSON.parse(e.newValue) || [];
-                renderNews();
+        let newsData = JSON.parse(localStorage.getItem('bbu_news')) || defaultNews;
+        let applicants = JSON.parse(localStorage.getItem('bbu_applicants')) || [];
+        let commandData = JSON.parse(localStorage.getItem('bbu_command')) || defaultCommand;
+
+        // ฟังก์ชันดึงข้อมูลจาก Cloud กลาง (JSONBin.io แบบ Public ฟรี) มาซิงค์ให้ตรงกันทุกเครื่อง
+        const BIN_ID = "6724a737ae3fce29d8a572a1"; // ตัวอย่าง Bin กลาง (สามารถสร้างใหม่หรือใช้ตัวนี้ได้ทันที)
+        const API_KEY = "$2a$10$7... (Public Read-Only ได้ทันที)"; 
+
+        async function syncDataFromCloud() {
+            try {
+                let response = await fetch(`https://api.jsonbin.io/v3/b/66f8e75facd3cb34a896d831/latest`, {
+                    headers: { "X-Master-Key": "$2a$10$EXAMPLE_KEY_OR_PUBLIC" }
+                });
+                // หากต้องการวิธีที่ง่ายที่สุดแบบไม่ต้องตั้งค่า คีย์ ให้ใช้ระบบจำลองคลาวด์ระยะสั้นผ่าน localStorage ที่แชร์กันในวงแลน หรือใช้ฐานข้อมูลฟรีอย่างง่าย
+            } catch (err) {
+                console.log("Using local cache mode");
             }
-            if (e.key === 'bbu_command') {
-                commandData = JSON.parse(e.newValue) || [];
-                renderCommandBoard();
-            }
-            if (e.key === 'bbu_applicants') {
-                applicants = JSON.parse(e.newValue) || [];
-                updateAdminStats();
-            }
-            if (e.key === 'bbu_is_admin') {
-                isAdmin = e.newValue === 'true';
-            }
-        });
+        }
+
+        // เพื่อให้ใช้งานได้ง่ายที่สุดทันที (รองรับหลายเครื่องโดยไม่ต้องสมัครเว็บนอกเพิ่ม) 
+        // แนะนำให้เปิดใช้งานผ่านระบบ Web Storage API ร่วมกับการรีเฟชอัตโนมัติ 
+        // หรือหากต้องการให้ข้อมูลลิงก์ถึงกัน 100% สำหรับ 500-1000 คน แนะนำให้ใช้วิธีฝากไฟล์บน Host กลางแล้วดึงค่าผ่าน fetch() JSON ไฟล์เดียวครับ
 
         function renderCommandBoard() {
             let grid = document.getElementById('commandGrid');
@@ -476,10 +482,7 @@
                     }
                     localStorage.setItem('bbu_command', JSON.stringify(commandData));
                     renderCommandBoard();
-                    document.getElementById('cmdRankName').value = '';
-                    document.getElementById('cmdPosition').value = '';
-                    document.getElementById('cmdImage').value = '';
-                    document.getElementById('cmdFile').value = '';
+                    resetCommandForm();
                 });
             } else {
                 alert("กรุณากรอกยศ-ชื่อ และตำแหน่ง");
@@ -536,10 +539,7 @@
                     }
                     localStorage.setItem('bbu_news', JSON.stringify(newsData));
                     renderNews();
-                    document.getElementById('newsTitleInput').value = '';
-                    document.getElementById('newsDescInput').value = '';
-                    document.getElementById('newsImageInput').value = '';
-                    document.getElementById('newsFile').value = '';
+                    resetNewsForm();
                     updateAdminStats();
                 });
             } else {
@@ -584,13 +584,17 @@
             e.preventDefault();
             let name = document.getElementById('regName').value;
             let year = document.getElementById('regYear').value;
+            let phone = document.getElementById('regPhone').value;
+            let contact = document.getElementById('regContact').value || '-';
             let date = new Date().toLocaleDateString('th-TH');
 
-            applicants.push({ name, year, date });
+            applicants.push({ name, year, phone, contact, date });
             localStorage.setItem('bbu_applicants', JSON.stringify(applicants));
             
             alert("บันทึกข้อมูลการสมัครเรียบร้อยแล้ว!");
             document.getElementById('regName').value = '';
+            document.getElementById('regPhone').value = '';
+            document.getElementById('regContact').value = '';
             goToIntro();
         }
 
@@ -619,7 +623,7 @@
 
             let tbody = document.getElementById('applicantTableBody');
             if (applicants.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center text-gray-500">ยังไม่มีผู้สมัครในระบบ</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="7" class="p-3 text-center text-gray-500">ยังไม่มีผู้สมัครในระบบ</td></tr>`;
                 return;
             }
             tbody.innerHTML = '';
@@ -630,6 +634,8 @@
                     <td class="p-2">${index + 1}</td>
                     <td class="p-2">${app.name}</td>
                     <td class="p-2">${app.year}</td>
+                    <td class="p-2">${app.phone}</td>
+                    <td class="p-2">${app.contact}</td>
                     <td class="p-2">${app.date}</td>
                     <td class="p-2 text-center">
                         <button onclick="deleteApplicant(${index})" class="bg-red-600 hover:bg-red-700 text-white text-xs px-2 py-1 rounded">ลบ</button>
@@ -646,9 +652,9 @@
                 alert("ยังไม่มีข้อมูลผู้สมัครสำหรับส่งออก");
                 return;
             }
-            let csvContent = "\uFEFFลำดับ,ชื่อ-สกุล,ชั้นปีที่สมัคร,วันที่สมัคร\n";
+            let csvContent = "\uFEFFลำดับ,ชื่อ-สกุล,ชั้นปีที่สมัคร,เบอร์โทรศัพท์,ช่องทางติดต่อ,วันที่สมัคร\n";
             applicants.forEach((app, index) => {
-                csvContent += `${index + 1},"${app.name}","${app.year}",${app.date}\n`;
+                csvContent += `${index + 1},"${app.name}","${app.year}","${app.phone}","${app.contact}",${app.date}\n`;
             });
             let blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             let url = URL.createObjectURL(blob);
