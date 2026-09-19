@@ -9,7 +9,7 @@
     <style>
         body { font-family: 'Sarabun', sans-serif; }
         .military-bg {
-            background: linear-gradient(rgba(10, 25, 12, 0.88), rgba(5, 15, 8, 0.92)), 
+            background: linear-gradient(rgba(10, 25, 12, 0.90), rgba(5, 15, 8, 0.94)), 
                         url('https://st.depositphotos.com/1868209/3939/i/450/depositphotos_39398843-Thai-army-green-woodland-digital-camouflage-fabric-texture-backg.jpg');
             background-size: cover;
             background-position: center;
@@ -22,7 +22,7 @@
     <!-- Intro Page -->
     <div id="introPage" class="flex flex-col min-h-screen justify-between p-4 md:p-6">
         <!-- Top Header -->
-        <div class="flex justify-between items-center w-full">
+        <div class="flex justify-between items-center w-full bg-black/40 p-3 rounded-xl border border-zinc-700/50">
             <div class="flex items-center space-x-3">
                 <div class="w-12 h-12 md:w-16 md:h-16 bg-yellow-500 rounded-full flex items-center justify-center border-2 border-white shadow-lg overflow-hidden">
                     <span class="text-xs font-bold text-black text-center">พัน.นศท.</span>
@@ -39,7 +39,7 @@
 
         <!-- Center Content -->
         <div class="text-center my-auto py-8">
-            <div class="inline-block p-3 bg-zinc-900/80 backdrop-blur-md rounded-2xl border border-yellow-500/50 shadow-2xl mb-6 max-w-xl mx-auto">
+            <div class="inline-block p-3 bg-zinc-900/90 backdrop-blur-md rounded-2xl border border-yellow-500/50 shadow-2xl mb-6 max-w-xl mx-auto">
                 <img src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=800&q=80" alt="ธสถิตในดวงใจ" class="w-full h-48 md:h-64 object-cover rounded-xl border border-yellow-400">
                 <p class="text-base md:text-lg font-bold text-yellow-300 mt-3 tracking-wide">"ธสถิตในดวงใจตราบนิจนิรันดร์"</p>
                 <p class="text-xs md:text-sm text-gray-300">สมเด็จพระเจ้าลูกเธอ เจ้าฟ้าพัชรกิติยาภา นเรนทิราเทพยวดี กรมหลวงราชสาริณีสิริพัชร มหาวัชรราชธิดา</p>
@@ -63,11 +63,17 @@
         </div>
     </div>
 
-    <!-- Main Website -->
+    <!-- Main Website (TDC Style) -->
     <div id="mainSite" class="hidden min-h-screen flex flex-col justify-between text-white">
         <div>
+            <!-- Top Military Header Bar -->
+            <div class="bg-zinc-950 border-b border-zinc-800 text-xs py-1 px-4 text-gray-400 flex justify-between">
+                <span>กองทัพบก | หน่วยบัญชาการรักษาดินแดน (จำลองแบบ นรด.)</span>
+                <span>โรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"</span>
+            </div>
+
             <!-- Header Nav -->
-            <header class="bg-zinc-950/90 backdrop-blur border-b border-zinc-800 p-4 flex flex-col md:flex-row justify-between items-center shadow-lg">
+            <header class="bg-zinc-900/95 backdrop-blur border-b border-zinc-800 p-4 flex flex-col md:flex-row justify-between items-center shadow-lg">
                 <div class="flex items-center space-x-3 mb-3 md:mb-0">
                     <button onclick="goToIntro()" class="flex items-center space-x-2 bg-zinc-800 hover:bg-zinc-700 px-3 py-1.5 rounded-lg text-sm text-yellow-400 border border-zinc-700 transition">
                         <span>⬅ กลับหน้าแรก</span>
@@ -75,69 +81,120 @@
                     <div class="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center font-bold text-black text-xs">
                         พัน.นศท.
                     </div>
-                    <span class="font-bold text-sm md:text-base text-yellow-400">พัน.นศท.รร.บบ.</span>
+                    <div>
+                        <span class="font-bold text-sm md:text-base text-yellow-400 block">พัน.นศท.รร.บบ.</span>
+                        <span class="text-[10px] text-gray-400">Territorial Defense Student Battalion</span>
+                    </div>
                 </div>
-                <nav class="flex flex-wrap justify-center gap-2 md:gap-4 text-sm md:text-base items-center">
-                    <button onclick="showSection('home')" class="hover:text-yellow-400 px-3 py-1 rounded transition">หน้าหลัก</button>
-                    <button onclick="showSection('command')" class="hover:text-yellow-400 px-3 py-1 rounded transition">บอร์ดการบังคับบัญชา</button>
-                    <button onclick="showSection('motto')" class="hover:text-yellow-400 px-3 py-1 rounded transition">คำขวัญประจำกองพัน</button>
-                    <button onclick="showSection('news')" class="hover:text-yellow-400 px-3 py-1 rounded transition">ข่าวสาร</button>
-                    <button onclick="showSection('contact')" class="hover:text-yellow-400 px-3 py-1 rounded transition">ช่องทางติดต่อ</button>
-                    <span id="adminNavTab" class="hidden"><button onclick="showAdminPanel()" class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-white font-bold text-sm">⚙ แดชบอร์ด Admin</button></span>
+                <nav class="flex flex-wrap justify-center gap-2 md:gap-3 text-sm md:text-base items-center">
+                    <button onclick="showSection('home')" class="hover:text-yellow-400 px-3 py-1 rounded transition font-medium">หน้าหลัก</button>
+                    <button onclick="showSection('command')" class="hover:text-yellow-400 px-3 py-1 rounded transition font-medium">บอร์ดผู้บังคับบัญชา</button>
+                    <button onclick="showSection('motto')" class="hover:text-yellow-400 px-3 py-1 rounded transition font-medium">คำขวัญกองพัน</button>
+                    <button onclick="showSection('news')" class="hover:text-yellow-400 px-3 py-1 rounded transition font-medium">ข่าวสาร</button>
+                    <button onclick="showSection('contact')" class="hover:text-yellow-400 px-3 py-1 rounded transition font-medium">ช่องทางติดต่อ</button>
+                    <span id="adminNavTab" class="hidden"><button onclick="showAdminPanel()" class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-white font-bold text-sm shadow">⚙ แดชบอร์ด Admin</button></span>
                 </nav>
             </header>
+
+            <!-- Breaking News Ticker (TDC Style) -->
+            <div class="bg-red-950/80 border-b border-red-800 text-red-200 text-xs md:text-sm py-2 px-4 flex items-center overflow-hidden">
+                <span class="bg-red-700 text-white px-2 py-0.5 rounded font-bold mr-3 text-xs uppercase tracking-wider shrink-0">ประกาศด่วน</span>
+                <div class="whitespace-nowrap overflow-x-auto">
+                    <span>ยินดีต้อนรับสู่เว็บไซต์กองพันนักศึกษาวิชาทหาร โรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์" — ติดต่อราชการห้องบังคับการ (ห้องธนาคารโรงเรียนเก่า)</span>
+                </div>
+            </div>
 
             <!-- Content Area -->
             <main class="p-6 md:p-10 max-w-5xl mx-auto w-full">
                 <!-- Home Section -->
-                <div id="sec-home" class="content-section text-center py-10 bg-zinc-900/80 backdrop-blur rounded-2xl p-8 border border-zinc-700/50 shadow-xl">
+                <div id="sec-home" class="content-section text-center py-10 bg-zinc-900/85 backdrop-blur rounded-2xl p-8 border border-zinc-700/50 shadow-xl">
+                    <div class="w-24 h-24 bg-yellow-500 rounded-full mx-auto flex items-center justify-center border-4 border-white shadow-xl mb-6">
+                        <span class="text-xl font-bold text-black">พัน.นศท.</span>
+                    </div>
                     <h2 class="text-2xl md:text-4xl font-bold text-yellow-400 mb-6">
                         ยินดีต้อนรับเข้าสู่เว็บไซต์ของกองพันนักศึกษาวิชาทหารโรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"
                     </h2>
-                    <p class="text-gray-300 text-base md:text-lg max-w-2xl mx-auto">
-                        เว็บไซต์ทางการสำหรับประชาสัมพันธ์ข้อมูลข่าวสาร การบังคับบัญชา และระเบียบปฏิบัติของนักศึกษาวิชาทหาร โรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"
+                    <p class="text-gray-300 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+                        เว็บไซต์ทางการสำหรับประชาสัมพันธ์ข้อมูลข่าวสาร การบังคับบัญชา และระเบียบปฏิบัติของนักศึกษาวิชาทหาร โรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์" มุ่งเน้นวินัย ความเสียสละ และความเป็นผู้นำ
                     </p>
                 </div>
 
-                <!-- Command Board -->
-                <div id="sec-command" class="content-section hidden py-6 bg-zinc-900/80 backdrop-blur rounded-2xl p-8 border border-zinc-700/50 shadow-xl">
-                    <h3 class="text-2xl font-bold text-yellow-400 mb-4 border-b border-zinc-700 pb-2">บอร์ดการบังคับบัญชา</h3>
-                    <p class="text-gray-300">กำลังปรับปรุงข้อมูลบอร์ดการบังคับบัญชา...</p>
+                <!-- Command Board (TDC Style) -->
+                <div id="sec-command" class="content-section hidden py-6 bg-zinc-900/85 backdrop-blur rounded-2xl p-8 border border-zinc-700/50 shadow-xl">
+                    <h3 class="text-2xl font-bold text-yellow-400 mb-6 border-b border-zinc-700 pb-3 flex items-center">
+                        <span class="bg-yellow-500 w-2 h-6 mr-3 rounded"></span> บอร์ดการบังคับบัญชา พัน.นศท.รร.บบ.
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Commander Card 1 -->
+                        <div class="bg-zinc-800/90 border border-zinc-700 rounded-xl p-5 text-center shadow-lg">
+                            <div class="w-32 h-32 bg-zinc-700 rounded-full mx-auto mb-4 border-2 border-yellow-500 overflow-hidden flex items-center justify-center">
+                                <span class="text-xs text-gray-400">รูปผู้บังคับบัญชา</span>
+                            </div>
+                            <h4 class="text-lg font-bold text-yellow-300">ร.ต. / นศท. (ผู้บังคับกองพัน)</h4>
+                            <p class="text-sm text-gray-300 mt-1">ผู้บังคับกองพันนักศึกษาวิชาทหาร</p>
+                            <p class="text-xs text-yellow-500 mt-2 font-semibold">รร.บ้านบึง "อุตสาหกรรมมนุเคราะห์"</p>
+                        </div>
+
+                        <!-- Commander Card 2 -->
+                        <div class="bg-zinc-800/90 border border-zinc-700 rounded-xl p-5 text-center shadow-lg">
+                            <div class="w-32 h-32 bg-zinc-700 rounded-full mx-auto mb-4 border-2 border-yellow-500 overflow-hidden flex items-center justify-center">
+                                <span class="text-xs text-gray-400">รูปผู้บังคับบัญชา</span>
+                            </div>
+                            <h4 class="text-lg font-bold text-yellow-300">นศท. (รอง ผบ.พัน)</h4>
+                            <p class="text-sm text-gray-300 mt-1">รองผู้บังคับกองพันนักศึกษาวิชาทหาร</p>
+                            <p class="text-xs text-yellow-500 mt-2 font-semibold">รร.บ้านบึง "อุตสาหกรรมมนุเคราะห์"</p>
+                        </div>
+
+                        <!-- Commander Card 3 -->
+                        <div class="bg-zinc-800/90 border border-zinc-700 rounded-xl p-5 text-center shadow-lg">
+                            <div class="w-32 h-32 bg-zinc-700 rounded-full mx-auto mb-4 border-2 border-yellow-500 overflow-hidden flex items-center justify-center">
+                                <span class="text-xs text-gray-400">รูปผู้บังคับบัญชา</span>
+                            </div>
+                            <h4 class="text-lg font-bold text-yellow-300">นศท. (ฝ่ายอำนวยการ)</h4>
+                            <p class="text-sm text-gray-300 mt-1">ฝ่ายอำนวยการ (ผอ.4)</p>
+                            <p class="text-xs text-yellow-500 mt-2 font-semibold">รร.บ้านบึง "อุตสาหกรรมมนุเคราะห์"</p>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Motto -->
-                <div id="sec-motto" class="content-section hidden py-6 bg-zinc-900/80 backdrop-blur rounded-2xl p-8 border border-zinc-700/50 shadow-xl">
+                <div id="sec-motto" class="content-section hidden py-6 bg-zinc-900/85 backdrop-blur rounded-2xl p-8 border border-zinc-700/50 shadow-xl">
                     <h3 class="text-2xl font-bold text-yellow-400 mb-4 border-b border-zinc-700 pb-2">คำขวัญประจำกองพัน</h3>
-                    <div class="bg-zinc-800 p-6 rounded-xl border border-zinc-700 text-center">
-                        <p class="text-xl text-yellow-300 font-semibold">"มีวินัย ใฝ่ศึกษา เสียสละเพื่อส่วนรวม"</p>
+                    <div class="bg-zinc-800 p-8 rounded-xl border border-zinc-700 text-center shadow-inner">
+                        <p class="text-2xl text-yellow-300 font-bold tracking-wide">"มีวินัย ใฝ่ศึกษา เสียสละเพื่อส่วนรวม"</p>
+                        <p class="text-sm text-gray-400 mt-3">— กองพันนักศึกษาวิชาทหาร โรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"</p>
                     </div>
                 </div>
 
                 <!-- News -->
-                <div id="sec-news" class="content-section hidden py-6 bg-zinc-900/80 backdrop-blur rounded-2xl p-8 border border-zinc-700/50 shadow-xl">
-                    <h3 class="text-2xl font-bold text-yellow-400 mb-4 border-b border-zinc-700 pb-2">ข่าวสารและประกาศ</h3>
-                    <div id="newsList" class="space-y-4">
+                <div id="sec-news" class="content-section hidden py-6 bg-zinc-900/85 backdrop-blur rounded-2xl p-8 border border-zinc-700/50 shadow-xl">
+                    <h3 class="text-2xl font-bold text-yellow-400 mb-6 border-b border-zinc-700 pb-2">ข่าวสารและประกาศทางราชการ</h3>
+                    <div id="newsList" class="space-y-6">
                         <!-- Dynamic News Rendered Here -->
                     </div>
                 </div>
 
                 <!-- Contact -->
-                <div id="sec-contact" class="content-section hidden py-6 bg-zinc-900/80 backdrop-blur rounded-2xl p-8 border border-zinc-700/50 shadow-xl">
-                    <h3 class="text-2xl font-bold text-yellow-400 mb-4 border-b border-zinc-700 pb-2">ช่องทางติดต่อ</h3>
-                    <p class="text-gray-300">ติดต่อสอบถามข้อมูลเพิ่มเติมได้ที่ห้องบังคับการกองพันนักศึกษาวิชาทหาร</p>
+                <div id="sec-contact" class="content-section hidden py-6 bg-zinc-900/85 backdrop-blur rounded-2xl p-8 border border-zinc-700/50 shadow-xl">
+                    <h3 class="text-2xl font-bold text-yellow-400 mb-4 border-b border-zinc-700 pb-2">ช่องทางติดต่อราชการ</h3>
+                    <div class="bg-zinc-800 p-6 rounded-xl border border-zinc-700 space-y-3">
+                        <p class="text-gray-200 text-base">📍 <strong class="text-yellow-300">สถานที่ติดต่อ:</strong> ห้องบังคับการกองพันนักศึกษาวิชาทหาร โรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์" (ห้องธนาคารโรงเรียนเก่า)</p>
+                        <p class="text-gray-200 text-base">📞 <strong class="text-yellow-300">หน่วยงานรับผิดชอบ:</strong> ฝ่ายอำนวยการ 4 กองพันนักศึกษาวิชาทหาร</p>
+                    </div>
                 </div>
 
                 <!-- Admin Dashboard -->
                 <div id="sec-admin" class="content-section hidden py-6 bg-zinc-900/90 backdrop-blur rounded-2xl p-8 border border-red-500/40 shadow-xl">
                     <div class="flex justify-between items-center mb-6 border-b border-zinc-700 pb-2">
-                        <h3 class="text-2xl font-bold text-red-500">⚙ แผงควบคุมผู้ดูแลระบบ (Admin Dashboard)</h3>
+                        <h3 class="text-2xl font-bold text-red-500">⚙ แผงควบคุมผู้ดูแลระบบ (Admin Dashboard - นรด.จำลอง)</h3>
                         <button onclick="adminLogout()" class="bg-zinc-700 hover:bg-zinc-600 text-white px-3 py-1.5 rounded text-sm font-semibold">ออกจากระบบ Admin</button>
                     </div>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                         <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700">
                             <h4 class="font-bold text-yellow-400 mb-2">สถิติเว็บไซต์</h4>
-                            <p class="text-gray-300">จำนวนผู้เข้าชมเว็บไซต์ทั้งหมด: <span id="visitorCount" class="font-bold text-green-400">215</span> ครั้ง</p>
+                            <p class="text-gray-300">จำนวนผู้เข้าชมเว็บไซต์ทั้งหมด: <span id="visitorCount" class="font-bold text-green-400">342</span> ครั้ง</p>
                             <p class="text-gray-300 mt-2">จำนวนผู้สมัคร นศท. ทั้งหมด: <span id="applicantCount" class="font-bold text-blue-400">0</span> คน</p>
                         </div>
                         
@@ -191,7 +248,7 @@
         </div>
 
         <!-- Footer -->
-        <footer class="bg-zinc-950/90 backdrop-blur border-t border-zinc-800 text-center p-4 text-xs md:text-sm text-gray-400">
+        <footer class="bg-zinc-950 border-t border-zinc-800 text-center p-4 text-xs md:text-sm text-gray-400">
             หากต้องการติดต่อราชการต่างๆ ให้ติดต่อได้ที่ห้องบังคับการกองพันนักศึกษาวิชาทหารโรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์" (ห้องธนาคารโรงเรียนเก่า)
         </footer>
     </div>
@@ -227,7 +284,6 @@
         ];
         let applicants = JSON.parse(localStorage.getItem('bbu_applicants')) || [];
 
-        // Check initial admin state on load
         if (isAdmin) {
             document.getElementById('adminNavTab').classList.remove('hidden');
             document.getElementById('adminBtn').innerText = "⚙ แดชบอร์ด Admin";
@@ -240,17 +296,15 @@
             if (adminList) adminList.innerHTML = '';
 
             newsData.forEach((item, index) => {
-                // Public News View
                 let div = document.createElement('div');
-                div.className = "bg-zinc-800 p-4 rounded-xl border border-zinc-700";
+                div.className = "bg-zinc-800 p-5 rounded-xl border border-zinc-700 shadow";
                 div.innerHTML = `
                     <h4 class="font-bold text-yellow-300 text-lg">${item.title}</h4>
-                    <p class="text-sm text-gray-300 mt-2 whitespace-pre-line">${item.desc}</p>
-                    ${item.image ? `<img src="${item.image}" alt="รูปข่าว" class="mt-3 rounded-lg max-h-64 object-cover w-full border border-zinc-700">` : ''}
+                    <p class="text-sm text-gray-300 mt-2 whitespace-pre-line leading-relaxed">${item.desc}</p>
+                    ${item.image ? `<img src="${item.image}" alt="รูปข่าว" class="mt-4 rounded-lg max-h-72 object-cover w-full border border-zinc-700">` : ''}
                 `;
                 list.appendChild(div);
 
-                // Admin News Management View
                 if (adminList) {
                     let adminDiv = document.createElement('div');
                     adminDiv.className = "flex justify-between items-center bg-zinc-900 p-3 rounded border border-zinc-700 text-sm";
@@ -449,7 +503,6 @@
             a.click();
         }
 
-        // Initialize news on load
         renderNews();
     </script>
 </body>
