@@ -1,910 +1,456 @@
 <!DOCTYPE html>
-<html lang="th" class="scroll-smooth">
+<html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>กองพันนักศึกษาวิชาทหาร รร.บบ. - ระบบสารสนเทศกำลังพล</title>
+    <title>กองพันนักศึกษาวิชาทหาร โรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Sarabun', 'sans-serif'],
-                    },
-                    colors: {
-                        military: {
-                            50: '#f0fdf4',
-                            100: '#dcfce7',
-                            600: '#166534',
-                            700: '#14532d',
-                            800: '#064e3b',
-                            900: '#022c22',
-                        },
-                        gold: {
-                            500: '#eab308',
-                            600: '#ca8a04',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
     <style>
         body { font-family: 'Sarabun', sans-serif; }
-        .military-gradient { background: linear-gradient(135deg, #064e3b 0%, #14532d 100%); }
+        .military-bg {
+            background: linear-gradient(rgba(10, 25, 12, 0.88), rgba(5, 15, 8, 0.92)), 
+                        url('https://st.depositphotos.com/1868209/3939/i/450/depositphotos_39398843-Thai-army-green-woodland-digital-camouflage-fabric-texture-backg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 flex flex-col min-h-screen">
+<body class="military-bg min-h-screen text-white flex flex-col justify-between">
 
-    <!-- Navigation Bar -->
-    <header class="military-gradient text-white shadow-lg sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
-                <div class="flex items-center space-x-3">
-                    <div class="bg-white/10 p-2.5 rounded-full border border-gold-500/50">
-                        <i class="fa-solid fa-shield-halved text-gold-500 text-2xl"></i>
-                    </div>
-                    <div>
-                        <h1 class="text-lg sm:text-xl font-bold tracking-wide">กองพันนักศึกษาวิชาทหาร รร.บบ.</h1>
-                        <p class="text-xs text-emerald-200">Territorial Defense Student Battalion, BB School</p>
-                    </div>
+    <!-- Intro Page -->
+    <div id="introPage" class="flex flex-col min-h-screen justify-between p-4 md:p-6">
+        <!-- Top Header -->
+        <div class="flex justify-between items-center w-full">
+            <div class="flex items-center space-x-3">
+                <div class="w-12 h-12 md:w-16 md:h-16 bg-yellow-500 rounded-full flex items-center justify-center border-2 border-white shadow-lg overflow-hidden">
+                    <span class="text-xs font-bold text-black text-center">พัน.นศท.</span>
                 </div>
-                <!-- Desktop Nav -->
-                <nav class="hidden md:flex items-center space-x-6 text-sm font-medium">
-                    <a href="#home" class="hover:text-gold-500 transition"><i class="fa-solid fa-house mr-1"></i> หน้าแรก</a>
-                    <a href="#commanders" class="hover:text-gold-500 transition"><i class="fa-solid fa-user-tie mr-1"></i> ทำเนียบผู้บังคับบัญชา</a>
-                    <a href="#news" class="hover:text-gold-500 transition"><i class="fa-solid fa-bullhorn mr-1"></i> ข่าวสาร</a>
-                    <a href="#register" class="hover:text-gold-500 transition"><i class="fa-solid fa-file-signature mr-1"></i> สมัครสมาชิก/ลงทะเบียน</a>
-                    <button onclick="openAdminModal()" class="bg-gold-500 hover:bg-gold-600 text-slate-950 px-4 py-2 rounded-lg font-semibold shadow transition flex items-center gap-2">
-                        <i class="fa-solid fa-lock"></i> ระบบผู้ดูแลระบบ
-                    </button>
-                </nav>
-                <!-- Mobile menu button -->
-                <div class="md:hidden flex items-center">
-                    <button onclick="toggleMobileMenu()" class="text-white focus:outline-none p-2">
-                        <i class="fa-solid fa-bars text-xl"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <!-- Mobile Dropdown -->
-        <div id="mobileMenu" class="hidden md:hidden bg-military-900 border-t border-emerald-800 px-4 pt-2 pb-4 space-y-2">
-            <a href="#home" class="block py-2 hover:text-gold-500"><i class="fa-solid fa-house mr-2"></i> หน้าแรก</a>
-            <a href="#commanders" class="block py-2 hover:text-gold-500"><i class="fa-solid fa-user-tie mr-2"></i> ทำเนียบผู้บังคับบัญชา</a>
-            <a href="#news" class="block py-2 hover:text-gold-500"><i class="fa-solid fa-bullhorn mr-2"></i> ข่าวสาร</a>
-            <a href="#register" class="block py-2 hover:text-gold-500"><i class="fa-solid fa-file-signature mr-2"></i> สมัครสมาชิก/ลงทะเบียน</a>
-            <button onclick="openAdminModal()" class="w-full text-left py-2 text-gold-500 font-semibold"><i class="fa-solid fa-lock mr-2"></i> ระบบผู้ดูแลระบบ</button>
-        </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section id="home" class="relative military-gradient text-white py-20 overflow-hidden">
-        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#eab308_1px,transparent_1px)] [background-size:16px_16px]"></div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-            <span class="inline-block bg-gold-500/20 text-gold-500 border border-gold-500/40 text-xs px-3 py-1 rounded-full font-semibold mb-4 tracking-wider uppercase">
-                หน่วยบัญชาการรักษาดินแดน (TDC Style)
-            </span>
-            <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight mb-6 leading-tight">
-                วินัย นำมา ซึ่งความสำเร็จ <br class="hidden sm:inline">เกียรติศักดิ์ ศรี นูดร
-            </h2>
-            <p class="max-w-2xl mx-auto text-emerald-100 text-base sm:text-lg mb-8 font-light">
-                ระบบจัดการสารสนเทศกองพันนักศึกษาวิชาทหาร รร.บบ. ศูนย์รวมข้อมูลข่าวสาร ประกาศราชการ และลงทะเบียนกำลังพลอย่างเป็นทางการ
-            </p>
-            <div class="flex flex-wrap justify-center gap-4">
-                <a href="#register" class="bg-gold-500 hover:bg-gold-600 text-slate-950 font-bold px-6 py-3 rounded-xl shadow-lg transition transform hover:-translate-y-0.5 flex items-center gap-2">
-                    <i class="fa-solid fa-user-plus"></i> สมัครเข้ารับการฝึก/ลงทะเบียน
-                </a>
-                <a href="#news" class="bg-white/10 hover:bg-white/20 border border-white/30 text-white font-semibold px-6 py-3 rounded-xl backdrop-blur transition flex items-center gap-2">
-                    <i class="fa-solid fa-newspaper"></i> ข่าวสารล่าสุด
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Commanders Section -->
-    <section id="commanders" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div class="text-center mb-12">
-            <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 border-b-2 border-emerald-700 pb-2 inline-block">
-                ทำเนียบผู้บังคับบัญชา
-            </h2>
-            <p class="text-slate-600 mt-2 text-sm sm:text-base">ผู้บังคับบัญชาและอาจารย์ที่ปรึกษากองพันนักศึกษาวิชาทหาร</p>
-        </div>
-        <div id="commandersGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <!-- Dynamically populated -->
-        </div>
-    </section>
-
-    <!-- News Section -->
-    <section id="news" class="bg-slate-100 py-16 border-y border-slate-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 border-b-2 border-emerald-700 pb-2 inline-block">
-                    ข่าวสาร และประกาศสำคัญ
-                </h2>
-                <p class="text-slate-600 mt-2 text-sm sm:text-base">ติดตามความเคลื่อนไหว ระเบียบ และกำหนดการฝึกประจำปี</p>
-            </div>
-            <div id="newsGrid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Dynamically populated -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Registration Section -->
-    <section id="register" class="py-16 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
-            <div class="military-gradient p-6 text-white text-center">
-                <h3 class="text-xl sm:text-2xl font-bold"><i class="fa-solid fa-file-shield mr-2"></i> แบบฟอร์มลงทะเบียน / สมัครสมาชิก นศท.</h3>
-                <p class="text-xs sm:text-sm text-emerald-100 mt-1">กรอกข้อมูลส่วนตัวเพื่อบันทึกเข้าสู่ฐานข้อมูลกำลังพลของหน่วย</p>
-            </div>
-            <form id="registrationForm" onsubmit="handleRegistration(event)" class="p-6 sm:p-8 space-y-6">
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-1">คำนำหน้าชื่อ / ยศ</label>
-                        <select id="regPrefix" required class="w-full rounded-lg border border-slate-300 p-2.5 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
-                            <option value="">เลือกคำนำหน้า</option>
-                            <option value="นาย">นาย</option>
-                            <option value="นางสาว">นางสาว</option>
-                            <option value="อส.ทส.">อส.ทส.</option>
-                            <option value="นศท.">นศท.</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-1">ชื่อ - นามสกุล</label>
-                        <input type="text" id="regFullName" required placeholder="เช่น สมชาย ใจมั่น" class="w-full rounded-lg border border-slate-300 p-2.5 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-1">ชั้นปี (นศท.)</label>
-                        <select id="regYear" required class="w-full rounded-lg border border-slate-300 p-2.5 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
-                            <option value="">เลือกชั้นปี</option>
-                            <option value="ชั้นปีที่ 1">ชั้นปีที่ 1</option>
-                            <option value="ชั้นปีที่ 2">ชั้นปีที่ 2</option>
-                            <option value="ชั้นปีที่ 3">ชั้นปีที่ 3</option>
-                            <option value="ชั้นปีที่ 4">ชั้นปีที่ 4</option>
-                            <option value="ชั้นปีที่ 5">ชั้นปีที่ 5</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-1">สถานศึกษา</label>
-                        <input type="text" id="regSchool" required placeholder="เช่น โรงเรียนเบญจมราชูทิศ" class="w-full rounded-lg border border-slate-300 p-2.5 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-1">หมายเลขโทรศัพท์มือถือ</label>
-                        <input type="tel" id="regPhone" required placeholder="08xxxxxxxx" class="w-full rounded-lg border border-slate-300 p-2.5 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-1">อีเมล</label>
-                        <input type="email" id="regEmail" required placeholder="example@domain.com" class="w-full rounded-lg border border-slate-300 p-2.5 focus:ring-2 focus:ring-emerald-600 focus:outline-none">
-                    </div>
-                </div>
-                <div class="pt-4 text-center">
-                    <button type="submit" class="w-full sm:w-auto bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-8 py-3 rounded-xl shadow transition">
-                        <i class="fa-solid fa-paper-plane mr-2"></i> ยืนยันการลงทะเบียน
-                    </button>
-                </div>
-            </form>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-400 py-10 mt-auto border-t border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
-            <div>
-                <p class="text-slate-200 font-semibold">กองพันนักศึกษาวิชาทหาร รร.บบ.</p>
-                <p class="text-xs text-slate-500 mt-1">ระบบสารสนเทศเพื่อการบริหารและประชาสัมพันธ์ภายในหน่วย</p>
-            </div>
-            <div class="text-xs text-slate-500">
-                &copy; 2026 Territorial Defense Student Battalion. All Rights Reserved.
-            </div>
-        </div>
-    </footer>
-
-    <!-- Admin Login Modal -->
-    <div id="adminLoginModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 relative">
-            <button onclick="closeAdminModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
-                <i class="fa-solid fa-xmark text-xl"></i>
-            </button>
-            <div class="text-center mb-6">
-                <div class="bg-emerald-100 text-emerald-800 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-2 text-xl font-bold">
-                    <i class="fa-solid fa-lock"></i>
-                </div>
-                <h3 class="text-lg font-bold text-slate-900">เข้าสู่ระบบผู้ดูแลระบบ</h3>
-                <p class="text-xs text-slate-500">กรุณากรอกรหัสผ่านเพื่อเข้าจัดการระบบ</p>
-            </div>
-            <form onsubmit="handleAdminLogin(event)" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1">รหัสผ่าน (ค่าเริ่มต้น: admin123)</label>
-                    <input type="password" id="adminPasswordInput" required class="w-full rounded-lg border border-slate-300 p-2.5 text-sm focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+                    <h1 class="text-base md:text-xl font-bold text-yellow-300">พัน.นศท.รร.บบ.</h1>
+                    <p class="text-xs text-gray-300">กองพันนักศึกษาวิชาทหาร รร.บ้านบึง "อุตสาหกรรมมนุเคราะห์"</p>
                 </div>
-                <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2.5 rounded-lg transition text-sm">
-                    เข้าสู่ระบบ
+            </div>
+            <button onclick="handleAdminClick()" id="adminBtn" class="bg-red-700 hover:bg-red-800 text-white text-xs md:text-sm px-3 py-2 rounded-lg font-semibold shadow transition border border-red-500">
+                เข้าสู่ระบบ Admin
+            </button>
+        </div>
+
+        <!-- Center Content -->
+        <div class="text-center my-auto py-8">
+            <div class="inline-block p-3 bg-zinc-900/80 backdrop-blur-md rounded-2xl border border-yellow-500/50 shadow-2xl mb-6 max-w-xl mx-auto">
+                <img src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=800&q=80" alt="ธสถิตในดวงใจ" class="w-full h-48 md:h-64 object-cover rounded-xl border border-yellow-400">
+                <p class="text-base md:text-lg font-bold text-yellow-300 mt-3 tracking-wide">"ธสถิตในดวงใจตราบนิจนิรันดร์"</p>
+                <p class="text-xs md:text-sm text-gray-300">สมเด็จพระเจ้าลูกเธอ เจ้าฟ้าพัชรกิติยาภา นเรนทิราเทพยวดี กรมหลวงราชสาริณีสิริพัชร มหาวัชรราชธิดา</p>
+            </div>
+            <h2 class="text-xl md:text-3xl font-bold text-yellow-400 mb-6 drop-shadow-md">
+                กองพันนักศึกษาวิชาทหาร โรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"
+            </h2>
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                <button onclick="enterMainSite()" class="bg-green-600 hover:bg-green-700 text-white text-base md:text-lg font-bold px-8 py-3 rounded-xl shadow-xl transition transform hover:scale-105 border border-green-400">
+                    เข้าสู่เว็บไซต์หลัก
                 </button>
-            </form>
+                <button onclick="openRegisterPage()" class="bg-blue-600 hover:bg-blue-700 text-white text-base md:text-lg font-bold px-8 py-3 rounded-xl shadow-xl transition transform hover:scale-105 border border-blue-400">
+                    สมัครเข้าเป็นนักศึกษาวิชาทหาร
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer Credit -->
+        <div class="text-center text-xs md:text-sm text-gray-400 py-2">
+            จัดทำโดย ฝ่ายอำนวยการ 4
         </div>
     </div>
 
-    <!-- Admin Dashboard Panel (Hidden by default) -->
-    <div id="adminDashboard" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md hidden z-50 overflow-y-auto">
-        <div class="max-w-7xl mx-auto px-4 py-8 min-h-screen flex flex-col">
-            <div class="bg-white rounded-2xl shadow-2xl flex-grow flex flex-col overflow-hidden border border-slate-200">
-                <!-- Admin Header -->
-                <div class="military-gradient text-white p-6 flex flex-col sm:flex-row justify-between items-center gap-4">
-                    <div class="flex items-center space-x-3">
-                        <div class="bg-gold-500 text-slate-950 p-2.5 rounded-xl font-bold">
-                            <i class="fa-solid fa-gauge-high text-xl"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-lg font-bold">แผงควบคุมผู้ดูแลระบบ (Admin Dashboard)</h3>
-                            <p class="text-xs text-emerald-200">จัดการข้อมูลผู้บังคับบัญชา ข่าวสาร และทะเบียนกำลังพล</p>
-                        </div>
+    <!-- Main Website -->
+    <div id="mainSite" class="hidden min-h-screen flex flex-col justify-between text-white">
+        <div>
+            <!-- Header Nav -->
+            <header class="bg-zinc-950/90 backdrop-blur border-b border-zinc-800 p-4 flex flex-col md:flex-row justify-between items-center shadow-lg">
+                <div class="flex items-center space-x-3 mb-3 md:mb-0">
+                    <button onclick="goToIntro()" class="flex items-center space-x-2 bg-zinc-800 hover:bg-zinc-700 px-3 py-1.5 rounded-lg text-sm text-yellow-400 border border-zinc-700 transition">
+                        <span>⬅ กลับหน้าแรก</span>
+                    </button>
+                    <div class="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center font-bold text-black text-xs">
+                        พัน.นศท.
                     </div>
-                    <button onclick="closeAdminDashboard()" class="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-xl text-sm font-semibold transition border border-white/20">
-                        <i class="fa-solid fa-right-from-bracket mr-1"></i> ออกจากระบบ Admin
-                    </button>
+                    <span class="font-bold text-sm md:text-base text-yellow-400">พัน.นศท.รร.บบ.</span>
+                </div>
+                <nav class="flex flex-wrap justify-center gap-2 md:gap-4 text-sm md:text-base items-center">
+                    <button onclick="showSection('home')" class="hover:text-yellow-400 px-3 py-1 rounded transition">หน้าหลัก</button>
+                    <button onclick="showSection('command')" class="hover:text-yellow-400 px-3 py-1 rounded transition">บอร์ดการบังคับบัญชา</button>
+                    <button onclick="showSection('motto')" class="hover:text-yellow-400 px-3 py-1 rounded transition">คำขวัญประจำกองพัน</button>
+                    <button onclick="showSection('news')" class="hover:text-yellow-400 px-3 py-1 rounded transition">ข่าวสาร</button>
+                    <button onclick="showSection('contact')" class="hover:text-yellow-400 px-3 py-1 rounded transition">ช่องทางติดต่อ</button>
+                    <span id="adminNavTab" class="hidden"><button onclick="showAdminPanel()" class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-white font-bold text-sm">⚙ แดชบอร์ด Admin</button></span>
+                </nav>
+            </header>
+
+            <!-- Content Area -->
+            <main class="p-6 md:p-10 max-w-5xl mx-auto w-full">
+                <!-- Home Section -->
+                <div id="sec-home" class="content-section text-center py-10 bg-zinc-900/80 backdrop-blur rounded-2xl p-8 border border-zinc-700/50 shadow-xl">
+                    <h2 class="text-2xl md:text-4xl font-bold text-yellow-400 mb-6">
+                        ยินดีต้อนรับเข้าสู่เว็บไซต์ของกองพันนักศึกษาวิชาทหารโรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"
+                    </h2>
+                    <p class="text-gray-300 text-base md:text-lg max-w-2xl mx-auto">
+                        เว็บไซต์ทางการสำหรับประชาสัมพันธ์ข้อมูลข่าวสาร การบังคับบัญชา และระเบียบปฏิบัติของนักศึกษาวิชาทหาร โรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"
+                    </p>
                 </div>
 
-                <!-- Admin Tabs -->
-                <div class="bg-slate-100 border-b border-slate-200 px-6 flex space-x-4 overflow-x-auto">
-                    <button onclick="switchAdminTab('commandersTab')" id="btnCommandersTab" class="py-3 px-4 font-semibold text-sm border-b-2 border-emerald-700 text-emerald-800 whitespace-nowrap">
-                        <i class="fa-solid fa-user-tie mr-1.5"></i> จัดการทำเนียบผู้บังคับบัญชา
-                    </button>
-                    <button onclick="switchAdminTab('newsTab')" id="btnNewsTab" class="py-3 px-4 font-semibold text-sm border-b-2 border-transparent text-slate-600 hover:text-slate-900 whitespace-nowrap">
-                        <i class="fa-solid fa-newspaper mr-1.5"></i> จัดการข่าวสาร
-                    </button>
-                    <button onclick="switchAdminTab('applicantsTab')" id="btnApplicantsTab" class="py-3 px-4 font-semibold text-sm border-b-2 border-transparent text-slate-600 hover:text-slate-900 whitespace-nowrap">
-                        <i class="fa-solid fa-users mr-1.5"></i> รายชื่อผู้สมัคร / กำลังพล (<span id="applicantCountBadge">0</span>)
-                    </button>
+                <!-- Command Board -->
+                <div id="sec-command" class="content-section hidden py-6 bg-zinc-900/80 backdrop-blur rounded-2xl p-8 border border-zinc-700/50 shadow-xl">
+                    <h3 class="text-2xl font-bold text-yellow-400 mb-4 border-b border-zinc-700 pb-2">บอร์ดการบังคับบัญชา</h3>
+                    <p class="text-gray-300">กำลังปรับปรุงข้อมูลบอร์ดการบังคับบัญชา...</p>
                 </div>
 
-                <!-- Admin Tab Contents -->
-                <div class="p-6 flex-grow overflow-y-auto">
+                <!-- Motto -->
+                <div id="sec-motto" class="content-section hidden py-6 bg-zinc-900/80 backdrop-blur rounded-2xl p-8 border border-zinc-700/50 shadow-xl">
+                    <h3 class="text-2xl font-bold text-yellow-400 mb-4 border-b border-zinc-700 pb-2">คำขวัญประจำกองพัน</h3>
+                    <div class="bg-zinc-800 p-6 rounded-xl border border-zinc-700 text-center">
+                        <p class="text-xl text-yellow-300 font-semibold">"มีวินัย ใฝ่ศึกษา เสียสละเพื่อส่วนรวม"</p>
+                    </div>
+                </div>
+
+                <!-- News -->
+                <div id="sec-news" class="content-section hidden py-6 bg-zinc-900/80 backdrop-blur rounded-2xl p-8 border border-zinc-700/50 shadow-xl">
+                    <h3 class="text-2xl font-bold text-yellow-400 mb-4 border-b border-zinc-700 pb-2">ข่าวสารและประกาศ</h3>
+                    <div id="newsList" class="space-y-4">
+                        <!-- Dynamic News Rendered Here -->
+                    </div>
+                </div>
+
+                <!-- Contact -->
+                <div id="sec-contact" class="content-section hidden py-6 bg-zinc-900/80 backdrop-blur rounded-2xl p-8 border border-zinc-700/50 shadow-xl">
+                    <h3 class="text-2xl font-bold text-yellow-400 mb-4 border-b border-zinc-700 pb-2">ช่องทางติดต่อ</h3>
+                    <p class="text-gray-300">ติดต่อสอบถามข้อมูลเพิ่มเติมได้ที่ห้องบังคับการกองพันนักศึกษาวิชาทหาร</p>
+                </div>
+
+                <!-- Admin Dashboard -->
+                <div id="sec-admin" class="content-section hidden py-6 bg-zinc-900/90 backdrop-blur rounded-2xl p-8 border border-red-500/40 shadow-xl">
+                    <div class="flex justify-between items-center mb-6 border-b border-zinc-700 pb-2">
+                        <h3 class="text-2xl font-bold text-red-500">⚙ แผงควบคุมผู้ดูแลระบบ (Admin Dashboard)</h3>
+                        <button onclick="adminLogout()" class="bg-zinc-700 hover:bg-zinc-600 text-white px-3 py-1.5 rounded text-sm font-semibold">ออกจากระบบ Admin</button>
+                    </div>
                     
-                    <!-- TAB 1: Commander Management -->
-                    <div id="commandersTabContent" class="space-y-6">
-                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
-                            <div>
-                                <h4 class="font-bold text-slate-900 text-base">รายการผู้บังคับบัญชาในทำเนียบ</h4>
-                                <p class="text-xs text-slate-500">เพิ่ม แก้ไข หรือลบข้อมูลผู้บังคับบัญชาในหน้าแรก</p>
-                            </div>
-                            <button onclick="openCommanderModal()" class="bg-emerald-700 hover:bg-emerald-800 text-white font-semibold px-4 py-2 rounded-lg text-sm transition shadow flex items-center gap-2">
-                                <i class="fa-solid fa-plus"></i> เพิ่มผู้บังคับบัญชาใหม่
-                            </button>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700">
+                            <h4 class="font-bold text-yellow-400 mb-2">สถิติเว็บไซต์</h4>
+                            <p class="text-gray-300">จำนวนผู้เข้าชมเว็บไซต์ทั้งหมด: <span id="visitorCount" class="font-bold text-green-400">215</span> ครั้ง</p>
+                            <p class="text-gray-300 mt-2">จำนวนผู้สมัคร นศท. ทั้งหมด: <span id="applicantCount" class="font-bold text-blue-400">0</span> คน</p>
                         </div>
-                        <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white">
-                            <table class="w-full text-left border-collapse">
-                                <thead>
-                                    <tr class="bg-slate-100 text-slate-700 text-xs uppercase font-semibold border-b border-slate-200">
-                                        <th class="p-3">รูปภาพ</th>
-                                        <th class="p-3">ชื่อ - นามสกุล / ยศ</th>
-                                        <th class="p-3">ตำแหน่ง</th>
-                                        <th class="p-3">สังกัด / รายละเอียด</th>
-                                        <th class="p-3 text-center">จัดการ</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="adminCommandersTableBody" class="divide-y divide-slate-100 text-sm">
-                                    <!-- Populated via JS -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <!-- TAB 2: News Management -->
-                    <div id="newsTabContent" class="space-y-6 hidden">
-                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
-                            <div>
-                                <h4 class="font-bold text-slate-900 text-base">รายการประกาศ / ข่าวสาร</h4>
-                                <p class="text-xs text-slate-500">สร้างหรือลบข่าวสารประชาสัมพันธ์</p>
-                            </div>
-                            <button onclick="openNewsModal()" class="bg-emerald-700 hover:bg-emerald-800 text-white font-semibold px-4 py-2 rounded-lg text-sm transition shadow flex items-center gap-2">
-                                <i class="fa-solid fa-plus"></i> เพิ่มข่าวสารใหม่
-                            </button>
-                        </div>
-                        <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white">
-                            <table class="w-full text-left border-collapse">
-                                <thead>
-                                    <tr class="bg-slate-100 text-slate-700 text-xs uppercase font-semibold border-b border-slate-200">
-                                        <th class="p-3">หัวข้อข่าว</th>
-                                        <th class="p-3">วันที่ประกาศ</th>
-                                        <th class="p-3">เนื้อหาย่อ</th>
-                                        <th class="p-3 text-center">จัดการ</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="adminNewsTableBody" class="divide-y divide-slate-100 text-sm">
-                                    <!-- Populated via JS -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <!-- TAB 3: Applicants Table & CSV Export -->
-                    <div id="applicantsTabContent" class="space-y-6 hidden">
-                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
-                            <div>
-                                <h4 class="font-bold text-slate-900 text-base">ทะเบียนรายชื่อผู้สมัคร / กำลังพล</h4>
-                                <p class="text-xs text-slate-500">ข้อมูลผู้กรอกฟอร์มลงทะเบียนทั้งหมด สามารถส่งออกเป็น CSV ได้</p>
-                            </div>
+                        
+                        <!-- Add/Edit News Box -->
+                        <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700">
+                            <h4 id="newsFormTitle" class="font-bold text-yellow-400 mb-2">เพิ่มข่าวสารใหม่</h4>
+                            <input type="hidden" id="editNewsIndex" value="-1">
+                            <input type="text" id="newsTitleInput" placeholder="1. หัวข้อข่าว..." class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm mb-2">
+                            <textarea id="newsDescInput" placeholder="2. เนื้อหาข่าว..." class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm mb-2 h-20"></textarea>
+                            <input type="text" id="newsImageInput" placeholder="3. ลิงก์รูปภาพข่าว (ถ้ามี)..." class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm mb-2">
                             <div class="flex gap-2">
-                                <button onclick="exportToCSV()" class="bg-emerald-700 hover:bg-emerald-800 text-white font-semibold px-4 py-2 rounded-lg text-sm transition shadow flex items-center gap-2">
-                                    <i class="fa-solid fa-file-excel"></i> ส่งออกข้อมูลเป็น CSV
-                                </button>
-                                <button onclick="clearAllApplicants()" class="bg-rose-600 hover:bg-rose-700 text-white font-semibold px-4 py-2 rounded-lg text-sm transition shadow flex items-center gap-2">
-                                    <i class="fa-solid fa-trash-can"></i> ล้างข้อมูลทั้งหมด
-                                </button>
+                                <button onclick="saveNews()" id="saveNewsBtn" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded text-sm font-bold text-white w-full">บันทึกข่าวสาร</button>
+                                <button onclick="resetNewsForm()" id="cancelNewsBtn" class="hidden bg-zinc-700 hover:bg-zinc-600 px-3 py-2 rounded text-sm font-bold text-white">ยกเลิก</button>
                             </div>
                         </div>
-                        <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white">
-                            <table class="w-full text-left border-collapse">
-                                <thead>
-                                    <tr class="bg-slate-100 text-slate-700 text-xs uppercase font-semibold border-b border-slate-200">
-                                        <th class="p-3">ลำดับ</th>
-                                        <th class="p-3">ชื่อ - นามสกุล</th>
-                                        <th class="p-3">ชั้นปี</th>
-                                        <th class="p-3">สถานศึกษา</th>
-                                        <th class="p-3">เบอร์โทรศัพท์</th>
-                                        <th class="p-3">อีเมล</th>
-                                        <th class="p-3 text-center">จัดการ</th>
+                    </div>
+
+                    <!-- Applicant Table for Admin -->
+                    <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700 mb-6">
+                        <div class="flex justify-between items-center mb-3">
+                            <h4 class="font-bold text-yellow-400">รายชื่อผู้สมัครเข้าเป็นนักศึกษาวิชาทหาร</h4>
+                            <button onclick="exportToCSV()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-3 py-1.5 rounded font-bold">📥 ส่งออกเป็น Excel (CSV)</button>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-sm text-gray-300">
+                                <thead class="bg-zinc-900 text-yellow-300">
+                                    <tr>
+                                        <th class="p-2">ลำดับ</th>
+                                        <th class="p-2">ชื่อ - สกุล</th>
+                                        <th class="p-2">ชั้นปีที่สมัคร</th>
+                                        <th class="p-2">วันที่สมัคร</th>
+                                        <th class="p-2 text-center">จัดการ</th>
                                     </tr>
                                 </thead>
-                                <tbody id="adminApplicantsTableBody" class="divide-y divide-slate-100 text-sm">
-                                    <!-- Populated via JS -->
+                                <tbody id="applicantTableBody">
+                                    <tr><td colspan="5" class="p-3 text-center text-gray-500">ยังไม่มีผู้สมัครในระบบ</td></tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
 
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Commander Modal (Add/Edit) -->
-    <div id="commanderModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 relative max-h-[90vh] overflow-y-auto">
-            <button onclick="closeCommanderModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
-                <i class="fa-solid fa-xmark text-xl"></i>
-            </button>
-            <h3 id="commanderModalTitle" class="text-lg font-bold text-slate-900 mb-4">เพิ่มผู้บังคับบัญชาใหม่</h3>
-            <form id="commanderForm" onsubmit="saveCommander(event)" class="space-y-4">
-                <input type="hidden" id="commanderEditId">
-                <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1">ยศ และ ชื่อ - นามสกุล</label>
-                    <input type="text" id="commName" required placeholder="เช่น พ.อ. สมชาย ทหารกล้า" class="w-full rounded-lg border border-slate-300 p-2.5 text-sm focus:ring-2 focus:ring-emerald-600 focus:outline-none">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1">ตำแหน่ง</label>
-                    <input type="text" id="commPosition" required placeholder="เช่น ผู้บังคับกองพันนักศึกษาวิชาทหาร" class="w-full rounded-lg border border-slate-300 p-2.5 text-sm focus:ring-2 focus:ring-emerald-600 focus:outline-none">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1">สังกัด / โรงเรียน / คำบรรยายใต้ชื่อ</label>
-                    <input type="text" id="commSubtitle" required placeholder="เช่น รร.เบญจมราชูทิศ" class="w-full rounded-lg border border-slate-300 p-2.5 text-sm focus:ring-2 focus:ring-emerald-600 focus:outline-none">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1">ลิงก์รูปภาพ (URL)</label>
-                    <input type="url" id="commImage" required placeholder="https://images.unsplash.com/..." class="w-full rounded-lg border border-slate-300 p-2.5 text-sm focus:ring-2 focus:ring-emerald-600 focus:outline-none">
-                    <p class="text-[10px] text-slate-400 mt-1">แนะนำ: ใช้ลิงก์ภาพถ่ายสัดส่วนแนวตั้ง (Portrait)</p>
-                </div>
-                <div class="flex justify-end gap-2 pt-2">
-                    <button type="button" onclick="closeCommanderModal()" class="px-4 py-2 bg-slate-200 text-slate-700 rounded-lg text-sm font-semibold hover:bg-slate-300 transition">ยกเลิก</button>
-                    <button type="submit" class="px-4 py-2 bg-emerald-700 text-white rounded-lg text-sm font-semibold hover:bg-emerald-800 transition">บันทึก</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- News Modal (Add) -->
-    <div id="newsModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 relative max-h-[90vh] overflow-y-auto">
-            <button onclick="closeNewsModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
-                <i class="fa-solid fa-xmark text-xl"></i>
-            </button>
-            <h3 class="text-lg font-bold text-slate-900 mb-4">เพิ่มประกาศ / ข่าวสารใหม่</h3>
-            <form id="newsForm" onsubmit="saveNews(event)" class="space-y-4">
-                <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1">หัวข้อประกาศ</label>
-                    <input type="text" id="newsTitle" required placeholder="เช่น กำหนดการรายงานตัว นศท. ประจำปี" class="w-full rounded-lg border border-slate-300 p-2.5 text-sm focus:ring-2 focus:ring-emerald-600 focus:outline-none">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1">วันที่ประกาศ</label>
-                    <input type="date" id="newsDate" required class="w-full rounded-lg border border-slate-300 p-2.5 text-sm focus:ring-2 focus:ring-emerald-600 focus:outline-none">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1">เนื้อหาย่อ</label>
-                    <textarea id="newsDesc" rows="4" required placeholder="รายละเอียดข่าวสาร..." class="w-full rounded-lg border border-slate-300 p-2.5 text-sm focus:ring-2 focus:ring-emerald-600 focus:outline-none"></textarea>
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1">ลิงก์ภาพประกอบข่าว (URL)</label>
-                    <input type="url" id="newsImage" required placeholder="https://images.unsplash.com/..." class="w-full rounded-lg border border-slate-300 p-2.5 text-sm focus:ring-2 focus:ring-emerald-600 focus:outline-none">
-                </div>
-                <div class="flex justify-end gap-2 pt-2">
-                    <button type="button" onclick="closeNewsModal()" class="px-4 py-2 bg-slate-200 text-slate-700 rounded-lg text-sm font-semibold hover:bg-slate-300 transition">ยกเลิก</button>
-                    <button type="submit" class="px-4 py-2 bg-emerald-700 text-white rounded-lg text-sm font-semibold hover:bg-emerald-800 transition">บันทึก</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Custom Notification Modal (No alert() used) -->
-    <div id="alertModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 text-center relative">
-            <div id="alertIcon" class="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3 text-xl font-bold bg-emerald-100 text-emerald-800">
-                <i class="fa-solid fa-check"></i>
-            </div>
-            <h4 id="alertTitle" class="text-base font-bold text-slate-900 mb-1">แจ้งเตือน</h4>
-            <p id="alertMessage" class="text-xs text-slate-600 mb-6">ข้อความแจ้งเตือน...</p>
-            <button onclick="closeCustomAlert()" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-semibold py-2.5 rounded-lg text-sm transition">
-                ตกลง
-            </button>
-        </div>
-    </div>
-
-    <!-- JavaScript Application Logic -->
-    <script>
-        const defaultCommanders = [
-            {
-                id: 1,
-                name: 'พ.อ. อดิศร พงษ์พานิช',
-                position: 'ผู้บังคับกองพันนักศึกษาวิชาทหาร',
-                subtitle: 'ศูนย์ฝึก นศท. มณฑลทหารบกที่ 33',
-                image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400'
-            },
-            {
-                id: 2,
-                name: 'ทส.จ. สมชาย ใจมั่น',
-                position: 'รองผู้บังคับกองพัน (ฝ่ายกิจการพิเศษ)',
-                subtitle: 'โรงเรียนเบญจมราชูทิศ',
-                image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=400'
-            },
-            {
-                id: 3,
-                name: 'ทส.จ. กัญญาณัฐ วงศ์สวัสดิ์',
-                position: 'นายทหารฝ่ายกำลังพล',
-                subtitle: 'โรงเรียนสามเสนวิทยาลัย',
-                image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=400'
-            },
-            {
-                id: 4,
-                name: 'ทส.จ. ธีรภัทร ชูเกียรติ',
-                position: 'นายทหารฝ่ายยุทธการ',
-                subtitle: 'โรงเรียนเตรียมอุดมศึกษา',
-                image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=400'
-            }
-        ];
-
-        const defaultNews = [
-            {
-                id: 1,
-                title: 'ประกาศกำหนดการฝึกภาคสนาม นศท. ประจำปีการศึกษา 2569',
-                date: '2026-06-15',
-                desc: 'แจ้งให้นักศึกษาวิชาทหารทุกชั้นปี เตรียมความพร้อมสำหรับการฝึกภาคสนาม ณ ค่ายฝึกนักศึกษาวิชาทหาร พร้อมตรวจเครื่องแบบและอุปกรณ์ให้เรียบร้อย',
-                image: 'https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&q=80&w=600'
-            },
-            {
-                id: 2,
-                title: 'พิธีสวนสนามและกระทำสัตย์ปฏิญาณตน นศท. ประจำปี',
-                date: '2026-05-20',
-                desc: 'ขอเชิญผู้บังคับบัญชาและ นศท. ทุกนายเข้าร่วมพิธีสวนสนามและกระทำสัตย์ปฏิญาณตน ณ ลานสนามกีฬากลาง โดยพร้อมเพรียงกัน',
-                image: 'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&q=80&w=600'
-            },
-            {
-                id: 3,
-                title: 'เปิดรับสมัครนักศึกษาวิชาทหาร ชั้นปีที่ 1 รอบพิเศษ',
-                date: '2026-05-01',
-                desc: 'เปิดรับสมัครบุคคลเข้าเป็นนักศึกษาวิชาทหารชายและหญิง รอบพิเศษ สามารถกรอกข้อมูลลงทะเบียนได้ผ่านระบบสารสนเทศออนไลน์ของหน่วย',
-                image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=600'
-            }
-        ];
-
-        // Support both bbu_commanders key and tdc_commanders fallback for local storage compatibility
-        let commanders = JSON.parse(localStorage.getItem('bbu_commanders')) || JSON.parse(localStorage.getItem('tdc_commanders')) || defaultCommanders;
-        let newsList = JSON.parse(localStorage.getItem('tdc_news')) || defaultNews;
-        let applicants = JSON.parse(localStorage.getItem('tdc_applicants')) || [];
-
-        function saveCommandersToStorage() {
-            localStorage.setItem('bbu_commanders', JSON.stringify(commanders));
-            localStorage.setItem('tdc_commanders', JSON.stringify(commanders));
-        }
-        function saveNewsToStorage() {
-            localStorage.setItem('tdc_news', JSON.stringify(newsList));
-        }
-        function saveApplicantsToStorage() {
-            localStorage.setItem('tdc_applicants', JSON.stringify(applicants));
-        }
-
-        window.onload = function() {
-            renderCommanders();
-            renderNews();
-            renderAdminCommanders();
-            renderAdminNews();
-            renderAdminApplicants();
-            
-            const today = new Date().toISOString().split('T')[0];
-            const newsDateEl = document.getElementById('newsDate');
-            if(newsDateEl) newsDateEl.value = today;
-        };
-
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobileMenu');
-            menu.classList.toggle('hidden');
-        }
-
-        function renderCommanders() {
-            const grid = document.getElementById('commandersGrid');
-            if(!grid) return;
-            grid.innerHTML = '';
-            commanders.forEach(comm => {
-                grid.innerHTML += `
-                    <div class="bg-white rounded-2xl shadow-md border border-slate-200 overflow-hidden text-center group hover:shadow-xl transition flex flex-col">
-                        <div class="h-56 overflow-hidden relative bg-slate-100">
-                            <img src="${comm.image}" alt="${comm.name}" onerror="this.src='https://placehold.co/400x400/064e3b/ffffff?text=Commander'" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition flex items-end justify-center pb-4">
-                                <span class="bg-gold-500 text-slate-950 text-xs font-bold px-3 py-1 rounded-full shadow">${comm.subtitle}</span>
-                            </div>
-                        </div>
-                        <div class="p-6 flex-grow flex flex-col justify-between">
-                            <div>
-                                <h4 class="font-bold text-slate-900 text-lg mb-1">${comm.name}</h4>
-                                <p class="text-emerald-700 font-semibold text-sm mb-2">${comm.position}</p>
-                            </div>
-                            <div class="text-xs text-slate-500 bg-slate-50 py-1.5 px-3 rounded-lg border border-slate-100 mt-2">
-                                <i class="fa-solid fa-shield text-emerald-700 mr-1"></i> ${comm.subtitle}
-                            </div>
+                    <!-- Manage News Table for Admin -->
+                    <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700">
+                        <h4 class="font-bold text-yellow-400 mb-3">จัดการข่าวสารที่มีอยู่</h4>
+                        <div id="adminNewsList" class="space-y-2">
+                            <!-- News management list -->
                         </div>
                     </div>
-                `;
-            });
+                </div>
+            </main>
+        </div>
+
+        <!-- Footer -->
+        <footer class="bg-zinc-950/90 backdrop-blur border-t border-zinc-800 text-center p-4 text-xs md:text-sm text-gray-400">
+            หากต้องการติดต่อราชการต่างๆ ให้ติดต่อได้ที่ห้องบังคับการกองพันนักศึกษาวิชาทหารโรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์" (ห้องธนาคารโรงเรียนเก่า)
+        </footer>
+    </div>
+
+    <!-- Registration Page -->
+    <div id="registerPage" class="hidden min-h-screen flex flex-col justify-between text-white p-6">
+        <div class="max-w-xl mx-auto w-full py-8 bg-zinc-900/90 backdrop-blur p-8 rounded-2xl border border-zinc-700 shadow-xl">
+            <button onclick="goToIntro()" class="mb-4 bg-zinc-800 hover:bg-zinc-700 px-3 py-1.5 rounded text-sm text-yellow-400">⬅ กลับหน้าแรก</button>
+            <h2 class="text-2xl font-bold text-yellow-400 mb-4">สมัครเข้าเป็นนักศึกษาวิชาทหาร โรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"</h2>
+            <form onsubmit="submitRegister(event)" class="space-y-4">
+                <div>
+                    <label class="block text-sm text-gray-300 mb-1">ชื่อ - สกุล</label>
+                    <input type="text" id="regName" required class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white" placeholder="เช่น ด.ช.รักชาติ ยิ่งชีพ">
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-300 mb-1">ชั้นปีที่สมัคร</label>
+                    <select id="regYear" class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white">
+                        <option>นศท. ชั้นปีที่ 1</option>
+                        <option>นศท. ชั้นปีที่ 2</option>
+                        <option>นศท. ชั้นปีที่ 3</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg">ยืนยันการสมัคร</button>
+            </form>
+        </div>
+        <footer class="text-center text-xs text-gray-500 py-2">จัดทำโดย ฝ่ายอำนวยการ 4</footer>
+    </div>
+
+    <script>
+        let isAdmin = localStorage.getItem('bbu_is_admin') === 'true';
+        let newsData = JSON.parse(localStorage.getItem('bbu_news')) || [
+            { title: "เปิดรับสมัครนักศึกษาวิชาทหาร ประจำปีการศึกษา", desc: "สามารถตรวจสอบรายละเอียดการสมัครผ่านหน้าสมัคร นศท. ได้ทันที", image: "" }
+        ];
+        let applicants = JSON.parse(localStorage.getItem('bbu_applicants')) || [];
+
+        // Check initial admin state on load
+        if (isAdmin) {
+            document.getElementById('adminNavTab').classList.remove('hidden');
+            document.getElementById('adminBtn').innerText = "⚙ แดชบอร์ด Admin";
         }
 
         function renderNews() {
-            const grid = document.getElementById('newsGrid');
-            if(!grid) return;
-            grid.innerHTML = '';
-            newsList.forEach(item => {
-                grid.innerHTML += `
-                    <div class="bg-white rounded-2xl shadow-md border border-slate-200 overflow-hidden flex flex-col">
-                        <div class="h-48 overflow-hidden bg-slate-100">
-                            <img src="${item.image}" alt="${item.title}" onerror="this.src='https://placehold.co/600x400/064e3b/ffffff?text=News'" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+            let list = document.getElementById('newsList');
+            let adminList = document.getElementById('adminNewsList');
+            list.innerHTML = '';
+            if (adminList) adminList.innerHTML = '';
+
+            newsData.forEach((item, index) => {
+                // Public News View
+                let div = document.createElement('div');
+                div.className = "bg-zinc-800 p-4 rounded-xl border border-zinc-700";
+                div.innerHTML = `
+                    <h4 class="font-bold text-yellow-300 text-lg">${item.title}</h4>
+                    <p class="text-sm text-gray-300 mt-2 whitespace-pre-line">${item.desc}</p>
+                    ${item.image ? `<img src="${item.image}" alt="รูปข่าว" class="mt-3 rounded-lg max-h-64 object-cover w-full border border-zinc-700">` : ''}
+                `;
+                list.appendChild(div);
+
+                // Admin News Management View
+                if (adminList) {
+                    let adminDiv = document.createElement('div');
+                    adminDiv.className = "flex justify-between items-center bg-zinc-900 p-3 rounded border border-zinc-700 text-sm";
+                    adminDiv.innerHTML = `
+                        <span class="font-medium text-yellow-200 truncate max-w-xs">${index + 1}. ${item.title}</span>
+                        <div class="flex gap-2">
+                            <button onclick="editNews(${index})" class="bg-amber-600 hover:bg-amber-700 px-2.5 py-1 rounded text-xs font-bold text-white">แก้ไข</button>
+                            <button onclick="deleteNews(${index})" class="bg-red-600 hover:bg-red-700 px-2.5 py-1 rounded text-xs font-bold text-white">ลบ</button>
                         </div>
-                        <div class="p-6 flex-grow flex flex-col justify-between">
-                            <div>
-                                <div class="flex items-center text-xs text-emerald-700 font-semibold mb-2">
-                                    <i class="fa-regular fa-calendar-days mr-1.5"></i> ${item.date}
-                                </div>
-                                <h4 class="font-bold text-slate-900 text-base mb-2 line-clamp-2">${item.title}</h4>
-                                <p class="text-slate-600 text-sm line-clamp-3">${item.desc}</p>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-        }
-
-        function handleRegistration(e) {
-            e.preventDefault();
-            const prefix = document.getElementById('regPrefix').value;
-            const fullName = document.getElementById('regFullName').value;
-            const year = document.getElementById('regYear').value;
-            const school = document.getElementById('regSchool').value;
-            const phone = document.getElementById('regPhone').value;
-            const email = document.getElementById('regEmail').value;
-
-            const newApplicant = {
-                id: Date.now(),
-                prefix,
-                fullName: `${prefix} ${fullName}`,
-                year,
-                school,
-                phone,
-                email,
-                date: new Date().toLocaleDateString('th-TH')
-            };
-
-            applicants.push(newApplicant);
-            saveApplicantsToStorage();
-            renderAdminApplicants();
-
-            document.getElementById('registrationForm').reset();
-            showCustomAlert('สำเร็จ', 'บันทึกข้อมูลการลงทะเบียนเรียบร้อยแล้ว', 'success');
-        }
-
-        function openAdminModal() {
-            document.getElementById('adminLoginModal').classList.remove('hidden');
-            document.getElementById('adminLoginModal').classList.add('flex');
-        }
-        function closeAdminModal() {
-            document.getElementById('adminLoginModal').classList.remove('flex');
-            document.getElementById('adminLoginModal').classList.add('hidden');
-            document.getElementById('adminPasswordInput').value = '';
-        }
-        function handleAdminLogin(e) {
-            e.preventDefault();
-            const pass = document.getElementById('adminPasswordInput').value;
-            if(pass === 'admin123') {
-                closeAdminModal();
-                openAdminDashboard();
-            } else {
-                showCustomAlert('ผิดพลาด', 'รหัสผ่านผู้ดูแลระบบไม่ถูกต้อง (ค่าเริ่มต้น: admin123)', 'error');
-            }
-        }
-        function openAdminDashboard() {
-            document.getElementById('adminDashboard').classList.remove('hidden');
-            renderAdminCommanders();
-            renderAdminNews();
-            renderAdminApplicants();
-        }
-        function closeAdminDashboard() {
-            document.getElementById('adminDashboard').classList.add('hidden');
-        }
-
-        function switchAdminTab(tabName) {
-            document.getElementById('commandersTabContent').classList.add('hidden');
-            document.getElementById('newsTabContent').classList.add('hidden');
-            document.getElementById('applicantsTabContent').classList.add('hidden');
-
-            document.getElementById('btnCommandersTab').className = "py-3 px-4 font-semibold text-sm border-b-2 border-transparent text-slate-600 hover:text-slate-900 whitespace-nowrap";
-            document.getElementById('btnNewsTab').className = "py-3 px-4 font-semibold text-sm border-b-2 border-transparent text-slate-600 hover:text-slate-900 whitespace-nowrap";
-            document.getElementById('btnApplicantsTab').className = "py-3 px-4 font-semibold text-sm border-b-2 border-transparent text-slate-600 hover:text-slate-900 whitespace-nowrap";
-
-            if(tabName === 'commandersTab') {
-                document.getElementById('commandersTabContent').classList.remove('hidden');
-                document.getElementById('btnCommandersTab').className = "py-3 px-4 font-semibold text-sm border-b-2 border-emerald-700 text-emerald-800 whitespace-nowrap";
-            } else if(tabName === 'newsTab') {
-                document.getElementById('newsTabContent').classList.remove('hidden');
-                document.getElementById('btnNewsTab').className = "py-3 px-4 font-semibold text-sm border-b-2 border-emerald-700 text-emerald-800 whitespace-nowrap";
-            } else if(tabName === 'applicantsTab') {
-                document.getElementById('applicantsTabContent').classList.remove('hidden');
-                document.getElementById('btnApplicantsTab').className = "py-3 px-4 font-semibold text-sm border-b-2 border-emerald-700 text-emerald-800 whitespace-nowrap";
-            }
-        }
-
-        // Commander Admin Management Functions
-        function renderAdminCommanders() {
-            const tbody = document.getElementById('adminCommandersTableBody');
-            if(!tbody) return;
-            tbody.innerHTML = '';
-            if(commanders.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-500">ยังไม่มีข้อมูลผู้บังคับบัญชา</td></tr>`;
-                return;
-            }
-            commanders.forEach((comm) => {
-                tbody.innerHTML += `
-                    <tr class="hover:bg-slate-50 border-b border-slate-100">
-                        <td class="p-3">
-                            <img src="${comm.image}" alt="" onerror="this.src='https://placehold.co/100x100/064e3b/ffffff?text=IMG'" class="w-10 h-10 rounded-full object-cover border border-slate-200">
-                        </td>
-                        <td class="p-3 font-semibold text-slate-900">${comm.name}</td>
-                        <td class="p-3 text-slate-600">${comm.position}</td>
-                        <td class="p-3 text-slate-500 text-xs">${comm.subtitle}</td>
-                        <td class="p-3 text-center space-x-2">
-                            <button onclick="editCommander(${comm.id})" class="text-blue-600 hover:text-blue-800 p-1.5" title="แก้ไข"><i class="fa-solid fa-pen-to-square"></i></button>
-                            <button onclick="deleteCommander(${comm.id})" class="text-rose-600 hover:text-rose-800 p-1.5" title="ลบ"><i class="fa-solid fa-trash"></i></button>
-                        </td>
-                    </tr>
-                `;
-            });
-        }
-
-        function openCommanderModal(id = null) {
-            document.getElementById('commanderModal').classList.remove('hidden');
-            document.getElementById('commanderModal').classList.add('flex');
-            if(id) {
-                document.getElementById('commanderModalTitle').innerText = 'แก้ไขข้อมูลผู้บังคับบัญชา';
-                const comm = commanders.find(c => c.id === id);
-                if(comm) {
-                    document.getElementById('commanderEditId').value = comm.id;
-                    document.getElementById('commName').value = comm.name;
-                    document.getElementById('commPosition').value = comm.position;
-                    document.getElementById('commSubtitle').value = comm.subtitle;
-                    document.getElementById('commImage').value = comm.image;
+                    `;
+                    adminList.appendChild(adminDiv);
                 }
-            } else {
-                document.getElementById('commanderModalTitle').innerText = 'เพิ่มผู้บังคับบัญชาใหม่';
-                document.getElementById('commanderForm').reset();
-                document.getElementById('commanderEditId').value = '';
-            }
-        }
-        function closeCommanderModal() {
-            document.getElementById('commanderModal').classList.remove('flex');
-            document.getElementById('commanderModal').classList.add('hidden');
-        }
-        function saveCommander(e) {
-            e.preventDefault();
-            const id = document.getElementById('commanderEditId').value;
-            const name = document.getElementById('commName').value;
-            const position = document.getElementById('commPosition').value;
-            const subtitle = document.getElementById('commSubtitle').value;
-            const image = document.getElementById('commImage').value;
-
-            if(id) {
-                const index = commanders.findIndex(c => c.id == id);
-                if(index !== -1) {
-                    commanders[index] = { id: Number(id), name, position, subtitle, image };
-                }
-            } else {
-                const newComm = {
-                    id: Date.now(),
-                    name,
-                    position,
-                    subtitle,
-                    image
-                };
-                commanders.push(newComm);
-            }
-
-            saveCommandersToStorage();
-            renderCommanders();
-            renderAdminCommanders();
-            closeCommanderModal();
-            showCustomAlert('สำเร็จ', 'บันทึกข้อมูลผู้บังคับบัญชาเรียบร้อยแล้ว', 'success');
-        }
-        function editCommander(id) {
-            openCommanderModal(id);
-        }
-        function deleteCommander(id) {
-            if(confirm('คุณต้องการลบผู้บังคับบัญชานี้ใช่หรือไม่?')) {
-                commanders = commanders.filter(c => c.id !== id);
-                saveCommandersToStorage();
-                renderCommanders();
-                renderAdminCommanders();
-                showCustomAlert('สำเร็จ', 'ลบข้อมูลผู้บังคับบัญชาเรียบร้อยแล้ว', 'success');
-            }
-        }
-
-        // News Admin Management Functions
-        function renderAdminNews() {
-            const tbody = document.getElementById('adminNewsTableBody');
-            if(!tbody) return;
-            tbody.innerHTML = '';
-            if(newsList.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-500">ยังไม่มีประกาศ/ข่าวสาร</td></tr>`;
-                return;
-            }
-            newsList.forEach((item) => {
-                tbody.innerHTML += `
-                    <tr class="hover:bg-slate-50 border-b border-slate-100">
-                        <td class="p-3 font-semibold text-slate-900">${item.title}</td>
-                        <td class="p-3 text-slate-600 text-xs">${item.date}</td>
-                        <td class="p-3 text-slate-500 text-xs truncate max-w-xs">${item.desc}</td>
-                        <td class="p-3 text-center">
-                            <button onclick="deleteNews(${item.id})" class="text-rose-600 hover:text-rose-800 p-1.5" title="ลบ"><i class="fa-solid fa-trash"></i></button>
-                        </td>
-                    </tr>
-                `;
             });
         }
-        function openNewsModal() {
-            document.getElementById('newsModal').classList.remove('hidden');
-            document.getElementById('newsModal').classList.add('flex');
-            document.getElementById('newsForm').reset();
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('newsDate').value = today;
-        }
-        function closeNewsModal() {
-            document.getElementById('newsModal').classList.remove('flex');
-            document.getElementById('newsModal').classList.add('hidden');
-        }
-        function saveNews(e) {
-            e.preventDefault();
-            const title = document.getElementById('newsTitle').value;
-            const date = document.getElementById('newsDate').value;
-            const desc = document.getElementById('newsDesc').value;
-            const image = document.getElementById('newsImage').value;
 
-            const newItem = {
-                id: Date.now(),
-                title,
-                date,
-                desc,
-                image
-            };
-
-            newsList.unshift(newItem);
-            saveNewsToStorage();
+        function enterMainSite() {
+            document.getElementById('introPage').classList.add('hidden');
+            document.getElementById('mainSite').classList.remove('hidden');
+            showSection('home');
             renderNews();
-            renderAdminNews();
-            closeNewsModal();
-            showCustomAlert('สำเร็จ', 'เพิ่มประกาศ/ข่าวสารเรียบร้อยแล้ว', 'success');
-        }
-        function deleteNews(id) {
-            if(confirm('คุณต้องการลบประกาศนี้ใช่หรือไม่?')) {
-                newsList = newsList.filter(n => n.id !== id);
-                saveNewsToStorage();
-                renderNews();
-                renderAdminNews();
-                showCustomAlert('สำเร็จ', 'ลบประกาศเรียบร้อยแล้ว', 'success');
-            }
         }
 
-        // Applicants Admin Management & CSV Export
-        function renderAdminApplicants() {
-            const tbody = document.getElementById('adminApplicantsTableBody');
-            const badge = document.getElementById('applicantCountBadge');
-            if(badge) badge.innerText = applicants.length;
-            if(!tbody) return;
-            tbody.innerHTML = '';
-            if(applicants.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-slate-500">ยังไม่มีผู้สมัครลงทะเบียนในระบบ</td></tr>`;
-                return;
-            }
-            applicants.forEach((app, index) => {
-                tbody.innerHTML += `
-                    <tr class="hover:bg-slate-50 border-b border-slate-100">
-                        <td class="p-3 text-slate-500">${index + 1}</td>
-                        <td class="p-3 font-semibold text-slate-900">${app.fullName}</td>
-                        <td class="p-3 text-slate-600">${app.year}</td>
-                        <td class="p-3 text-slate-600">${app.school}</td>
-                        <td class="p-3 text-slate-600">${app.phone}</td>
-                        <td class="p-3 text-slate-600">${app.email}</td>
-                        <td class="p-3 text-center">
-                            <button onclick="deleteApplicant(${app.id})" class="text-rose-600 hover:text-rose-800 p-1.5" title="ลบ"><i class="fa-solid fa-trash"></i></button>
-                        </td>
-                    </tr>
-                `;
-            });
-        }
-        function deleteApplicant(id) {
-            if(confirm('คุณต้องการลบข้อมูลผู้สมัครนี้ใช่หรือไม่?')) {
-                applicants = applicants.filter(a => a.id !== id);
-                saveApplicantsToStorage();
-                renderAdminApplicants();
-                showCustomAlert('สำเร็จ', 'ลบข้อมูลผู้สมัครเรียบร้อยแล้ว', 'success');
-            }
-        }
-        function clearAllApplicants() {
-            if(confirm('คำเตือน: คุณต้องการล้างข้อมูลผู้สมัครทั้งหมดใช่หรือไม่?')) {
-                applicants = [];
-                saveApplicantsToStorage();
-                renderAdminApplicants();
-                showCustomAlert('สำเร็จ', 'ล้างข้อมูลผู้สมัครทั้งหมดเรียบร้อยแล้ว', 'success');
-            }
-        }
-        function exportToCSV() {
-            if(applicants.length === 0) {
-                showCustomAlert('แจ้งเตือน', 'ไม่มีข้อมูลผู้สมัครสำหรับส่งออกเป็น CSV', 'error');
-                return;
-            }
-            let csvContent = "\uFEFFลำดับ,ชื่อ-นามสกุล,ชั้นปี,สถานศึกษา,เบอร์โทรศัพท์,อีเมล,วันที่ลงทะเบียน\n";
-            applicants.forEach((app, index) => {
-                csvContent += `${index + 1},"${app.fullName}","${app.year}","${app.school}","${app.phone}","${app.email}","${app.date}"\n`;
-            });
-
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.setAttribute('href', url);
-            a.setAttribute('download', `tdc_applicants_${new Date().toISOString().split('T')[0]}.csv`);
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
+        function goToIntro() {
+            document.getElementById('mainSite').classList.add('hidden');
+            document.getElementById('registerPage').classList.add('hidden');
+            document.getElementById('introPage').classList.remove('hidden');
         }
 
-        function showCustomAlert(title, message, type = 'success') {
-            const modal = document.getElementById('alertModal');
-            const titleEl = document.getElementById('alertTitle');
-            const msgEl = document.getElementById('alertMessage');
-            const iconEl = document.getElementById('alertIcon');
+        function openRegisterPage() {
+            document.getElementById('introPage').classList.add('hidden');
+            document.getElementById('registerPage').classList.remove('hidden');
+        }
 
-            titleEl.innerText = title;
-            msgEl.innerText = message;
+        function showSection(secId) {
+            document.querySelectorAll('.content-section').forEach(el => el.classList.add('hidden'));
+            document.getElementById('sec-' + secId).classList.remove('hidden');
+        }
 
-            if(type === 'success') {
-                iconEl.className = 'w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3 text-xl font-bold bg-emerald-100 text-emerald-800';
-                iconEl.innerHTML = '<i class="fa-solid fa-check"></i>';
+        function handleAdminClick() {
+            if (isAdmin) {
+                enterMainSite();
+                showSection('admin');
+                updateAdminStats();
             } else {
-                iconEl.className = 'w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3 text-xl font-bold bg-rose-100 text-rose-800';
-                iconEl.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
+                let pass = prompt("กรุณากรอกรหัสผ่าน Admin:");
+                if (pass === "พัน.นศท.รร.บบ.") {
+                    isAdmin = true;
+                    localStorage.setItem('bbu_is_admin', 'true');
+                    alert("เข้าสู่ระบบ Admin สำเร็จ!");
+                    document.getElementById('adminNavTab').classList.remove('hidden');
+                    document.getElementById('adminBtn').innerText = "⚙ แดชบอร์ด Admin";
+                    enterMainSite();
+                    showSection('admin');
+                    updateAdminStats();
+                } else if (pass !== null) {
+                    alert("รหัสผ่านไม่ถูกต้อง!");
+                }
             }
+        }
 
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
+        function showAdminPanel() {
+            if (isAdmin) {
+                showSection('admin');
+                updateAdminStats();
+            }
         }
-        function closeCustomAlert() {
-            const modal = document.getElementById('alertModal');
-            modal.classList.remove('flex');
-            modal.classList.add('hidden');
+
+        function adminLogout() {
+            isAdmin = false;
+            localStorage.removeItem('bbu_is_admin');
+            document.getElementById('adminNavTab').classList.add('hidden');
+            document.getElementById('adminBtn').innerText = "เข้าสู่ระบบ Admin";
+            alert("ออกจากระบบ Admin เรียบร้อยแล้ว");
+            goToIntro();
         }
+
+        function saveNews() {
+            let title = document.getElementById('newsTitleInput').value;
+            let desc = document.getElementById('newsDescInput').value;
+            let image = document.getElementById('newsImageInput').value;
+            let editIndex = parseInt(document.getElementById('editNewsIndex').value);
+
+            if (title && desc) {
+                if (editIndex === -1) {
+                    newsData.unshift({ title, desc, image });
+                    alert("เพิ่มข่าวสารสำเร็จ!");
+                } else {
+                    newsData[editIndex] = { title, desc, image };
+                    alert("แก้ไขข่าวสารสำเร็จ!");
+                    resetNewsForm();
+                }
+                localStorage.setItem('bbu_news', JSON.stringify(newsData));
+                renderNews();
+                document.getElementById('newsTitleInput').value = '';
+                document.getElementById('newsDescInput').value = '';
+                document.getElementById('newsImageInput').value = '';
+                updateAdminStats();
+            } else {
+                alert("กรุณากรอกหัวข้อและเนื้อหาข่าวสาร");
+            }
+        }
+
+        function editNews(index) {
+            let item = newsData[index];
+            document.getElementById('newsTitleInput').value = item.title;
+            document.getElementById('newsDescInput').value = item.desc;
+            document.getElementById('newsImageInput').value = item.image || '';
+            document.getElementById('editNewsIndex').value = index;
+            document.getElementById('newsFormTitle').innerText = "แก้ไขข่าวสาร";
+            document.getElementById('saveNewsBtn').innerText = "อัปเดตข่าวสาร";
+            document.getElementById('cancelNewsBtn').classList.remove('hidden');
+        }
+
+        function resetNewsForm() {
+            document.getElementById('newsTitleInput').value = '';
+            document.getElementById('newsDescInput').value = '';
+            document.getElementById('newsImageInput').value = '';
+            document.getElementById('editNewsIndex').value = '-1';
+            document.getElementById('newsFormTitle').innerText = "เพิ่มข่าวสารใหม่";
+            document.getElementById('saveNewsBtn').innerText = "บันทึกข่าวสาร";
+            document.getElementById('cancelNewsBtn').classList.add('hidden');
+        }
+
+        function deleteNews(index) {
+            if (confirm("คุณต้องการลบข่าวสารนี้ใช่หรือไม่?")) {
+                newsData.splice(index, 1);
+                localStorage.setItem('bbu_news', JSON.stringify(newsData));
+                renderNews();
+                resetNewsForm();
+                alert("ลบข่าวสารสำเร็จ!");
+            }
+        }
+
+        function submitRegister(e) {
+            e.preventDefault();
+            let name = document.getElementById('regName').value;
+            let year = document.getElementById('regYear').value;
+            let date = new Date().toLocaleDateString('th-TH');
+
+            applicants.push({ name, year, date });
+            localStorage.setItem('bbu_applicants', JSON.stringify(applicants));
+            
+            alert("บันทึกข้อมูลการสมัครเรียบร้อยแล้ว!");
+            document.getElementById('regName').value = '';
+            goToIntro();
+        }
+
+        function deleteApplicant(index) {
+            if (confirm("คุณต้องการลบข้อมูลผู้สมัครรายนี้ใช่หรือไม่?")) {
+                applicants.splice(index, 1);
+                localStorage.setItem('bbu_applicants', JSON.stringify(applicants));
+                updateAdminStats();
+                alert("ลบข้อมูลผู้สมัครสำเร็จ!");
+            }
+        }
+
+        function updateAdminStats() {
+            document.getElementById('applicantCount').innerText = applicants.length;
+            let tbody = document.getElementById('applicantTableBody');
+            if (applicants.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center text-gray-500">ยังไม่มีผู้สมัครในระบบ</td></tr>`;
+                return;
+            }
+            tbody.innerHTML = '';
+            applicants.forEach((app, index) => {
+                let tr = document.createElement('tr');
+                tr.className = "border-b border-zinc-700/50 hover:bg-zinc-700/20";
+                tr.innerHTML = `
+                    <td class="p-2">${index + 1}</td>
+                    <td class="p-2">${app.name}</td>
+                    <td class="p-2">${app.year}</td>
+                    <td class="p-2">${app.date}</td>
+                    <td class="p-2 text-center">
+                        <button onclick="deleteApplicant(${index})" class="bg-red-600 hover:bg-red-700 text-white text-xs px-2 py-1 rounded">ลบ</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+            renderNews();
+        }
+
+        function exportToCSV() {
+            if (applicants.length === 0) {
+                alert("ยังไม่มีข้อมูลผู้สมัครสำหรับส่งออก");
+                return;
+            }
+            let csvContent = "\uFEFFลำดับ,ชื่อ-สกุล,ชั้นปีที่สมัคร,วันที่สมัคร\n";
+            applicants.forEach((app, index) => {
+                csvContent += `${index + 1},"${app.name}","${app.year}",${app.date}\n`;
+            });
+            let blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            let url = URL.createObjectURL(blob);
+            let a = document.createElement('a');
+            a.href = url;
+            a.download = `รายชื่อผู้สมัคร_นศท_รร.บบ_${new Date().toLocaleDateString()}.csv`;
+            a.click();
+        }
+
+        // Initialize news on load
+        renderNews();
     </script>
 </body>
 </html>
