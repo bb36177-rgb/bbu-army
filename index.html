@@ -32,7 +32,6 @@
                     <p class="text-xs text-gray-300">กองพันนักศึกษาวิชาทหาร รร.บ้านบึง "อุตสาหกรรมมนุเคราะห์"</p>
                 </div>
             </div>
-            <!-- ลบปุ่ม Admin ออกจากมุมบนขวาตามสั่ง -->
         </div>
 
         <!-- Center Content -->
@@ -43,7 +42,6 @@
             <h2 class="text-xl md:text-3xl font-bold text-yellow-400 mb-8 drop-shadow-md">
                 กองพันนักศึกษาวิชาทหาร โรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"
             </h2>
-            <!-- ปรับปุ่มให้อยู่คนละบรรทัด ขนาดเท่ากัน กึ่งกลาง และกลมกลืนกับ bg -->
             <div class="flex flex-col justify-center items-center gap-4 max-w-md mx-auto w-full px-4">
                 <button onclick="enterMainSite()" class="w-full bg-emerald-700/90 hover:bg-emerald-600 text-white text-base md:text-lg font-bold py-3.5 px-6 rounded-xl shadow-xl transition transform hover:scale-[1.02] border border-emerald-500/60 backdrop-blur-sm">
                     เข้าสู่เว็บไซต์หลัก
@@ -69,7 +67,6 @@
                     <button onclick="goToIntro()" class="flex items-center space-x-2 bg-zinc-800 hover:bg-zinc-700 px-3 py-1.5 rounded-lg text-sm text-yellow-400 border border-zinc-700 transition">
                         <span>⬅ กลับหน้าแรก</span>
                     </button>
-                    <!-- กดโลโก้เว็บหลักจะเด้งไปหน้าหลักของเว็บหลัก ไม่กลับหน้าแรก -->
                     <div onclick="showSection('home')" class="flex items-center space-x-2 cursor-pointer group">
                         <div class="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center font-bold text-black text-xs group-hover:scale-105 transition border border-white">
                             พัน.นศท.
@@ -83,7 +80,6 @@
                     <button onclick="showSection('motto')" class="hover:text-yellow-400 px-3 py-1 rounded transition">คำขวัญประจำกองพัน</button>
                     <button onclick="showSection('news')" class="hover:text-yellow-400 px-3 py-1 rounded transition">ข่าวสาร</button>
                     <button onclick="showSection('contact')" class="hover:text-yellow-400 px-3 py-1 rounded transition">ช่องทางติดต่อ</button>
-                    <!-- ปุ่ม Admin อยู่ที่เมนูเว็บหลักและหน้าแดชบอร์ดตามสั่ง -->
                     <button onclick="handleAdminClick()" id="adminNavBtn" class="bg-red-700 hover:bg-red-800 px-3 py-1.5 rounded text-white font-bold text-sm border border-red-500 transition">
                         ⚙ แดชบอร์ด Admin
                     </button>
@@ -135,7 +131,6 @@
                         <button onclick="adminLogout()" class="bg-zinc-700 hover:bg-zinc-600 text-white px-3 py-1.5 rounded text-sm font-semibold">ออกจากระบบ Admin</button>
                     </div>
                     
-                    <!-- Stats & Charts Section -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                         <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700 flex flex-col justify-between">
                             <div>
@@ -162,7 +157,6 @@
                             </div>
                         </div>
                         
-                        <!-- Add/Edit News Box -->
                         <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700">
                             <h4 id="newsFormTitle" class="font-bold text-yellow-400 mb-2">เพิ่มข่าวสารใหม่</h4>
                             <input type="hidden" id="editNewsIndex" value="-1">
@@ -190,7 +184,6 @@
                         </div>
                     </div>
 
-                    <!-- Manage Command Board Section -->
                     <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700 mb-6">
                         <h4 class="font-bold text-yellow-400 mb-3">จัดการบอร์ดการบังคับบัญชา</h4>
                         <div class="bg-zinc-900 p-3 rounded-lg border border-zinc-700 mb-4">
@@ -223,7 +216,6 @@
                         <div id="adminCommandList" class="space-y-2 max-h-48 overflow-y-auto"></div>
                     </div>
 
-                    <!-- Applicant Table for Admin -->
                     <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700 mb-6">
                         <div class="flex justify-between items-center mb-3">
                             <h4 class="font-bold text-yellow-400">รายชื่อผู้สมัครเข้าเป็นนักศึกษาวิชาทหาร</h4>
@@ -247,7 +239,6 @@
                         </div>
                     </div>
 
-                    <!-- Manage News Table for Admin -->
                     <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700">
                         <h4 class="font-bold text-yellow-400 mb-3">จัดการข่าวสารที่มีอยู่</h4>
                         <div id="adminNewsList" class="space-y-2"></div>
@@ -256,7 +247,6 @@
             </main>
         </div>
 
-        <!-- Footer -->
         <footer class="bg-zinc-950/90 backdrop-blur border-t border-zinc-800 text-center p-4 text-xs md:text-sm text-gray-400">
             หากต้องการติดต่อราชการต่างๆ ให้ติดต่อได้ที่ห้องบังคับการกองพันนักศึกษาวิชาทหารโรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์" (ห้องธนาคารโรงเรียนเก่า)
         </footer>
@@ -264,13 +254,13 @@
 
     <!-- Registration Page -->
     <div id="registerPage" class="hidden min-h-screen flex flex-col justify-between text-white p-6">
-        <!-- เพิ่มตรา พัน.นศท.รร.บบ. มุมบนขวา ถ้ากดจะกลับหน้าก่อนเข้าเว็บหลัก -->
-        <div class="flex justify-end w-full">
+        <!-- ตรา พัน.นศท.รร.บบ. อยู่มุมซ้าย และเมื่อกดจะกลับหน้าก่อนเข้าเว็บหลัก -->
+        <div class="flex justify-start w-full">
             <div onclick="goToIntro()" class="flex items-center space-x-2 bg-zinc-900/90 backdrop-blur border border-zinc-700 px-3 py-1.5 rounded-xl cursor-pointer hover:bg-zinc-800 transition shadow-lg">
-                <span class="text-xs font-bold text-yellow-300">พัน.นศท.รร.บบ.</span>
                 <div class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center font-bold text-black text-[10px] border border-white">
                     พัน.นศท.
                 </div>
+                <span class="text-xs font-bold text-yellow-300">พัน.นศท.รร.บบ.</span>
             </div>
         </div>
 
@@ -306,6 +296,25 @@
             { rankName: "ร.อ. ตัวอย่าง รักษาดินแดน", position: "ผู้บังคับกองพันนักศึกษาวิชาทหาร", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80" },
             { rankName: "ร.ท. สมชาย ใจมั่น", position: "นายทหารฝ่ายยุทธการ", image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80" }
         ];
+
+        // เพิ่มตัวจัดการซิงค์ข้อมูลแบบ Real-time ข้ามแท็บ/หน้าจออัตโนมัติ
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'bbu_news') {
+                newsData = JSON.parse(e.newValue) || [];
+                renderNews();
+            }
+            if (e.key === 'bbu_command') {
+                commandData = JSON.parse(e.newValue) || [];
+                renderCommandBoard();
+            }
+            if (e.key === 'bbu_applicants') {
+                applicants = JSON.parse(e.newValue) || [];
+                updateAdminStats();
+            }
+            if (e.key === 'bbu_is_admin') {
+                isAdmin = e.newValue === 'true';
+            }
+        });
 
         function renderCommandBoard() {
             let grid = document.getElementById('commandGrid');
