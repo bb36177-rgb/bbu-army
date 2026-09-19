@@ -13,6 +13,7 @@
                         url('https://st.depositphotos.com/1868209/3939/i/450/depositphotos_39398843-Thai-army-green-woodland-digital-camouflage-fabric-texture-backg.jpg');
             background-size: cover;
             background-position: center;
+            background-attachment: fixed;
         }
     </style>
 </head>
@@ -38,9 +39,10 @@
 
         <!-- Center Content -->
         <div class="text-center my-auto py-8">
-            <div class="inline-block p-2 bg-white/10 backdrop-blur-md rounded-2xl border border-yellow-500/50 shadow-2xl mb-6">
-                <img src="https://www.hola.com/us/horizon/portrait/a0099b02dede-5bec88c40d01-saveclipapp72097150115280780453551333175466866559856750n.jpg" alt="ธสถิตในดวงใจ" class="w-36 h-48 md:w-48 md:h-64 object-cover rounded-xl border border-yellow-400">
-                <p class="text-sm md:text-base font-semibold text-yellow-300 mt-3">ธสถิตในดวงใจตราบนิจนิรันดร์</p>
+            <div class="inline-block p-3 bg-zinc-900/80 backdrop-blur-md rounded-2xl border border-yellow-500/50 shadow-2xl mb-6 max-w-xl mx-auto">
+                <img src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=800&q=80" alt="ธสถิตในดวงใจ" class="w-full h-48 md:h-64 object-cover rounded-xl border border-yellow-400">
+                <p class="text-base md:text-lg font-bold text-yellow-300 mt-3 tracking-wide">"ธสถิตในดวงใจตราบนิจนิรันดร์"</p>
+                <p class="text-xs md:text-sm text-gray-300">สมเด็จพระเจ้าลูกเธอ เจ้าฟ้าพัชรกิติยาภา นเรนทิราเทพยวดี กรมหลวงราชสาริณีสิริพัชร มหาวัชรราชธิดา</p>
             </div>
             <h2 class="text-xl md:text-3xl font-bold text-yellow-400 mb-6 drop-shadow-md">
                 กองพันนักศึกษาวิชาทหาร โรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"
@@ -62,10 +64,10 @@
     </div>
 
     <!-- Main Website -->
-    <div id="mainSite" class="hidden min-h-screen flex flex-col justify-between bg-zinc-900/95 text-white">
+    <div id="mainSite" class="hidden min-h-screen flex flex-col justify-between text-white">
         <div>
             <!-- Header Nav -->
-            <header class="bg-zinc-950 border-b border-zinc-800 p-4 flex flex-col md:flex-row justify-between items-center shadow-lg">
+            <header class="bg-zinc-950/90 backdrop-blur border-b border-zinc-800 p-4 flex flex-col md:flex-row justify-between items-center shadow-lg">
                 <div class="flex items-center space-x-3 mb-3 md:mb-0">
                     <button onclick="goToIntro()" class="flex items-center space-x-2 bg-zinc-800 hover:bg-zinc-700 px-3 py-1.5 rounded-lg text-sm text-yellow-400 border border-zinc-700 transition">
                         <span>⬅ กลับหน้าแรก</span>
@@ -88,7 +90,7 @@
             <!-- Content Area -->
             <main class="p-6 md:p-10 max-w-5xl mx-auto w-full">
                 <!-- Home Section -->
-                <div id="sec-home" class="content-section text-center py-10">
+                <div id="sec-home" class="content-section text-center py-10 bg-zinc-900/80 backdrop-blur rounded-2xl p-8 border border-zinc-700/50 shadow-xl">
                     <h2 class="text-2xl md:text-4xl font-bold text-yellow-400 mb-6">
                         ยินดีต้อนรับเข้าสู่เว็บไซต์ของกองพันนักศึกษาวิชาทหารโรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"
                     </h2>
@@ -98,13 +100,13 @@
                 </div>
 
                 <!-- Command Board -->
-                <div id="sec-command" class="content-section hidden py-6">
+                <div id="sec-command" class="content-section hidden py-6 bg-zinc-900/80 backdrop-blur rounded-2xl p-8 border border-zinc-700/50 shadow-xl">
                     <h3 class="text-2xl font-bold text-yellow-400 mb-4 border-b border-zinc-700 pb-2">บอร์ดการบังคับบัญชา</h3>
                     <p class="text-gray-300">กำลังปรับปรุงข้อมูลบอร์ดการบังคับบัญชา...</p>
                 </div>
 
                 <!-- Motto -->
-                <div id="sec-motto" class="content-section hidden py-6">
+                <div id="sec-motto" class="content-section hidden py-6 bg-zinc-900/80 backdrop-blur rounded-2xl p-8 border border-zinc-700/50 shadow-xl">
                     <h3 class="text-2xl font-bold text-yellow-400 mb-4 border-b border-zinc-700 pb-2">คำขวัญประจำกองพัน</h3>
                     <div class="bg-zinc-800 p-6 rounded-xl border border-zinc-700 text-center">
                         <p class="text-xl text-yellow-300 font-semibold">"มีวินัย ใฝ่ศึกษา เสียสละเพื่อส่วนรวม"</p>
@@ -112,25 +114,22 @@
                 </div>
 
                 <!-- News -->
-                <div id="sec-news" class="content-section hidden py-6">
+                <div id="sec-news" class="content-section hidden py-6 bg-zinc-900/80 backdrop-blur rounded-2xl p-8 border border-zinc-700/50 shadow-xl">
                     <h3 class="text-2xl font-bold text-yellow-400 mb-4 border-b border-zinc-700 pb-2">ข่าวสารและประกาศ</h3>
                     <div id="newsList" class="space-y-4">
-                        <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700">
-                            <h4 class="font-bold text-yellow-300">เปิดรับสมัครนักศึกษาวิชาทหาร ประจำปีการศึกษา</h4>
-                            <p class="text-sm text-gray-300 mt-1">สามารถตรวจสอบรายละเอียดการสมัครผ่านหน้าสมัคร นศท. ได้ทันที</p>
-                        </div>
+                        <!-- Dynamic News Rendered Here -->
                     </div>
                 </div>
 
                 <!-- Contact -->
-                <div id="sec-contact" class="content-section hidden py-6">
+                <div id="sec-contact" class="content-section hidden py-6 bg-zinc-900/80 backdrop-blur rounded-2xl p-8 border border-zinc-700/50 shadow-xl">
                     <h3 class="text-2xl font-bold text-yellow-400 mb-4 border-b border-zinc-700 pb-2">ช่องทางติดต่อ</h3>
                     <p class="text-gray-300">ติดต่อสอบถามข้อมูลเพิ่มเติมได้ที่ห้องบังคับการกองพันนักศึกษาวิชาทหาร</p>
                 </div>
 
                 <!-- Admin Dashboard -->
-                <div id="sec-admin" class="content-section hidden py-6">
-                    <div class="flex justify-between items-center mb-4 border-b border-zinc-700 pb-2">
+                <div id="sec-admin" class="content-section hidden py-6 bg-zinc-900/90 backdrop-blur rounded-2xl p-8 border border-red-500/40 shadow-xl">
+                    <div class="flex justify-between items-center mb-6 border-b border-zinc-700 pb-2">
                         <h3 class="text-2xl font-bold text-red-500">⚙ แผงควบคุมผู้ดูแลระบบ (Admin Dashboard)</h3>
                         <button onclick="adminLogout()" class="bg-zinc-700 hover:bg-zinc-600 text-white px-3 py-1.5 rounded text-sm font-semibold">ออกจากระบบ Admin</button>
                     </div>
@@ -138,18 +137,26 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                         <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700">
                             <h4 class="font-bold text-yellow-400 mb-2">สถิติเว็บไซต์</h4>
-                            <p class="text-gray-300">จำนวนผู้เข้าชมเว็บไซต์ทั้งหมด: <span id="visitorCount" class="font-bold text-green-400">189</span> ครั้ง</p>
+                            <p class="text-gray-300">จำนวนผู้เข้าชมเว็บไซต์ทั้งหมด: <span id="visitorCount" class="font-bold text-green-400">215</span> ครั้ง</p>
                             <p class="text-gray-300 mt-2">จำนวนผู้สมัคร นศท. ทั้งหมด: <span id="applicantCount" class="font-bold text-blue-400">0</span> คน</p>
                         </div>
+                        
+                        <!-- Add/Edit News Box -->
                         <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700">
-                            <h4 class="font-bold text-yellow-400 mb-2">จัดการข่าวสาร</h4>
-                            <input type="text" id="newNewsTitle" placeholder="หัวข้อข่าวสารใหม่..." class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm mb-2">
-                            <button onclick="addNews()" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded text-sm font-bold text-white w-full">เพิ่มข่าวสาร</button>
+                            <h4 id="newsFormTitle" class="font-bold text-yellow-400 mb-2">เพิ่มข่าวสารใหม่</h4>
+                            <input type="hidden" id="editNewsIndex" value="-1">
+                            <input type="text" id="newsTitleInput" placeholder="1. หัวข้อข่าว..." class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm mb-2">
+                            <textarea id="newsDescInput" placeholder="2. เนื้อหาข่าว..." class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm mb-2 h-20"></textarea>
+                            <input type="text" id="newsImageInput" placeholder="3. ลิงก์รูปภาพข่าว (ถ้ามี)..." class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm mb-2">
+                            <div class="flex gap-2">
+                                <button onclick="saveNews()" id="saveNewsBtn" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded text-sm font-bold text-white w-full">บันทึกข่าวสาร</button>
+                                <button onclick="resetNewsForm()" id="cancelNewsBtn" class="hidden bg-zinc-700 hover:bg-zinc-600 px-3 py-2 rounded text-sm font-bold text-white">ยกเลิก</button>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Applicant Table for Admin -->
-                    <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700">
+                    <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700 mb-6">
                         <div class="flex justify-between items-center mb-3">
                             <h4 class="font-bold text-yellow-400">รายชื่อผู้สมัครเข้าเป็นนักศึกษาวิชาทหาร</h4>
                             <button onclick="exportToCSV()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-3 py-1.5 rounded font-bold">📥 ส่งออกเป็น Excel (CSV)</button>
@@ -162,12 +169,21 @@
                                         <th class="p-2">ชื่อ - สกุล</th>
                                         <th class="p-2">ชั้นปีที่สมัคร</th>
                                         <th class="p-2">วันที่สมัคร</th>
+                                        <th class="p-2 text-center">จัดการ</th>
                                     </tr>
                                 </thead>
                                 <tbody id="applicantTableBody">
-                                    <tr><td colspan="4" class="p-3 text-center text-gray-500">ยังไม่มีผู้สมัครในระบบ</td></tr>
+                                    <tr><td colspan="5" class="p-3 text-center text-gray-500">ยังไม่มีผู้สมัครในระบบ</td></tr>
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+
+                    <!-- Manage News Table for Admin -->
+                    <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700">
+                        <h4 class="font-bold text-yellow-400 mb-3">จัดการข่าวสารที่มีอยู่</h4>
+                        <div id="adminNewsList" class="space-y-2">
+                            <!-- News management list -->
                         </div>
                     </div>
                 </div>
@@ -175,17 +191,17 @@
         </div>
 
         <!-- Footer -->
-        <footer class="bg-zinc-950 border-t border-zinc-800 text-center p-4 text-xs md:text-sm text-gray-400">
+        <footer class="bg-zinc-950/90 backdrop-blur border-t border-zinc-800 text-center p-4 text-xs md:text-sm text-gray-400">
             หากต้องการติดต่อราชการต่างๆ ให้ติดต่อได้ที่ห้องบังคับการกองพันนักศึกษาวิชาทหารโรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์" (ห้องธนาคารโรงเรียนเก่า)
         </footer>
     </div>
 
     <!-- Registration Page -->
-    <div id="registerPage" class="hidden min-h-screen flex flex-col justify-between bg-zinc-900 text-white p-6">
-        <div class="max-w-xl mx-auto w-full py-8">
+    <div id="registerPage" class="hidden min-h-screen flex flex-col justify-between text-white p-6">
+        <div class="max-w-xl mx-auto w-full py-8 bg-zinc-900/90 backdrop-blur p-8 rounded-2xl border border-zinc-700 shadow-xl">
             <button onclick="goToIntro()" class="mb-4 bg-zinc-800 hover:bg-zinc-700 px-3 py-1.5 rounded text-sm text-yellow-400">⬅ กลับหน้าแรก</button>
             <h2 class="text-2xl font-bold text-yellow-400 mb-4">สมัครเข้าเป็นนักศึกษาวิชาทหาร โรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"</h2>
-            <form onsubmit="submitRegister(event)" class="space-y-4 bg-zinc-800 p-6 rounded-xl border border-zinc-700">
+            <form onsubmit="submitRegister(event)" class="space-y-4">
                 <div>
                     <label class="block text-sm text-gray-300 mb-1">ชื่อ - สกุล</label>
                     <input type="text" id="regName" required class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white" placeholder="เช่น ด.ช.รักชาติ ยิ่งชีพ">
@@ -201,24 +217,52 @@
                 <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg">ยืนยันการสมัคร</button>
             </form>
         </div>
-        <footer class="text-center text-xs text-gray-500">จัดทำโดย ฝ่ายอำนวยการ 4</footer>
+        <footer class="text-center text-xs text-gray-500 py-2">จัดทำโดย ฝ่ายอำนวยการ 4</footer>
     </div>
 
     <script>
-        let isAdmin = false;
+        let isAdmin = localStorage.getItem('bbu_is_admin') === 'true';
         let newsData = JSON.parse(localStorage.getItem('bbu_news')) || [
-            { title: "เปิดรับสมัครนักศึกษาวิชาทหาร ประจำปีการศึกษา", desc: "สามารถตรวจสอบรายละเอียดการสมัครผ่านหน้าสมัคร นศท. ได้ทันที" }
+            { title: "เปิดรับสมัครนักศึกษาวิชาทหาร ประจำปีการศึกษา", desc: "สามารถตรวจสอบรายละเอียดการสมัครผ่านหน้าสมัคร นศท. ได้ทันที", image: "" }
         ];
         let applicants = JSON.parse(localStorage.getItem('bbu_applicants')) || [];
 
+        // Check initial admin state on load
+        if (isAdmin) {
+            document.getElementById('adminNavTab').classList.remove('hidden');
+            document.getElementById('adminBtn').innerText = "⚙ แดชบอร์ด Admin";
+        }
+
         function renderNews() {
             let list = document.getElementById('newsList');
+            let adminList = document.getElementById('adminNewsList');
             list.innerHTML = '';
-            newsData.forEach(item => {
+            if (adminList) adminList.innerHTML = '';
+
+            newsData.forEach((item, index) => {
+                // Public News View
                 let div = document.createElement('div');
                 div.className = "bg-zinc-800 p-4 rounded-xl border border-zinc-700";
-                div.innerHTML = `<h4 class="font-bold text-yellow-300">${item.title}</h4><p class="text-sm text-gray-300 mt-1">${item.desc}</p>`;
+                div.innerHTML = `
+                    <h4 class="font-bold text-yellow-300 text-lg">${item.title}</h4>
+                    <p class="text-sm text-gray-300 mt-2 whitespace-pre-line">${item.desc}</p>
+                    ${item.image ? `<img src="${item.image}" alt="รูปข่าว" class="mt-3 rounded-lg max-h-64 object-cover w-full border border-zinc-700">` : ''}
+                `;
                 list.appendChild(div);
+
+                // Admin News Management View
+                if (adminList) {
+                    let adminDiv = document.createElement('div');
+                    adminDiv.className = "flex justify-between items-center bg-zinc-900 p-3 rounded border border-zinc-700 text-sm";
+                    adminDiv.innerHTML = `
+                        <span class="font-medium text-yellow-200 truncate max-w-xs">${index + 1}. ${item.title}</span>
+                        <div class="flex gap-2">
+                            <button onclick="editNews(${index})" class="bg-amber-600 hover:bg-amber-700 px-2.5 py-1 rounded text-xs font-bold text-white">แก้ไข</button>
+                            <button onclick="deleteNews(${index})" class="bg-red-600 hover:bg-red-700 px-2.5 py-1 rounded text-xs font-bold text-white">ลบ</button>
+                        </div>
+                    `;
+                    adminList.appendChild(adminDiv);
+                }
             });
         }
 
@@ -249,10 +293,12 @@
             if (isAdmin) {
                 enterMainSite();
                 showSection('admin');
+                updateAdminStats();
             } else {
                 let pass = prompt("กรุณากรอกรหัสผ่าน Admin:");
                 if (pass === "พัน.นศท.รร.บบ.") {
                     isAdmin = true;
+                    localStorage.setItem('bbu_is_admin', 'true');
                     alert("เข้าสู่ระบบ Admin สำเร็จ!");
                     document.getElementById('adminNavTab').classList.remove('hidden');
                     document.getElementById('adminBtn').innerText = "⚙ แดชบอร์ด Admin";
@@ -274,20 +320,67 @@
 
         function adminLogout() {
             isAdmin = false;
+            localStorage.removeItem('bbu_is_admin');
             document.getElementById('adminNavTab').classList.add('hidden');
             document.getElementById('adminBtn').innerText = "เข้าสู่ระบบ Admin";
             alert("ออกจากระบบ Admin เรียบร้อยแล้ว");
             goToIntro();
         }
 
-        function addNews() {
-            let title = document.getElementById('newNewsTitle').value;
-            if(title) {
-                newsData.unshift({ title: title, desc: "ประกาศใหม่โดยผู้ดูแลระบบ" });
+        function saveNews() {
+            let title = document.getElementById('newsTitleInput').value;
+            let desc = document.getElementById('newsDescInput').value;
+            let image = document.getElementById('newsImageInput').value;
+            let editIndex = parseInt(document.getElementById('editNewsIndex').value);
+
+            if (title && desc) {
+                if (editIndex === -1) {
+                    newsData.unshift({ title, desc, image });
+                    alert("เพิ่มข่าวสารสำเร็จ!");
+                } else {
+                    newsData[editIndex] = { title, desc, image };
+                    alert("แก้ไขข่าวสารสำเร็จ!");
+                    resetNewsForm();
+                }
                 localStorage.setItem('bbu_news', JSON.stringify(newsData));
                 renderNews();
-                document.getElementById('newNewsTitle').value = '';
-                alert("เพิ่มข่าวสารสำเร็จ!");
+                document.getElementById('newsTitleInput').value = '';
+                document.getElementById('newsDescInput').value = '';
+                document.getElementById('newsImageInput').value = '';
+                updateAdminStats();
+            } else {
+                alert("กรุณากรอกหัวข้อและเนื้อหาข่าวสาร");
+            }
+        }
+
+        function editNews(index) {
+            let item = newsData[index];
+            document.getElementById('newsTitleInput').value = item.title;
+            document.getElementById('newsDescInput').value = item.desc;
+            document.getElementById('newsImageInput').value = item.image || '';
+            document.getElementById('editNewsIndex').value = index;
+            document.getElementById('newsFormTitle').innerText = "แก้ไขข่าวสาร";
+            document.getElementById('saveNewsBtn').innerText = "อัปเดตข่าวสาร";
+            document.getElementById('cancelNewsBtn').classList.remove('hidden');
+        }
+
+        function resetNewsForm() {
+            document.getElementById('newsTitleInput').value = '';
+            document.getElementById('newsDescInput').value = '';
+            document.getElementById('newsImageInput').value = '';
+            document.getElementById('editNewsIndex').value = '-1';
+            document.getElementById('newsFormTitle').innerText = "เพิ่มข่าวสารใหม่";
+            document.getElementById('saveNewsBtn').innerText = "บันทึกข่าวสาร";
+            document.getElementById('cancelNewsBtn').classList.add('hidden');
+        }
+
+        function deleteNews(index) {
+            if (confirm("คุณต้องการลบข่าวสารนี้ใช่หรือไม่?")) {
+                newsData.splice(index, 1);
+                localStorage.setItem('bbu_news', JSON.stringify(newsData));
+                renderNews();
+                resetNewsForm();
+                alert("ลบข่าวสารสำเร็จ!");
             }
         }
 
@@ -305,11 +398,20 @@
             goToIntro();
         }
 
+        function deleteApplicant(index) {
+            if (confirm("คุณต้องการลบข้อมูลผู้สมัครรายนี้ใช่หรือไม่?")) {
+                applicants.splice(index, 1);
+                localStorage.setItem('bbu_applicants', JSON.stringify(applicants));
+                updateAdminStats();
+                alert("ลบข้อมูลผู้สมัครสำเร็จ!");
+            }
+        }
+
         function updateAdminStats() {
             document.getElementById('applicantCount').innerText = applicants.length;
             let tbody = document.getElementById('applicantTableBody');
             if (applicants.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" class="p-3 text-center text-gray-500">ยังไม่มีผู้สมัครในระบบ</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center text-gray-500">ยังไม่มีผู้สมัครในระบบ</td></tr>`;
                 return;
             }
             tbody.innerHTML = '';
@@ -321,9 +423,13 @@
                     <td class="p-2">${app.name}</td>
                     <td class="p-2">${app.year}</td>
                     <td class="p-2">${app.date}</td>
+                    <td class="p-2 text-center">
+                        <button onclick="deleteApplicant(${index})" class="bg-red-600 hover:bg-red-700 text-white text-xs px-2 py-1 rounded">ลบ</button>
+                    </td>
                 `;
                 tbody.appendChild(tr);
             });
+            renderNews();
         }
 
         function exportToCSV() {
