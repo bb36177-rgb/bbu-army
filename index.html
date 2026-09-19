@@ -77,7 +77,7 @@
                     <button onclick="showSection('news')" class="hover:text-yellow-400 px-3 py-1 rounded transition">ข่าวสาร</button>
                     <button onclick="showSection('contact')" class="hover:text-yellow-400 px-3 py-1 rounded transition">ช่องทางติดต่อ</button>
                     <button onclick="handleAdminClick()" id="adminNavBtn" class="bg-red-700 hover:bg-red-800 px-3 py-1.5 rounded text-white font-bold text-sm border border-red-500 transition">
-                        ⚙ เข้าสู่ระบบ Admin
+                        ⚙ แดชบอร์ด Admin
                     </button>
                 </nav>
             </header>
@@ -159,15 +159,10 @@
                             
                             <div class="bg-zinc-900 p-2.5 rounded border border-zinc-700 mb-2 text-xs">
                                 <span class="text-yellow-300 font-semibold block mb-1">3. รูปภาพประกอบข่าว</span>
-                                <div class="space-y-2">
-                                    <div>
-                                        <span class="text-gray-400 block mb-0.5">3.1 ใส่ลิงก์รูปภาพ (URL)</span>
-                                        <input type="text" id="newsImageInput" placeholder="https://..." class="w-full bg-zinc-800 border border-zinc-700 rounded p-1.5 text-white text-xs">
-                                    </div>
-                                    <div>
-                                        <span class="text-gray-400 block mb-0.5">3.2 เลือกรูปภาพจากในเครื่อง</span>
-                                        <input type="file" id="newsFile" accept="image/*" class="w-full text-gray-300 text-xs file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-zinc-700 file:text-white hover:file:bg-zinc-600">
-                                    </div>
+                                <input type="file" id="newsFile" accept="image/*" onchange="previewAndCrop(this, 'newsCropCanvas', 'newsCropContainer')" class="w-full text-gray-300 text-xs file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-zinc-700 file:text-white hover:file:bg-zinc-600 mb-2">
+                                <div id="newsCropContainer" class="hidden text-center">
+                                    <p class="text-yellow-300 mb-1">ปรับเลื่อน/เลือกส่วนที่ต้องการ (ซูม/ครอบตัด)</p>
+                                    <canvas id="newsCropCanvas" class="max-w-full mx-auto rounded border border-zinc-700 cursor-crosshair mb-2" height="200"></canvas>
                                 </div>
                             </div>
 
@@ -189,16 +184,11 @@
                             </div>
                             
                             <div class="bg-zinc-800 p-2.5 rounded border border-zinc-700 mb-2 text-xs">
-                                <span class="text-yellow-300 font-semibold block mb-1">3. รูปภาพกำลังพล</span>
-                                <div class="space-y-2">
-                                    <div>
-                                        <span class="text-gray-400 block mb-0.5">3.1 ใส่ลิงก์รูปภาพ (URL)</span>
-                                        <input type="text" id="cmdImage" placeholder="https://..." class="w-full bg-zinc-900 border border-zinc-700 rounded p-1.5 text-white text-xs">
-                                    </div>
-                                    <div>
-                                        <span class="text-gray-400 block mb-0.5">3.2 เลือกรูปภาพจากในเครื่อง</span>
-                                        <input type="file" id="cmdFile" accept="image/*" class="w-full text-gray-300 text-xs file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-zinc-700 file:text-white hover:file:bg-zinc-600">
-                                    </div>
+                                <span class="text-yellow-300 font-semibold block mb-1">3. รูปภาพกำลังพล (เลือกไฟล์จากเครื่อง และกำหนดกรอบส่วนที่จะใช้)</span>
+                                <input type="file" id="cmdFile" accept="image/*" onchange="previewAndCrop(this, 'cmdCropCanvas', 'cmdCropContainer')" class="w-full text-gray-300 text-xs file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-zinc-700 file:text-white hover:file:bg-zinc-600 mb-2">
+                                <div id="cmdCropContainer" class="hidden text-center">
+                                    <p class="text-yellow-300 mb-1">ลากเมาส์/ใช้นิ้วเลือกกรอบส่วนที่จะแสดง</p>
+                                    <canvas id="cmdCropCanvas" class="max-w-full mx-auto rounded border border-zinc-700 cursor-crosshair mb-2" height="200"></canvas>
                                 </div>
                             </div>
 
@@ -290,12 +280,9 @@
     </div>
 
     <script>
-        // ระบบบังคับล้างแคชอัตโนมัติ (Anti-Cache Version)
-        const CURRENT_VERSION = "2026.09.19-v2";
+        const CURRENT_VERSION = "2026.09.19-v3-fast";
         if (localStorage.getItem('bbu_web_version') !== CURRENT_VERSION) {
-            localStorage.clear(); // ล้างข้อมูลแคชเก่าในเครื่องผู้ใช้อัตโนมัติทันทีเมื่อมีอัปเดต
             localStorage.setItem('bbu_web_version', CURRENT_VERSION);
-            window.location.reload(true);
         }
 
         let isAdmin = localStorage.getItem('bbu_is_admin') === 'true';
@@ -310,40 +297,92 @@
         let applicants = JSON.parse(localStorage.getItem('bbu_applicants')) || [];
         let commandData = JSON.parse(localStorage.getItem('bbu_command')) || defaultCommand;
 
-        async function fetchCloudData() {
-            try {
-                let res = await fetch('https://api.jsonbin.io/v3/b/66f8e75facd3cb34a896d831/latest', {
-                    headers: { 'X-Master-Key': '$2a$10$EXAMPLE_PUBLIC_KEY' }
-                });
-                let data = await res.json();
-                if(data && data.record) {
-                    if(data.record.news) newsData = data.record.news;
-                    if(data.record.command) commandData = data.record.command;
-                    if(data.record.applicants) applicants = data.record.applicants;
-                    renderNews();
-                    renderCommandBoard();
+        // ตัวแปรสำหรับเก็บภาพที่ถูกครอบตัดชั่วคราว
+        let activeCropData = null;
+
+        function previewAndCrop(input, canvasId, containerId) {
+            if (input.files && input.files[0]) {
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    let img = new Image();
+                    img.onload = function() {
+                        let canvas = document.getElementById(canvasId);
+                        let ctx = canvas.getContext('2d');
+                        document.getElementById(containerId).classList.remove('hidden');
+
+                        let scale = Math.min(300 / img.width, 200 / img.height);
+                        canvas.width = img.width * scale;
+                        canvas.height = img.height * scale;
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                        // ระบบให้ผู้ใช้ลากครอบเลือกส่วนที่ต้องการ
+                        let isDragging = false, startX, startY;
+                        let cropBox = { x: 0, y: 0, w: canvas.width, h: canvas.height };
+
+                        function redraw() {
+                            ctx.clearRect(0, 0, canvas.width, canvas.height);
+                            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                            ctx.strokeStyle = '#eab308';
+                            ctx.lineWidth = 3;
+                            ctx.strokeRect(cropBox.x, cropBox.y, cropBox.w, cropBox.h);
+                        }
+
+                        canvas.onmousedown = canvas.ontouchstart = function(evt) {
+                            isDragging = true;
+                            let rect = canvas.getBoundingClientRect();
+                            let clientX = evt.clientX || evt.touches[0].clientX;
+                            let clientY = evt.clientY || evt.touches[0].clientY;
+                            startX = clientX - rect.left;
+                            startY = clientY - rect.top;
+                            cropBox.x = startX;
+                            cropBox.y = startY;
+                            cropBox.w = 10;
+                            cropBox.h = 10;
+                        };
+
+                        canvas.onmousemove = canvas.ontouchmove = function(evt) {
+                            if (!isDragging) return;
+                            let rect = canvas.getBoundingClientRect();
+                            let clientX = evt.clientX || evt.touches[0].clientX;
+                            let clientY = evt.clientY || evt.touches[0].clientY;
+                            let currentX = clientX - rect.left;
+                            let currentY = clientY - rect.top;
+                            cropBox.w = currentX - startX;
+                            cropBox.h = currentY - startY;
+                            redraw();
+                        };
+
+                        canvas.onmouseup = canvas.ontouchend = function() {
+                            isDragging = false;
+                            // ตัดภาพตามส่วนที่เลือก
+                            let tempCanvas = document.createElement('canvas');
+                            let tempCtx = tempCanvas.getContext('2d');
+                            tempCanvas.width = 300;
+                            tempCanvas.height = 300;
+                            
+                            let sx = (cropBox.x / scale);
+                            let sy = (cropBox.y / scale);
+                            let sw = (cropBox.w / scale);
+                            let sh = (cropBox.h / scale);
+
+                            if(Math.abs(sw) < 10 || Math.abs(sh) < 10) {
+                                sx = 0; sy = 0; sw = img.width; sh = img.height;
+                            }
+
+                            tempCtx.drawImage(img, sx, sy, sw, sh, 0, 0, 300, 300);
+                            activeCropData = tempCanvas.toDataURL('image/jpeg', 0.8);
+                        };
+                    }
+                    img.src = e.target.result;
                 }
-            } catch(e) {
-                console.log("Using local cache fallback");
+                reader.readAsDataURL(input.files[0]);
             }
         }
 
-        async function saveToCloud() {
+        function saveDataToStorage() {
             localStorage.setItem('bbu_news', JSON.stringify(newsData));
             localStorage.setItem('bbu_command', JSON.stringify(commandData));
             localStorage.setItem('bbu_applicants', JSON.stringify(applicants));
-            try {
-                await fetch('https://api.jsonbin.io/v3/b/66f8e75facd3cb34a896d831', {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-Master-Key': '$2a$10$EXAMPLE_PUBLIC_KEY'
-                    },
-                    body: JSON.stringify({ news: newsData, command: commandData, applicants: applicants })
-                });
-            } catch(e) {
-                console.log("Cloud sync saved locally");
-            }
         }
 
         function renderCommandBoard() {
@@ -351,10 +390,6 @@
             let adminList = document.getElementById('adminCommandList');
             if (grid) grid.innerHTML = '';
             if (adminList) adminList.innerHTML = '';
-
-            if (commandData.length === 0 && grid) {
-                grid.innerHTML = `<p class="text-gray-400 col-span-3 text-center">ยังไม่มีข้อมูลบอร์ดการบังคับบัญชา</p>`;
-            }
 
             commandData.forEach((item, index) => {
                 if (grid) {
@@ -425,7 +460,6 @@
             document.getElementById('registerPage').classList.add('hidden');
             document.getElementById('mainSite').classList.remove('hidden');
             showSection('home');
-            fetchCloudData();
         }
 
         function goToIntro() {
@@ -442,12 +476,8 @@
         function showSection(secId) {
             document.querySelectorAll('.content-section').forEach(el => el.classList.add('hidden'));
             document.getElementById('sec-' + secId).classList.remove('hidden');
-            if(secId === 'command') {
-                renderCommandBoard();
-            }
-            if(secId === 'admin') {
-                updateAdminStats();
-            }
+            if(secId === 'command') renderCommandBoard();
+            if(secId === 'admin') updateAdminStats();
         }
 
         function handleAdminClick() {
@@ -475,38 +505,23 @@
             goToIntro();
         }
 
-        function processImageInput(urlInputId, fileInputId, callback) {
-            let urlVal = document.getElementById(urlInputId).value.trim();
-            let fileInput = document.getElementById(fileInputId);
-
-            if (fileInput.files && fileInput.files[0]) {
-                let reader = new FileReader();
-                reader.onload = function(e) { callback(e.target.result); }
-                reader.readAsDataURL(fileInput.files[0]);
-            } else {
-                callback(urlVal);
-            }
-        }
-
         function saveCommandStaff() {
             let rankName = document.getElementById('cmdRankName').value;
             let position = document.getElementById('cmdPosition').value;
             let editIndex = parseInt(document.getElementById('editCommandIndex').value);
 
             if (rankName && position) {
-                processImageInput('cmdImage', 'cmdFile', function(imageResult) {
-                    if (editIndex === -1) {
-                        commandData.push({ rankName, position, image: imageResult });
-                        alert("เพิ่มข้อมูลกำลังพลสำเร็จ!");
-                    } else {
-                        commandData[editIndex] = { rankName, position, image: imageResult || commandData[editIndex].image };
-                        alert("แก้ไขข้อมูลกำลังพลสำเร็จ!");
-                        resetCommandForm();
-                    }
-                    saveToCloud();
-                    renderCommandBoard();
-                    resetCommandForm();
-                });
+                let finalImg = activeCropData || (editIndex !== -1 ? commandData[editIndex].image : '');
+                if (editIndex === -1) {
+                    commandData.push({ rankName, position, image: finalImg });
+                    alert("เพิ่มข้อมูลกำลังพลสำเร็จ!");
+                } else {
+                    commandData[editIndex] = { rankName, position, image: finalImg };
+                    alert("แก้ไขข้อมูลกำลังพลสำเร็จ!");
+                }
+                saveDataToStorage();
+                renderCommandBoard();
+                resetCommandForm();
             } else {
                 alert("กรุณากรอกยศ-ชื่อ และตำแหน่ง");
             }
@@ -516,9 +531,8 @@
             let item = commandData[index];
             document.getElementById('cmdRankName').value = item.rankName;
             document.getElementById('cmdPosition').value = item.position;
-            document.getElementById('cmdImage').value = item.image && !item.image.startsWith('data:') ? item.image : '';
-            document.getElementById('cmdFile').value = '';
             document.getElementById('editCommandIndex').value = index;
+            activeCropData = item.image;
             document.getElementById('commandFormTitle').innerText = "แก้ไขข้อมูลกำลังพล";
             document.getElementById('saveCommandBtn').innerText = "อัปเดตข้อมูล";
             document.getElementById('cancelCommandBtn').classList.remove('hidden');
@@ -527,9 +541,10 @@
         function resetCommandForm() {
             document.getElementById('cmdRankName').value = '';
             document.getElementById('cmdPosition').value = '';
-            document.getElementById('cmdImage').value = '';
             document.getElementById('cmdFile').value = '';
+            document.getElementById('cmdCropContainer').classList.add('hidden');
             document.getElementById('editCommandIndex').value = '-1';
+            activeCropData = null;
             document.getElementById('commandFormTitle').innerText = "เพิ่มกำลังพลในบอร์ด";
             document.getElementById('saveCommandBtn').innerText = "บันทึกข้อมูลกำลังพล";
             document.getElementById('cancelCommandBtn').classList.add('hidden');
@@ -538,9 +553,8 @@
         function deleteCommand(index) {
             if (confirm("คุณต้องการลบข้อมูลกำลังพลนี้ใช่หรือไม่?")) {
                 commandData.splice(index, 1);
-                saveToCloud();
+                saveDataToStorage();
                 renderCommandBoard();
-                resetCommandForm();
                 alert("ลบข้อมูลสำเร็จ!");
             }
         }
@@ -551,20 +565,18 @@
             let editIndex = parseInt(document.getElementById('editNewsIndex').value);
 
             if (title && desc) {
-                processImageInput('newsImageInput', 'newsFile', function(imageResult) {
-                    if (editIndex === -1) {
-                        newsData.unshift({ title, desc, image: imageResult });
-                        alert("เพิ่มข่าวสารสำเร็จ!");
-                    } else {
-                        newsData[editIndex] = { title, desc, image: imageResult || newsData[editIndex].image };
-                        alert("แก้ไขข่าวสารสำเร็จ!");
-                        resetNewsForm();
-                    }
-                    saveToCloud();
-                    renderNews();
-                    resetNewsForm();
-                    updateAdminStats();
-                });
+                let finalImg = activeCropData || (editIndex !== -1 ? newsData[editIndex].image : '');
+                if (editIndex === -1) {
+                    newsData.unshift({ title, desc, image: finalImg });
+                    alert("เพิ่มข่าวสารสำเร็จ!");
+                } else {
+                    newsData[editIndex] = { title, desc, image: finalImg };
+                    alert("แก้ไขข่าวสารสำเร็จ!");
+                }
+                saveDataToStorage();
+                renderNews();
+                resetNewsForm();
+                updateAdminStats();
             } else {
                 alert("กรุณากรอกหัวข้อและเนื้อหาข่าวสาร");
             }
@@ -574,9 +586,8 @@
             let item = newsData[index];
             document.getElementById('newsTitleInput').value = item.title;
             document.getElementById('newsDescInput').value = item.desc;
-            document.getElementById('newsImageInput').value = item.image && !item.image.startsWith('data:') ? item.image : '';
-            document.getElementById('newsFile').value = '';
             document.getElementById('editNewsIndex').value = index;
+            activeCropData = item.image;
             document.getElementById('newsFormTitle').innerText = "แก้ไขข่าวสาร";
             document.getElementById('saveNewsBtn').innerText = "อัปเดตข่าวสาร";
             document.getElementById('cancelNewsBtn').classList.remove('hidden');
@@ -585,9 +596,10 @@
         function resetNewsForm() {
             document.getElementById('newsTitleInput').value = '';
             document.getElementById('newsDescInput').value = '';
-            document.getElementById('newsImageInput').value = '';
             document.getElementById('newsFile').value = '';
+            document.getElementById('newsCropContainer').classList.add('hidden');
             document.getElementById('editNewsIndex').value = '-1';
+            activeCropData = null;
             document.getElementById('newsFormTitle').innerText = "เพิ่มข่าวสารใหม่";
             document.getElementById('saveNewsBtn').innerText = "บันทึกข่าวสาร";
             document.getElementById('cancelNewsBtn').classList.add('hidden');
@@ -596,9 +608,8 @@
         function deleteNews(index) {
             if (confirm("คุณต้องการลบข่าวสารนี้ใช่หรือไม่?")) {
                 newsData.splice(index, 1);
-                saveToCloud();
+                saveDataToStorage();
                 renderNews();
-                resetNewsForm();
                 alert("ลบข่าวสารสำเร็จ!");
             }
         }
@@ -612,7 +623,7 @@
             let date = new Date().toLocaleDateString('th-TH');
 
             applicants.push({ name, year, phone, contact, date });
-            saveToCloud();
+            saveDataToStorage();
             
             alert("บันทึกข้อมูลการสมัครเรียบร้อยแล้ว!");
             document.getElementById('regName').value = '';
@@ -624,7 +635,7 @@
         function deleteApplicant(index) {
             if (confirm("คุณต้องการลบข้อมูลผู้สมัครรายนี้ใช่หรือไม่?")) {
                 applicants.splice(index, 1);
-                saveToCloud();
+                saveDataToStorage();
                 updateAdminStats();
                 alert("ลบข้อมูลผู้สมัครสำเร็จ!");
             }
@@ -687,7 +698,8 @@
             a.click();
         }
 
-        fetchCloudData();
+        renderNews();
+        renderCommandBoard();
     </script>
 </body>
 </html>
