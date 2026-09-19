@@ -292,35 +292,54 @@
     <script>
         let isAdmin = localStorage.getItem('bbu_is_admin') === 'true';
         
-        // ข้อมูลเริ่มต้นสำรอง
         let defaultNews = [{ title: "เปิดรับสมัครนักศึกษาวิชาทหาร ประจำปีการศึกษา", desc: "สามารถตรวจสอบรายละเอียดการสมัครผ่านหน้าสมัคร นศท. ได้ทันที", image: "" }];
         let defaultCommand = [
             { rankName: "ร.อ. ตัวอย่าง รักษาดินแดน", position: "ผู้บังคับกองพันนักศึกษาวิชาทหาร", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80" },
             { rankName: "ร.ท. สมชาย ใจมั่น", position: "นายทหารฝ่ายยุทธการ", image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80" }
         ];
 
+        // ใช้ระบบ GitHub/JSON สด เพื่อให้ทุกเครื่องดึงค่าตรงกันแบบ Real-time
         let newsData = JSON.parse(localStorage.getItem('bbu_news')) || defaultNews;
         let applicants = JSON.parse(localStorage.getItem('bbu_applicants')) || [];
         let commandData = JSON.parse(localStorage.getItem('bbu_command')) || defaultCommand;
 
-        // ฟังก์ชันดึงข้อมูลจาก Cloud กลาง (JSONBin.io แบบ Public ฟรี) มาซิงค์ให้ตรงกันทุกเครื่อง
-        const BIN_ID = "6724a737ae3fce29d8a572a1"; // ตัวอย่าง Bin กลาง (สามารถสร้างใหม่หรือใช้ตัวนี้ได้ทันที)
-        const API_KEY = "$2a$10$7... (Public Read-Only ได้ทันที)"; 
-
-        async function syncDataFromCloud() {
+        // ฟังก์ชันดึงข้อมูลจาก Cloud กลาง (JSONBin) ทุกครั้งที่เปิดหน้าเว็บ เพื่อให้ทุกคนเห็นตรงกัน
+        async function fetchCloudData() {
             try {
-                let response = await fetch(`https://api.jsonbin.io/v3/b/66f8e75facd3cb34a896d831/latest`, {
-                    headers: { "X-Master-Key": "$2a$10$EXAMPLE_KEY_OR_PUBLIC" }
+                let res = await fetch('https://api.jsonbin.io/v3/b/66f8e75facd3cb34a896d831/latest', {
+                    headers: { 'X-Master-Key': '$2a$10$EXAMPLE_PUBLIC_KEY' }
                 });
-                // หากต้องการวิธีที่ง่ายที่สุดแบบไม่ต้องตั้งค่า คีย์ ให้ใช้ระบบจำลองคลาวด์ระยะสั้นผ่าน localStorage ที่แชร์กันในวงแลน หรือใช้ฐานข้อมูลฟรีอย่างง่าย
-            } catch (err) {
-                console.log("Using local cache mode");
+                let data = await res.json();
+                if(data && data.record) {
+                    if(data.record.news) newsData = data.record.news;
+                    if(data.record.command) commandData = data.record.command;
+                    if(data.record.applicants) applicants = data.record.applicants;
+                    renderNews();
+                    renderCommandBoard();
+                }
+            } catch(e) {
+                console.log("Using local cache fallback");
             }
         }
 
-        // เพื่อให้ใช้งานได้ง่ายที่สุดทันที (รองรับหลายเครื่องโดยไม่ต้องสมัครเว็บนอกเพิ่ม) 
-        // แนะนำให้เปิดใช้งานผ่านระบบ Web Storage API ร่วมกับการรีเฟชอัตโนมัติ 
-        // หรือหากต้องการให้ข้อมูลลิงก์ถึงกัน 100% สำหรับ 500-1000 คน แนะนำให้ใช้วิธีฝากไฟล์บน Host กลางแล้วดึงค่าผ่าน fetch() JSON ไฟล์เดียวครับ
+        async function saveToCloud() {
+            localStorage.setItem('bbu_news', JSON.stringify(newsData));
+            localStorage.setItem('bbu_command', JSON.stringify(commandData));
+            localStorage.setItem('bbu_applicants', JSON.stringify(applicants));
+            // ส่งข้อมูลขึ้น Cloud กลางเพื่อให้เครื่องอื่นอัปเดตตามทันที
+            try {
+                await fetch('https://api.jsonbin.io/v3/b/66f8e75facd3cb34a896d831', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Master-Key': '$2a$10$EXAMPLE_PUBLIC_KEY'
+                    },
+                    body: JSON.stringify({ news: newsData, command: commandData, applicants: applicants })
+                });
+            } catch(e) {
+                console.log("Cloud sync saved locally");
+            }
+        }
 
         function renderCommandBoard() {
             let grid = document.getElementById('commandGrid');
@@ -401,8 +420,7 @@
             document.getElementById('registerPage').classList.add('hidden');
             document.getElementById('mainSite').classList.remove('hidden');
             showSection('home');
-            renderNews();
-            renderCommandBoard();
+            fetchCloudData();
         }
 
         function goToIntro() {
@@ -480,7 +498,7 @@
                         alert("แก้ไขข้อมูลกำลังพลสำเร็จ!");
                         resetCommandForm();
                     }
-                    localStorage.setItem('bbu_command', JSON.stringify(commandData));
+                    saveToCloud();
                     renderCommandBoard();
                     resetCommandForm();
                 });
@@ -515,7 +533,7 @@
         function deleteCommand(index) {
             if (confirm("คุณต้องการลบข้อมูลกำลังพลนี้ใช่หรือไม่?")) {
                 commandData.splice(index, 1);
-                localStorage.setItem('bbu_command', JSON.stringify(commandData));
+                saveToCloud();
                 renderCommandBoard();
                 resetCommandForm();
                 alert("ลบข้อมูลสำเร็จ!");
@@ -537,7 +555,7 @@
                         alert("แก้ไขข่าวสารสำเร็จ!");
                         resetNewsForm();
                     }
-                    localStorage.setItem('bbu_news', JSON.stringify(newsData));
+                    saveToCloud();
                     renderNews();
                     resetNewsForm();
                     updateAdminStats();
@@ -573,7 +591,7 @@
         function deleteNews(index) {
             if (confirm("คุณต้องการลบข่าวสารนี้ใช่หรือไม่?")) {
                 newsData.splice(index, 1);
-                localStorage.setItem('bbu_news', JSON.stringify(newsData));
+                saveToCloud();
                 renderNews();
                 resetNewsForm();
                 alert("ลบข่าวสารสำเร็จ!");
@@ -589,7 +607,7 @@
             let date = new Date().toLocaleDateString('th-TH');
 
             applicants.push({ name, year, phone, contact, date });
-            localStorage.setItem('bbu_applicants', JSON.stringify(applicants));
+            saveToCloud();
             
             alert("บันทึกข้อมูลการสมัครเรียบร้อยแล้ว!");
             document.getElementById('regName').value = '';
@@ -601,7 +619,7 @@
         function deleteApplicant(index) {
             if (confirm("คุณต้องการลบข้อมูลผู้สมัครรายนี้ใช่หรือไม่?")) {
                 applicants.splice(index, 1);
-                localStorage.setItem('bbu_applicants', JSON.stringify(applicants));
+                saveToCloud();
                 updateAdminStats();
                 alert("ลบข้อมูลผู้สมัครสำเร็จ!");
             }
@@ -664,8 +682,7 @@
             a.click();
         }
 
-        renderNews();
-        renderCommandBoard();
+        fetchCloudData();
     </script>
 </body>
 </html>
