@@ -290,20 +290,26 @@
     </div>
 
     <script>
+        // ระบบบังคับล้างแคชอัตโนมัติ (Anti-Cache Version)
+        const CURRENT_VERSION = "2026.09.19-v2";
+        if (localStorage.getItem('bbu_web_version') !== CURRENT_VERSION) {
+            localStorage.clear(); // ล้างข้อมูลแคชเก่าในเครื่องผู้ใช้อัตโนมัติทันทีเมื่อมีอัปเดต
+            localStorage.setItem('bbu_web_version', CURRENT_VERSION);
+            window.location.reload(true);
+        }
+
         let isAdmin = localStorage.getItem('bbu_is_admin') === 'true';
         
         let defaultNews = [{ title: "เปิดรับสมัครนักศึกษาวิชาทหาร ประจำปีการศึกษา", desc: "สามารถตรวจสอบรายละเอียดการสมัครผ่านหน้าสมัคร นศท. ได้ทันที", image: "" }];
         let defaultCommand = [
-            { rankName: "ร.อ. ตัวอย่าง รักษาดินแดน", position: "ผู้บังคับกองพันนักศึกษาวิชาทหาร", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80" },
+            { rankName: "ผกท.ณรงค์ศักดิ์ ปิยปากร", position: "ผู้กำกับนักศึกษาวิชาทหารโรงเรียนบ้านบึง \"อุตสาหกรรมมนุเคราะห์\"", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80" },
             { rankName: "ร.ท. สมชาย ใจมั่น", position: "นายทหารฝ่ายยุทธการ", image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80" }
         ];
 
-        // ใช้ระบบ GitHub/JSON สด เพื่อให้ทุกเครื่องดึงค่าตรงกันแบบ Real-time
         let newsData = JSON.parse(localStorage.getItem('bbu_news')) || defaultNews;
         let applicants = JSON.parse(localStorage.getItem('bbu_applicants')) || [];
         let commandData = JSON.parse(localStorage.getItem('bbu_command')) || defaultCommand;
 
-        // ฟังก์ชันดึงข้อมูลจาก Cloud กลาง (JSONBin) ทุกครั้งที่เปิดหน้าเว็บ เพื่อให้ทุกคนเห็นตรงกัน
         async function fetchCloudData() {
             try {
                 let res = await fetch('https://api.jsonbin.io/v3/b/66f8e75facd3cb34a896d831/latest', {
@@ -326,7 +332,6 @@
             localStorage.setItem('bbu_news', JSON.stringify(newsData));
             localStorage.setItem('bbu_command', JSON.stringify(commandData));
             localStorage.setItem('bbu_applicants', JSON.stringify(applicants));
-            // ส่งข้อมูลขึ้น Cloud กลางเพื่อให้เครื่องอื่นอัปเดตตามทันที
             try {
                 await fetch('https://api.jsonbin.io/v3/b/66f8e75facd3cb34a896d831', {
                     method: 'PUT',
