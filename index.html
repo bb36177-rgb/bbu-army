@@ -28,7 +28,7 @@
                 </div>
                 <div>
                     <h1 class="text-base md:text-xl font-bold text-yellow-300">พัน.นศท.รร.บบ.</h1>
-                    <p class="text-xs text-gray-300">กองพันนักศึกษาวิชาทหาร <br class="block md:hidden">รร.บ้านบึง "อุตสาหกรรมมนุเคราะห์"</p>
+                    <p class="text-xs text-gray-300">กองพันนักศึกษาวิชาทหาร โรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"</p>
                 </div>
             </div>
         </div>
@@ -38,7 +38,7 @@
                 <img src="19-9-69.png" alt="สถิตในดวงใจตราบนิจนิรันดร์" class="w-full h-auto object-cover rounded-xl border border-yellow-400" onerror="this.style.display='none'">
             </div>
             <h2 class="text-xl md:text-3xl font-bold text-yellow-400 mb-8 drop-shadow-md">
-                กองพันนักศึกษาวิชาทหาร <br>โรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"
+                กองพันนักศึกษาวิชาทหาร โรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"
             </h2>
             <div class="flex flex-col justify-center items-center gap-4 max-w-md mx-auto w-full px-4">
                 <button onclick="enterMainSite()" class="w-full bg-emerald-700/90 hover:bg-emerald-600 text-white text-base md:text-lg font-bold py-3.5 px-6 rounded-xl shadow-xl transition transform hover:scale-[1.02] border border-emerald-500/60 backdrop-blur-sm">
@@ -86,10 +86,10 @@
                 <!-- Home Section -->
                 <div id="sec-home" class="content-section text-center py-10 bg-zinc-900/80 backdrop-blur rounded-2xl p-8 border border-zinc-700/50 shadow-xl">
                     <h2 class="text-2xl md:text-4xl font-bold text-yellow-400 mb-6">
-                        ยินดีต้อนรับเข้าสู่เว็บไซต์ของกองพันนักศึกษาวิชาทหาร<br>โรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"
+                        ยินดีต้อนรับเข้าสู่เว็บไซต์ของกองพันนักศึกษาวิชาทหารโรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"
                     </h2>
                     <p class="text-gray-300 text-base md:text-lg max-w-2xl mx-auto">
-                        เว็บไซต์ทางการสำหรับประชาสัมพันธ์ข้อมูลข่าวสาร การบังคับบัญชา และระเบียบปฏิบัติของนักศึกษาวิชาทหาร <br>โรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"
+                        เว็บไซต์ทางการสำหรับประชาสัมพันธ์ข้อมูลข่าวสาร การบังคับบัญชา และระเบียบปฏิบัติของนักศึกษาวิชาทหาร โรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"
                     </p>
                 </div>
 
@@ -154,6 +154,15 @@
                             <input type="text" id="contactName" placeholder="ชื่อเพจ / เบอร์ / ไอดี" class="bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm">
                             <input type="tel" id="contactPhoneInput" placeholder="ใส่เบอร์ เช่น 0812345678" class="bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm hidden">
                             <input type="url" id="contactUrl" placeholder="ลิงก์ URL (ถ้ามี)" class="bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm">
+                        </div>
+                        <!-- ส่วนอัปโหลดรูปภาพเฉพาะกรณีเลือก "อื่นๆ" -->
+                        <div id="contactFileBox" class="bg-zinc-900 p-2.5 rounded border border-zinc-700 mb-2 text-xs hidden">
+                            <span class="text-yellow-300 font-semibold block mb-1">อัปโหลดรูปภาพ (สำหรับหัวข้ออื่นๆ)</span>
+                            <input type="file" id="contactFile" accept="image/*" onchange="openCropper(this, 'contact')" class="w-full text-gray-300 text-xs file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-zinc-700 file:text-white hover:file:bg-zinc-600 mb-2">
+                            <div id="contactPreviewBox" class="hidden text-center mt-2">
+                                <p class="text-emerald-400 text-[10px] mb-1">✔ เลือกรูปภาพเรียบร้อย</p>
+                                <img id="contactPreviewImg" class="w-24 h-24 object-cover mx-auto rounded border border-yellow-500">
+                            </div>
                         </div>
                         <div class="flex gap-2">
                             <button onclick="saveContactChannel()" id="saveContactBtn" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-sm font-bold text-white w-full mb-3">เพิ่มช่องทางติดต่อ</button>
@@ -309,7 +318,7 @@
 
         <div class="max-w-xl mx-auto w-full py-6 bg-zinc-900/90 backdrop-blur p-8 rounded-2xl border border-zinc-700 shadow-xl my-auto">
             <button onclick="goToIntro()" class="mb-4 bg-zinc-800 hover:bg-zinc-700 px-3 py-1.5 rounded text-sm text-yellow-400">⬅ กลับหน้าแรก</button>
-            <h2 class="text-2xl font-bold text-yellow-400 mb-4">สมัครเข้าเป็นนักศึกษาวิชาทหาร <br>โรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"</h2>
+            <h2 class="text-2xl font-bold text-yellow-400 mb-4">สมัครเข้าเป็นนักศึกษาวิชาทหาร โรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"</h2>
             <form onsubmit="submitRegister(event)" class="space-y-4">
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
                     <div>
@@ -406,9 +415,9 @@
 
     <!-- Lightbox Modal -->
     <div id="lightboxModal" class="hidden fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4" onclick="closeLightbox()">
-        <div class="relative max-w-4xl w-full max-h-[90vh] flex items-center justify-center">
+        <div class="relative max-w-4xl w-full max-h-[90vh] flex items-center justify-center" onclick="event.stopPropagation()">
             <img id="lightboxImg" class="max-w-full max-h-[85vh] object-contain rounded-lg border border-yellow-500/50 shadow-2xl">
-            <button class="absolute top-2 right-2 bg-zinc-800 text-white font-bold px-3 py-1 rounded-full text-sm border border-zinc-600">✕ ปิด</button>
+            <button onclick="closeLightbox()" class="absolute top-2 right-2 bg-zinc-800 hover:bg-zinc-700 text-white font-bold px-3 py-1 rounded-full text-sm border border-zinc-600 shadow">✕ ปิด</button>
         </div>
     </div>
 
@@ -439,9 +448,9 @@
             { rankName: "ร.ท. สมชาย ใจมั่น", position: "นายทหารฝ่ายยุทธการ", image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80" }
         ];
         let defaultContacts = [
-            { platform: "Facebook", name: "พัน.นศท.รร.บ้านบึง อุตสาหกรรมมนุเคราะห์", url: "https://facebook.com" },
-            { platform: "Line", name: "@bbu_army", url: "https://line.me" },
-            { platform: "เบอร์โทรศัพท์", name: "089-123-4567", url: "tel:0891234567" }
+            { platform: "Facebook", name: "พัน.นศท.รร.บ้านบึง อุตสาหกรรมมนุเคราะห์", url: "https://facebook.com", image: "" },
+            { platform: "Line", name: "@bbu_army", url: "https://line.me", image: "" },
+            { platform: "เบอร์โทรศัพท์", name: "089-123-4567", url: "tel:0891234567", image: "" }
         ];
         let defaultMotto = "มีวินัย ใฝ่ศึกษา เสียสละเพื่อส่วนรวม";
 
@@ -599,6 +608,10 @@
                 let box = document.getElementById('cmdPreviewBox');
                 box.classList.remove('hidden');
                 box.querySelector('img').src = activeImageData;
+            } else if (cropTargetType === 'contact') {
+                let box = document.getElementById('contactPreviewBox');
+                box.classList.remove('hidden');
+                box.querySelector('img').src = activeImageData;
             }
             closeCropper();
         }
@@ -607,6 +620,7 @@
             document.getElementById('cropperModal').classList.add('hidden');
             if(cropTargetType === 'news') document.getElementById('newsFile').value = '';
             if(cropTargetType === 'command') document.getElementById('cmdFile').value = '';
+            if(cropTargetType === 'contact') document.getElementById('contactFile').value = '';
         }
 
         function openLightbox(imgSrc) {
@@ -651,7 +665,6 @@
             } else if (p.includes('โทร') || p.includes('phone')) {
                 return `<svg class="w-6 h-6 fill-current text-zinc-900" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>`;
             } else {
-                // แก้ไขส่วน "อื่นๆ" ให้แสดงเป็นรูปบ้านหรือตราไอคอนเด่นๆ สไตล์โลโก้แอป
                 return `<svg class="w-5 h-5 fill-current text-zinc-900" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>`;
             }
         }
@@ -660,21 +673,25 @@
             let platform = document.getElementById('contactPlatform').value;
             let phoneInput = document.getElementById('contactPhoneInput');
             let urlInput = document.getElementById('contactUrl');
+            let fileBox = document.getElementById('contactFileBox');
             
             if (platform === 'เบอร์โทรศัพท์') {
                 phoneInput.classList.remove('hidden');
                 urlInput.classList.remove('hidden');
                 urlInput.placeholder = "ระบบจะใส่ tel:... ให้อัตโนมัติ";
+                fileBox.classList.add('hidden');
             } else if (platform === 'อื่นๆ') {
                 phoneInput.classList.add('hidden');
                 phoneInput.value = '';
                 urlInput.classList.add('hidden');
                 urlInput.value = '';
+                fileBox.classList.remove('hidden');
             } else {
                 phoneInput.classList.add('hidden');
                 phoneInput.value = '';
                 urlInput.classList.remove('hidden');
                 urlInput.placeholder = "ลิงก์ URL (ถ้ามี)";
+                fileBox.classList.add('hidden');
             }
         }
 
@@ -686,30 +703,51 @@
 
             contactData.forEach((c, index) => {
                 if(display) {
-                    let a = document.createElement('a');
-                    let targetUrl = c.url && c.url.trim() !== '' ? c.url : '#';
-                    
-                    if (targetUrl.startsWith('tel:')) {
-                        a.href = targetUrl;
-                    } else if (targetUrl !== '#') {
-                        a.href = targetUrl;
-                        a.target = "_blank";
-                        a.rel = "noopener noreferrer";
-                    } else {
-                        a.href = '#';
-                    }
+                    let container = document.createElement('div');
+                    container.className = "w-full";
 
-                    a.className = "flex items-center gap-3 w-full bg-zinc-800 hover:bg-zinc-700/80 p-3 rounded-xl border border-zinc-700/80 transition duration-200 text-left group";
-                    a.innerHTML = `
-                        <div class="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center shrink-0 shadow group-hover:scale-105 transition overflow-hidden border border-white">
-                            ${getSocialSvg(c.platform)}
-                        </div>
-                        <div class="overflow-hidden">
-                            <div class="text-xs text-yellow-400 font-semibold">${c.platform}:</div>
-                            <div class="text-sm text-gray-200 truncate">${c.name}</div>
-                        </div>
-                    `;
-                    display.appendChild(a);
+                    if (c.platform === 'อื่นๆ' && c.image) {
+                        let btn = document.createElement('button');
+                        btn.type = "button";
+                        btn.className = "flex items-center gap-3 w-full bg-zinc-800 hover:bg-zinc-700/80 p-3 rounded-xl border border-zinc-700/80 transition duration-200 text-left group";
+                        btn.onclick = () => openLightbox(c.image);
+                        btn.innerHTML = `
+                            <div class="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center shrink-0 shadow group-hover:scale-105 transition overflow-hidden border border-white">
+                                ${getSocialSvg(c.platform)}
+                            </div>
+                            <div class="overflow-hidden">
+                                <div class="text-xs text-yellow-400 font-semibold">${c.platform}:</div>
+                                <div class="text-sm text-gray-200 truncate">${c.name} (คลิกเพื่อดูรูปภาพ)</div>
+                            </div>
+                        `;
+                        container.appendChild(btn);
+                    } else {
+                        let a = document.createElement('a');
+                        let targetUrl = c.url && c.url.trim() !== '' ? c.url : '#';
+                        
+                        if (targetUrl.startsWith('tel:')) {
+                            a.href = targetUrl;
+                        } else if (targetUrl !== '#') {
+                            a.href = targetUrl;
+                            a.target = "_blank";
+                            a.rel = "noopener noreferrer";
+                        } else {
+                            a.href = '#';
+                        }
+
+                        a.className = "flex items-center gap-3 w-full bg-zinc-800 hover:bg-zinc-700/80 p-3 rounded-xl border border-zinc-700/80 transition duration-200 text-left group";
+                        a.innerHTML = `
+                            <div class="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center shrink-0 shadow group-hover:scale-105 transition overflow-hidden border border-white">
+                                ${getSocialSvg(c.platform)}
+                            </div>
+                            <div class="overflow-hidden">
+                                <div class="text-xs text-yellow-400 font-semibold">${c.platform}:</div>
+                                <div class="text-sm text-gray-200 truncate">${c.name}</div>
+                            </div>
+                        `;
+                        container.appendChild(a);
+                    }
+                    display.appendChild(container);
                 }
 
                 if(adminList) {
@@ -746,21 +784,25 @@
             let url = document.getElementById('contactUrl').value.trim();
             let editIndex = parseInt(document.getElementById('editContactIndex').value);
 
+            let finalImg = activeImageData || (editIndex !== -1 ? (contactData[editIndex].image || '') : '');
+
             if (platform === 'อื่นๆ') {
                 url = '#';
             } else if (platform === 'เบอร์โทรศัพท์' && phoneVal) {
                 if (!name) name = phoneVal;
                 url = 'tel:' + phoneVal.replace(/[^0-9+]/g, '');
+                finalImg = '';
             } else if (!url) {
                 url = '#';
+                finalImg = '';
             }
 
             if(name) {
                 if (editIndex === -1) {
-                    contactData.push({ platform, name, url });
+                    contactData.push({ platform, name, url, image: finalImg });
                     alert("เพิ่มช่องทางติดต่อสำเร็จ!");
                 } else {
-                    contactData[editIndex] = { platform, name, url };
+                    contactData[editIndex] = { platform, name, url, image: finalImg };
                     alert("แก้ไขช่องทางติดต่อสำเร็จ!");
                 }
                 saveDataToStorage();
@@ -778,20 +820,30 @@
             
             let phoneInput = document.getElementById('contactPhoneInput');
             let urlInput = document.getElementById('contactUrl');
+            let fileBox = document.getElementById('contactFileBox');
 
             if (c.platform === 'เบอร์โทรศัพท์') {
                 phoneInput.classList.remove('hidden');
                 phoneInput.value = c.url.startsWith('tel:') ? c.url.replace('tel:', '') : c.name;
                 urlInput.classList.remove('hidden');
+                fileBox.classList.add('hidden');
             } else if (c.platform === 'อื่นๆ') {
                 phoneInput.classList.add('hidden');
                 phoneInput.value = '';
                 urlInput.classList.add('hidden');
                 urlInput.value = '';
+                fileBox.classList.remove('hidden');
+                if(c.image) {
+                    activeImageData = c.image;
+                    let pBox = document.getElementById('contactPreviewBox');
+                    pBox.classList.remove('hidden');
+                    pBox.querySelector('img').src = c.image;
+                }
             } else {
                 phoneInput.classList.add('hidden');
                 phoneInput.value = '';
                 urlInput.classList.remove('hidden');
+                fileBox.classList.add('hidden');
             }
 
             document.getElementById('contactUrl').value = c.url === '#' ? '' : c.url;
@@ -808,7 +860,11 @@
             document.getElementById('contactPhoneInput').classList.add('hidden');
             document.getElementById('contactUrl').value = '';
             document.getElementById('contactUrl').classList.remove('hidden');
+            document.getElementById('contactFileBox').classList.add('hidden');
+            document.getElementById('contactFile').value = '';
+            document.getElementById('contactPreviewBox').classList.add('hidden');
             document.getElementById('editContactIndex').value = '-1';
+            activeImageData = null;
             document.getElementById('contactFormTitle').innerText = "จัดการช่องทางติดต่อโซเชียลและเบอร์โทรศัพท์";
             document.getElementById('saveContactBtn').innerText = "เพิ่มช่องทางติดต่อ";
             document.getElementById('cancelContactBtn').classList.add('hidden');
