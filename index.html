@@ -28,7 +28,7 @@
                 </div>
                 <div>
                     <h1 class="text-base md:text-xl font-bold text-yellow-300">พัน.นศท.รร.บบ.</h1>
-                    <p class="text-xs text-gray-300">กองพันนักศึกษาวิชาทหาร รร.บ้านบึง "อุตสาหกรรมมนุเคราะห์"</p>
+                    <p class="text-xs text-gray-300">กองพันนักศึกษาวิชาทหาร <br class="block md:hidden">รร.บ้านบึง "อุตสาหกรรมมนุเคราะห์"</p>
                 </div>
             </div>
         </div>
@@ -38,7 +38,7 @@
                 <img src="19-9-69.png" alt="สถิตในดวงใจตราบนิจนิรันดร์" class="w-full h-auto object-cover rounded-xl border border-yellow-400" onerror="this.style.display='none'">
             </div>
             <h2 class="text-xl md:text-3xl font-bold text-yellow-400 mb-8 drop-shadow-md">
-                กองพันนักศึกษาวิชาทหาร โรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"
+                กองพันนักศึกษาวิชาทหาร <br>โรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"
             </h2>
             <div class="flex flex-col justify-center items-center gap-4 max-w-md mx-auto w-full px-4">
                 <button onclick="enterMainSite()" class="w-full bg-emerald-700/90 hover:bg-emerald-600 text-white text-base md:text-lg font-bold py-3.5 px-6 rounded-xl shadow-xl transition transform hover:scale-[1.02] border border-emerald-500/60 backdrop-blur-sm">
@@ -86,10 +86,10 @@
                 <!-- Home Section -->
                 <div id="sec-home" class="content-section text-center py-10 bg-zinc-900/80 backdrop-blur rounded-2xl p-8 border border-zinc-700/50 shadow-xl">
                     <h2 class="text-2xl md:text-4xl font-bold text-yellow-400 mb-6">
-                        ยินดีต้อนรับเข้าสู่เว็บไซต์ของกองพันนักศึกษาวิชาทหารโรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"
+                        ยินดีต้อนรับเข้าสู่เว็บไซต์ของกองพันนักศึกษาวิชาทหาร<br>โรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"
                     </h2>
                     <p class="text-gray-300 text-base md:text-lg max-w-2xl mx-auto">
-                        เว็บไซต์ทางการสำหรับประชาสัมพันธ์ข้อมูลข่าวสาร การบังคับบัญชา และระเบียบปฏิบัติของนักศึกษาวิชาทหาร โรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"
+                        เว็บไซต์ทางการสำหรับประชาสัมพันธ์ข้อมูลข่าวสาร การบังคับบัญชา และระเบียบปฏิบัติของนักศึกษาวิชาทหาร <br>โรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"
                     </p>
                 </div>
 
@@ -309,7 +309,7 @@
 
         <div class="max-w-xl mx-auto w-full py-6 bg-zinc-900/90 backdrop-blur p-8 rounded-2xl border border-zinc-700 shadow-xl my-auto">
             <button onclick="goToIntro()" class="mb-4 bg-zinc-800 hover:bg-zinc-700 px-3 py-1.5 rounded text-sm text-yellow-400">⬅ กลับหน้าแรก</button>
-            <h2 class="text-2xl font-bold text-yellow-400 mb-4">สมัครเข้าเป็นนักศึกษาวิชาทหาร โรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"</h2>
+            <h2 class="text-2xl font-bold text-yellow-400 mb-4">สมัครเข้าเป็นนักศึกษาวิชาทหาร <br>โรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"</h2>
             <form onsubmit="submitRegister(event)" class="space-y-4">
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
                     <div>
@@ -651,8 +651,8 @@
             } else if (p.includes('โทร') || p.includes('phone')) {
                 return `<svg class="w-6 h-6 fill-current text-zinc-900" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>`;
             } else {
-                // กรณีเลือก "อื่นๆ" จะแสดงเป็นโลโก้รูปโรงเรียน (วงกลม พัน.นศท.)
-                return `<div class="w-full h-full bg-yellow-500 rounded-full flex items-center justify-center font-bold text-black text-[9px]">พัน</div>`;
+                // แก้ไขส่วน "อื่นๆ" ให้แสดงเป็นรูปบ้านหรือตราไอคอนเด่นๆ สไตล์โลโก้แอป
+                return `<svg class="w-5 h-5 fill-current text-zinc-900" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>`;
             }
         }
 
@@ -668,7 +668,7 @@
             } else if (platform === 'อื่นๆ') {
                 phoneInput.classList.add('hidden');
                 phoneInput.value = '';
-                urlInput.classList.add('hidden'); // ซ่อนช่อง URL เมื่อเลือกอื่นๆ
+                urlInput.classList.add('hidden');
                 urlInput.value = '';
             } else {
                 phoneInput.classList.add('hidden');
@@ -701,7 +701,7 @@
 
                     a.className = "flex items-center gap-3 w-full bg-zinc-800 hover:bg-zinc-700/80 p-3 rounded-xl border border-zinc-700/80 transition duration-200 text-left group";
                     a.innerHTML = `
-                        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center shrink-0 shadow group-hover:scale-105 transition overflow-hidden border border-yellow-500">
+                        <div class="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center shrink-0 shadow group-hover:scale-105 transition overflow-hidden border border-white">
                             ${getSocialSvg(c.platform)}
                         </div>
                         <div class="overflow-hidden">
@@ -747,7 +747,7 @@
             let editIndex = parseInt(document.getElementById('editContactIndex').value);
 
             if (platform === 'อื่นๆ') {
-                url = '#'; // บันทึกโดยไม่มี URL เมื่อเลือกอื่นๆ
+                url = '#';
             } else if (platform === 'เบอร์โทรศัพท์' && phoneVal) {
                 if (!name) name = phoneVal;
                 url = 'tel:' + phoneVal.replace(/[^0-9+]/g, '');
@@ -786,7 +786,7 @@
             } else if (c.platform === 'อื่นๆ') {
                 phoneInput.classList.add('hidden');
                 phoneInput.value = '';
-                urlInput.classList.add('hidden'); // ซ่อนช่อง URL เมื่อเป็นอื่นๆ
+                urlInput.classList.add('hidden');
                 urlInput.value = '';
             } else {
                 phoneInput.classList.add('hidden');
