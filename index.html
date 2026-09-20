@@ -103,7 +103,7 @@
                 <div id="sec-motto" class="content-section hidden py-6 bg-zinc-900/80 backdrop-blur rounded-2xl p-8 border border-zinc-700/50 shadow-xl">
                     <h3 class="text-2xl font-bold text-yellow-400 mb-4 border-b border-zinc-700 pb-2">คำขวัญประจำกองพัน</h3>
                     <div class="bg-zinc-800 p-6 rounded-xl border border-zinc-700 text-center">
-                        <p class="text-xl text-yellow-300 font-semibold">"มีวินัย ใฝ่ศึกษา เสียสละเพื่อส่วนรวม"</p>
+                        <p id="displayMotto" class="text-xl text-yellow-300 font-semibold">"มีวินัย ใฝ่ศึกษา เสียสละเพื่อส่วนรวม"</p>
                     </div>
                 </div>
 
@@ -116,7 +116,8 @@
                 <!-- Contact -->
                 <div id="sec-contact" class="content-section hidden py-6 bg-zinc-900/80 backdrop-blur rounded-2xl p-8 border border-zinc-700/50 shadow-xl">
                     <h3 class="text-2xl font-bold text-yellow-400 mb-4 border-b border-zinc-700 pb-2">ช่องทางติดต่อ</h3>
-                    <p class="text-gray-300">ติดต่อสอบถามข้อมูลเพิ่มเติมได้ที่ห้องบังคับการกองพันนักศึกษาวิชาทหาร</p>
+                    <p class="text-gray-300 mb-4">ติดต่อสอบถามข้อมูลเพิ่มเติมได้ที่ห้องบังคับการกองพันนักศึกษาวิชาทหาร หรือผ่านช่องทางออนไลน์ด้านล่างนี้</p>
+                    <div id="displayContactList" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
                 </div>
 
                 <!-- Admin Dashboard -->
@@ -126,6 +127,34 @@
                         <button onclick="adminLogout()" class="bg-zinc-700 hover:bg-zinc-600 text-white px-3 py-1.5 rounded text-sm font-semibold">ออกจากระบบ Admin</button>
                     </div>
                     
+                    <!-- แก้ไขคำขวัญ & จัดการทั่วไป -->
+                    <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700 mb-6">
+                        <h4 class="font-bold text-yellow-400 mb-2">แก้ไขคำขวัญประจำกองพัน</h4>
+                        <div class="flex gap-2">
+                            <input type="text" id="mottoInput" placeholder="พิมพ์คำขวัญประจำกองพัน..." class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm">
+                            <button onclick="saveMotto()" class="bg-yellow-600 hover:bg-yellow-700 px-4 py-2 rounded text-sm font-bold text-white shrink-0">บันทึกคำขวัญ</button>
+                        </div>
+                    </div>
+
+                    <!-- จัดการช่องทางติดต่อ -->
+                    <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700 mb-6">
+                        <h4 class="font-bold text-yellow-400 mb-2">จัดการช่องทางติดต่อโซเชียล</h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2">
+                            <select id="contactPlatform" class="bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm">
+                                <option value="Facebook">Facebook</option>
+                                <option value="TikTok">TikTok</option>
+                                <option value="Instagram">Instagram</option>
+                                <option value="Line">Line</option>
+                                <option value="YouTube">YouTube</option>
+                                <option value="อื่นๆ">อื่นๆ</option>
+                            </select>
+                            <input type="text" id="contactName" placeholder="ชื่อเพจ / ไอดี เช่น พัน.นศท. รร.บ้านบึง" class="bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm">
+                            <input type="url" id="contactUrl" placeholder="ลิงก์ URL (https://...)" class="bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm">
+                        </div>
+                        <button onclick="addContactChannel()" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-sm font-bold text-white w-full mb-3">เพิ่มช่องทางติดต่อ</button>
+                        <div id="adminContactList" class="space-y-2 max-h-40 overflow-y-auto"></div>
+                    </div>
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                         <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700 flex flex-col justify-between">
                             <div>
@@ -158,11 +187,11 @@
                             <textarea id="newsDescInput" placeholder="2. เนื้อหาข่าว..." class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm mb-2 h-20"></textarea>
                             
                             <div class="bg-zinc-900 p-2.5 rounded border border-zinc-700 mb-2 text-xs">
-                                <span class="text-yellow-300 font-semibold block mb-1">3. รูปภาพประกอบข่าว</span>
-                                <input type="file" id="newsFile" accept="image/*" onchange="processAutoSquareImage(this, 'newsPreviewBox')" class="w-full text-gray-300 text-xs file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-zinc-700 file:text-white hover:file:bg-zinc-600 mb-2">
+                                <span class="text-yellow-300 font-semibold block mb-1">3. รูปภาพประกอบข่าว (เลือกแล้วปรับเลื่อนครอบตัดได้)</span>
+                                <input type="file" id="newsFile" accept="image/*" onchange="openCropper(this, 'news')" class="w-full text-gray-300 text-xs file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-zinc-700 file:text-white hover:file:bg-zinc-600 mb-2">
                                 <div id="newsPreviewBox" class="hidden text-center mt-2">
-                                    <p class="text-emerald-400 text-[10px] mb-1">✔ ปรับสัดส่วนอัตโนมัติเรียบร้อย</p>
-                                    <img id="newsPreviewImg" class="w-20 h-20 object-cover mx-auto rounded border border-yellow-500">
+                                    <p class="text-emerald-400 text-[10px] mb-1">✔ ครอบตัดรูปภาพเรียบร้อย</p>
+                                    <img id="newsPreviewImg" class="w-24 h-24 object-cover mx-auto rounded border border-yellow-500">
                                 </div>
                             </div>
 
@@ -184,10 +213,10 @@
                             </div>
                             
                             <div class="bg-zinc-800 p-2.5 rounded border border-zinc-700 mb-2 text-xs">
-                                <span class="text-yellow-300 font-semibold block mb-1">3. รูปภาพกำลังพล (เลือกจากเครื่อง จัดพอดีอัตโนมัติ)</span>
-                                <input type="file" id="cmdFile" accept="image/*" onchange="processAutoSquareImage(this, 'cmdPreviewBox')" class="w-full text-gray-300 text-xs file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-zinc-700 file:text-white hover:file:bg-zinc-600 mb-2">
+                                <span class="text-yellow-300 font-semibold block mb-1">3. รูปภาพกำลังพล (เลือกแล้วปรับเลื่อนครอบตัดได้)</span>
+                                <input type="file" id="cmdFile" accept="image/*" onchange="openCropper(this, 'command')" class="w-full text-gray-300 text-xs file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-zinc-700 file:text-white hover:file:bg-zinc-600 mb-2">
                                 <div id="cmdPreviewBox" class="hidden text-center mt-2">
-                                    <p class="text-emerald-400 text-[10px] mb-1">✔ จัดรูปวงกลม/สเกลสวยงามเรียบร้อย</p>
+                                    <p class="text-emerald-400 text-[10px] mb-1">✔ จัดรูปวงกลมเรียบร้อย</p>
                                     <img id="cmdPreviewImg" class="w-20 h-20 object-cover mx-auto rounded-full border border-yellow-500">
                                 </div>
                             </div>
@@ -240,13 +269,16 @@
 
     <!-- Registration Page -->
     <div id="registerPage" class="hidden min-h-screen flex flex-col justify-between text-white p-6">
-        <div class="flex justify-start w-full">
+        <div class="flex justify-between items-center w-full">
             <div onclick="goToIntro()" class="flex items-center space-x-2 bg-zinc-900/90 backdrop-blur border border-zinc-700 px-3 py-1.5 rounded-xl cursor-pointer hover:bg-zinc-800 transition shadow-lg">
                 <div class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center font-bold text-black text-[10px] border border-white">
                     พัน.นศท.
                 </div>
                 <span class="text-xs font-bold text-yellow-300">พัน.นศท.รร.บบ.</span>
             </div>
+            <button onclick="handleAdminClick()" class="bg-red-700 hover:bg-red-800 text-white px-3 py-1.5 rounded-xl text-xs font-bold border border-red-500 shadow-lg transition">
+                ⚙ เข้าสู่ระบบ Admin
+            </button>
         </div>
 
         <div class="max-w-xl mx-auto w-full py-6 bg-zinc-900/90 backdrop-blur p-8 rounded-2xl border border-zinc-700 shadow-xl my-auto">
@@ -279,7 +311,37 @@
         <footer class="text-center text-xs text-gray-500 py-2">จัดทำโดย ฝ่ายอำนวยการ 4</footer>
     </div>
 
-    <!-- Firebase (ใช้เก็บข้อมูลกลาง ให้ทุกเครื่อง/มือถือเห็นข้อมูลตรงกัน) -->
+    <!-- Image Cropper Modal (สำหรับเลื่อนเลือกมุมมองรูปภาพ) -->
+    <div id="cropperModal" class="hidden fixed inset-0 bg-black/90 z-50 flex flex-col items-center justify-center p-4">
+        <div class="bg-zinc-900 border border-yellow-500/50 p-5 rounded-2xl max-w-md w-full shadow-2xl text-center">
+            <h3 class="text-lg font-bold text-yellow-400 mb-2">ปรับตำแหน่งและเลือกมุมมองรูปภาพ</h3>
+            <p class="text-xs text-gray-400 mb-4">ใช้แถบเลื่อนเพื่อซูม หรือลากเพื่อปรับมุมมองตามต้องการ</p>
+            
+            <div class="relative w-full h-64 bg-black rounded-lg overflow-hidden border border-zinc-700 flex items-center justify-center mb-4">
+                <canvas id="cropCanvas" class="cursor-grab active:grabbing"></canvas>
+            </div>
+
+            <div class="mb-4 text-left">
+                <label class="text-xs text-gray-300 block mb-1">ซูมภาพ (Zoom):</label>
+                <input type="range" id="zoomRange" min="1" max="3" step="0.05" value="1" oninput="updateCropView()" class="w-full accent-yellow-500">
+            </div>
+
+            <div class="flex gap-2">
+                <button onclick="confirmCrop()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded-xl w-full text-sm">ยืนยันรูปภาพนี้</button>
+                <button onclick="closeCropper()" class="bg-zinc-700 hover:bg-zinc-600 text-white font-bold py-2 px-4 rounded-xl text-sm">ยกเลิก</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox Modal (สำหรับคลิกดูรูปข่าวเต็มจอ) -->
+    <div id="lightboxModal" class="hidden fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4" onclick="closeLightbox()">
+        <div class="relative max-w-4xl w-full max-h-[90vh] flex items-center justify-center">
+            <img id="lightboxImg" class="max-w-full max-h-[85vh] object-contain rounded-lg border border-yellow-500/50 shadow-2xl">
+            <button class="absolute top-2 right-2 bg-zinc-800 text-white font-bold px-3 py-1 rounded-full text-sm border border-zinc-600">✕ ปิด</button>
+        </div>
+    </div>
+
+    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
@@ -298,11 +360,6 @@
     </script>
 
     <script>
-        const CURRENT_VERSION = "2026.09.19-v4-autosquare";
-        if (localStorage.getItem('bbu_web_version') !== CURRENT_VERSION) {
-            localStorage.setItem('bbu_web_version', CURRENT_VERSION);
-        }
-
         let isAdmin = localStorage.getItem('bbu_is_admin') === 'true';
         
         let defaultNews = [{ title: "เปิดรับสมัครนักศึกษาวิชาทหาร ประจำปีการศึกษา", desc: "สามารถตรวจสอบรายละเอียดการสมัครผ่านหน้าสมัคร นศท. ได้ทันที", image: "" }];
@@ -310,19 +367,30 @@
             { rankName: "ผกท.ณรงค์ศักดิ์ ปิยปากร", position: "ผู้กำกับนักศึกษาวิชาทหารโรงเรียนบ้านบึง \"อุตสาหกรรมมนุเคราะห์\"", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80" },
             { rankName: "ร.ท. สมชาย ใจมั่น", position: "นายทหารฝ่ายยุทธการ", image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80" }
         ];
+        let defaultContacts = [
+            { platform: "Facebook", name: "พัน.นศท.รร.บ้านบึง อุตสาหกรรมมนุเคราะห์", url: "#" },
+            { platform: "Line", name: "@bbu_army", url: "#" }
+        ];
+        let defaultMotto = "มีวินัย ใฝ่ศึกษา เสียสละเพื่อส่วนรวม";
 
         let newsData = [];
         let applicants = [];
         let commandData = [];
-        let dataLoaded = false;
-
+        let contactData = [];
+        let mottoText = defaultMotto;
         let activeImageData = null;
 
-        // ระบบซิงค์ข้อมูลกลางผ่าน Firestore แทน localStorage
-        // ทุกเครื่อง/มือถือที่เปิดเว็บจะอ่าน-เขียนข้อมูลชุดเดียวกันจากที่นี่
+        // ตัวแปรสำหรับระบบ Cropper
+        let cropImageObj = new Image();
+        let cropCanvas, cropCtx;
+        let cropTargetType = ''; // 'news' หรือ 'command'
+        let imgX = 0, imgY = 0, isDragging = false, startX = 0, startY = 0;
+
         function renderAll() {
             renderNews();
             renderCommandBoard();
+            renderContacts();
+            renderMotto();
             updateAdminStats();
         }
 
@@ -332,63 +400,217 @@
                 newsData = data.news || defaultNews;
                 commandData = data.command || defaultCommand;
                 applicants = data.applicants || [];
+                contactData = data.contacts || defaultContacts;
+                mottoText = data.motto || defaultMotto;
             } else {
-                // ยังไม่เคยมีข้อมูลใน Firestore เลย ให้สร้างค่าเริ่มต้นไว้ครั้งแรก
                 newsData = defaultNews;
                 commandData = defaultCommand;
                 applicants = [];
-                siteDocRef.set({ news: newsData, command: commandData, applicants: applicants })
-                    .catch((err) => console.error("สร้างข้อมูลเริ่มต้นไม่สำเร็จ:", err));
+                contactData = defaultContacts;
+                mottoText = defaultMotto;
+                siteDocRef.set({ news: newsData, command: commandData, applicants: applicants, contacts: contactData, motto: mottoText });
             }
-            dataLoaded = true;
             renderAll();
         }, (err) => {
-            console.error("เชื่อมต่อ Firestore ไม่สำเร็จ:", err);
-            alert("ไม่สามารถเชื่อมต่อฐานข้อมูลได้ กรุณาตรวจสอบอินเทอร์เน็ต");
+            console.error("Firestore Error:", err);
         });
-
-        // ระบบจัดกึ่งกลางและตัดภาพเป็นสี่เหลี่ยมจัตุรัสอัตโนมัติแบบแกลเลอรีมือถือ
-        function processAutoSquareImage(input, previewBoxId) {
-            if (input.files && input.files[0]) {
-                let reader = new FileReader();
-                reader.onload = function(e) {
-                    let img = new Image();
-                    img.onload = function() {
-                        let canvas = document.createElement('canvas');
-                        let ctx = canvas.getContext('2d');
-                        
-                        let size = 500; // กำหนดขนาดมาตรฐานเพื่อความคมชัดและประหยัดพื้นที่
-                        canvas.width = size;
-                        canvas.height = size;
-
-                        let sourceSize = Math.min(img.width, img.height);
-                        let startX = (img.width - sourceSize) / 2;
-                        let startY = (img.height - sourceSize) / 2;
-
-                        ctx.drawImage(img, startX, startY, sourceSize, sourceSize, 0, 0, size, size);
-                        activeImageData = canvas.toDataURL('image/jpeg', 0.85);
-
-                        // แสดงตัวอย่างภาพ
-                        let box = document.getElementById(previewBoxId);
-                        box.classList.remove('hidden');
-                        let imgTag = box.querySelector('img');
-                        imgTag.src = activeImageData;
-                    }
-                    img.src = e.target.result;
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
 
         function saveDataToStorage() {
             siteDocRef.set({
                 news: newsData,
                 command: commandData,
-                applicants: applicants
+                applicants: applicants,
+                contacts: contactData,
+                motto: mottoText
             }).catch((err) => {
-                console.error("บันทึกข้อมูลไม่สำเร็จ:", err);
-                alert("บันทึกข้อมูลไม่สำเร็จ กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ตแล้วลองใหม่");
+                alert("บันทึกข้อมูลไม่สำเร็จ กรุณาตรวจสอบอินเทอร์เน็ต");
             });
+        }
+
+        // --- ระบบ Cropper สำหรับเลือกมุมมองรูปภาพ ---
+        function openCropper(input, type) {
+            if (input.files && input.files[0]) {
+                cropTargetType = type;
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    cropImageObj.onload = function() {
+                        cropCanvas = document.getElementById('cropCanvas');
+                        cropCtx = cropCanvas.getContext('2d');
+                        cropCanvas.width = 250;
+                        cropCanvas.height = 250;
+                        
+                        imgX = (cropCanvas.width - cropImageObj.width) / 2;
+                        imgY = (cropCanvas.height - cropImageObj.height) / 2;
+                        document.getElementById('zoomRange').value = 1;
+
+                        initCropEvents();
+                        updateCropView();
+                        document.getElementById('cropperModal').classList.remove('hidden');
+                    }
+                    cropImageObj.src = e.target.result;
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function initCropEvents() {
+            cropCanvas.onmousedown = function(e) {
+                isDragging = true;
+                startX = e.clientX - imgX;
+                startY = e.clientY - imgY;
+            };
+            window.onmouseup = function() { isDragging = false; };
+            cropCanvas.onmousemove = function(e) {
+                if (!isDragging) return;
+                imgX = e.clientX - startX;
+                imgY = e.clientY - startY;
+                updateCropView();
+            };
+
+            // รองรับมือถือ (Touch)
+            cropCanvas.ontouchstart = function(e) {
+                isDragging = true;
+                let touch = e.touches[0];
+                startX = touch.clientX - imgX;
+                startY = touch.clientY - imgY;
+            };
+            window.ontouchend = function() { isDragging = false; };
+            cropCanvas.ontouchmove = function(e) {
+                if (!isDragging) return;
+                let touch = e.touches[0];
+                imgX = touch.clientX - startX;
+                imgY = touch.clientY - startY;
+                updateCropView();
+            };
+        }
+
+        function updateCropView() {
+            if(!cropCtx) return;
+            let zoom = parseFloat(document.getElementById('zoomRange').value);
+            cropCtx.clearRect(0, 0, cropCanvas.width, cropCanvas.height);
+            cropCtx.save();
+            cropCtx.translate(cropCanvas.width / 2, cropCanvas.height / 2);
+            cropCtx.scale(zoom, zoom);
+            cropCtx.drawImage(cropImageObj, imgX - cropCanvas.width/2, imgY - cropCanvas.height/2);
+            cropCtx.restore();
+        }
+
+        function confirmCrop() {
+            let tempCanvas = document.createElement('canvas');
+            let tCtx = tempCanvas.getContext('2d');
+            let size = 600;
+            tempCanvas.width = size;
+            tempCanvas.height = size;
+
+            let zoom = parseFloat(document.getElementById('zoomRange').value);
+            tCtx.translate(size / 2, size / 2);
+            tCtx.scale(zoom, zoom);
+            tCtx.drawImage(cropImageObj, (imgX - cropCanvas.width/2) * (size/cropCanvas.width), (imgY - cropCanvas.height/2) * (size/cropCanvas.height));
+
+            activeImageData = tempCanvas.toDataURL('image/jpeg', 0.9);
+
+            if (cropTargetType === 'news') {
+                let box = document.getElementById('newsPreviewBox');
+                box.classList.remove('hidden');
+                box.querySelector('img').src = activeImageData;
+            } else if (cropTargetType === 'command') {
+                let box = document.getElementById('cmdPreviewBox');
+                box.classList.remove('hidden');
+                box.querySelector('img').src = activeImageData;
+            }
+            closeCropper();
+        }
+
+        function closeCropper() {
+            document.getElementById('cropperModal').classList.add('hidden');
+            if(cropTargetType === 'news') document.getElementById('newsFile').value = '';
+            if(cropTargetType === 'command') document.getElementById('cmdFile').value = '';
+        }
+
+        // --- Lightbox ดูรูปเต็ม ---
+        function openLightbox(imgSrc) {
+            document.getElementById('lightboxImg').src = imgSrc;
+            document.getElementById('lightboxModal').classList.remove('hidden');
+        }
+        function closeLightbox() {
+            document.getElementById('lightboxModal').classList.add('hidden');
+        }
+
+        // --- Render ส่วนต่างๆ ---
+        function renderMotto() {
+            let el = document.getElementById('displayMotto');
+            if(el) el.innerText = `"${mottoText}"`;
+            let input = document.getElementById('mottoInput');
+            if(input) input.value = mottoText;
+        }
+
+        function saveMotto() {
+            let val = document.getElementById('mottoInput').value.trim();
+            if(val) {
+                mottoText = val;
+                saveDataToStorage();
+                renderMotto();
+                alert("บันทึกคำขวัญประจำกองพันสำเร็จ!");
+            }
+        }
+
+        function renderContacts() {
+            let display = document.getElementById('displayContactList');
+            let adminList = document.getElementById('adminContactList');
+            if(display) display.innerHTML = '';
+            if(adminList) adminList.innerHTML = '';
+
+            contactData.forEach((c, index) => {
+                if(display) {
+                    let a = document.createElement('a');
+                    a.href = c.url && c.url !== '#' ? c.url : '#';
+                    a.target = "_blank";
+                    a.className = "bg-zinc-800 hover:bg-zinc-700 p-3 rounded-xl border border-zinc-700 flex items-center space-x-3 transition shadow";
+                    a.innerHTML = `
+                        <div class="w-10 h-10 bg-yellow-500/20 text-yellow-400 font-bold rounded-lg flex items-center justify-center border border-yellow-500/40 text-xs shrink-0">${c.platform}</div>
+                        <div class="truncate">
+                            <h5 class="text-sm font-bold text-yellow-300">${c.platform}</h5>
+                            <p class="text-xs text-gray-300 truncate">${c.name}</p>
+                        </div>
+                    `;
+                    display.appendChild(a);
+                }
+
+                if(adminList) {
+                    let div = document.createElement('div');
+                    div.className = "flex justify-between items-center bg-zinc-900 p-2.5 rounded border border-zinc-700 text-xs";
+                    div.innerHTML = `
+                        <div><span class="text-yellow-300 font-bold">[${c.platform}]</span> <span class="text-gray-300 ml-2">${c.name}</span></div>
+                        <button onclick="deleteContact(${index})" class="bg-red-600 hover:bg-red-700 px-2 py-1 rounded text-white font-bold">ลบ</button>
+                    `;
+                    adminList.appendChild(div);
+                }
+            });
+        }
+
+        function addContactChannel() {
+            let platform = document.getElementById('contactPlatform').value;
+            let name = document.getElementById('contactName').value.trim();
+            let url = document.getElementById('contactUrl').value.trim() || '#';
+
+            if(name) {
+                contactData.push({ platform, name, url });
+                saveDataToStorage();
+                renderContacts();
+                document.getElementById('contactName').value = '';
+                document.getElementById('contactUrl').value = '';
+                alert("เพิ่มช่องทางติดต่อสำเร็จ!");
+            } else {
+                alert("กรุณากรอกชื่อเพจหรือไอดีติดต่อ");
+            }
+        }
+
+        function deleteContact(index) {
+            if(confirm("ต้องการลบช่องทางติดต่อนี้ใช่หรือไม่?")) {
+                contactData.splice(index, 1);
+                saveDataToStorage();
+                renderContacts();
+            }
         }
 
         function renderCommandBoard() {
@@ -402,7 +624,7 @@
                     let card = document.createElement('div');
                     card.className = "bg-zinc-800 p-4 rounded-xl border border-zinc-700 text-center flex flex-col items-center shadow-md";
                     card.innerHTML = `
-                        <img src="${item.image || 'https://via.placeholder.com/150'}" alt="${item.rankName}" class="w-28 h-28 object-cover rounded-full border-2 border-yellow-400 mb-3 shadow">
+                        <img src="${item.image || 'https://via.placeholder.com/150'}" alt="${item.rankName}" onclick="openLightbox('${item.image}')" class="w-28 h-28 object-cover rounded-full border-2 border-yellow-400 mb-3 shadow cursor-pointer hover:scale-105 transition">
                         <h4 class="font-bold text-yellow-300 text-base">${item.rankName}</h4>
                         <p class="text-xs text-gray-300 mt-1">${item.position}</p>
                     `;
@@ -442,7 +664,7 @@
                 div.innerHTML = `
                     <h4 class="font-bold text-yellow-300 text-lg">${item.title}</h4>
                     <p class="text-sm text-gray-300 mt-2 whitespace-pre-line">${item.desc}</p>
-                    ${item.image ? `<img src="${item.image}" alt="รูปข่าว" class="mt-3 rounded-lg max-h-64 object-cover w-full border border-zinc-700">` : ''}
+                    ${item.image ? `<div class="mt-3 overflow-hidden rounded-lg border border-zinc-700 max-h-72 flex justify-center bg-black/40"><img src="${item.image}" alt="รูปข่าว" onclick="openLightbox('${item.image}')" class="object-contain max-h-72 w-full cursor-pointer hover:opacity-95 transition"></div>` : ''}
                 `;
                 if(list) list.appendChild(div);
 
@@ -526,7 +748,6 @@
                     alert("แก้ไขข้อมูลกำลังพลสำเร็จ!");
                 }
                 saveDataToStorage();
-                renderCommandBoard();
                 resetCommandForm();
             } else {
                 alert("กรุณากรอกยศ-ชื่อ และตำแหน่ง");
@@ -565,7 +786,6 @@
             if (confirm("คุณต้องการลบข้อมูลกำลังพลนี้ใช่หรือไม่?")) {
                 commandData.splice(index, 1);
                 saveDataToStorage();
-                renderCommandBoard();
                 alert("ลบข้อมูลสำเร็จ!");
             }
         }
@@ -585,9 +805,7 @@
                     alert("แก้ไขข่าวสารสำเร็จ!");
                 }
                 saveDataToStorage();
-                renderNews();
                 resetNewsForm();
-                updateAdminStats();
             } else {
                 alert("กรุณากรอกหัวข้อและเนื้อหาข่าวสาร");
             }
@@ -625,7 +843,6 @@
             if (confirm("คุณต้องการลบข่าวสารนี้ใช่หรือไม่?")) {
                 newsData.splice(index, 1);
                 saveDataToStorage();
-                renderNews();
                 alert("ลบข่าวสารสำเร็จ!");
             }
         }
@@ -693,8 +910,6 @@
                 `;
                 tbody.appendChild(tr);
             });
-            renderNews();
-            renderCommandBoard();
         }
 
         function exportToCSV() {
@@ -713,9 +928,6 @@
             a.download = `รายชื่อผู้สมัคร_นศท_รร.บบ_${new Date().toLocaleDateString()}.csv`;
             a.click();
         }
-        // หมายเหตุ: ไม่ต้องเรียก renderNews()/renderCommandBoard() ตรงนี้แล้ว
-        // เพราะ onSnapshot ของ Firestore ด้านบนจะโหลดข้อมูลและ render ให้อัตโนมัติ
-        // ทันทีที่เชื่อมต่อสำเร็จ (ทั้งตอนเปิดหน้าเว็บครั้งแรก และทุกครั้งที่มีการแก้ไขจากเครื่องอื่น)
     </script>
 </body>
 </html>
