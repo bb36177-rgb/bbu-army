@@ -117,7 +117,8 @@
                 <div id="sec-contact" class="content-section hidden py-6 bg-zinc-900/80 backdrop-blur rounded-2xl p-8 border border-zinc-700/50 shadow-xl text-center">
                     <h3 class="text-2xl font-bold text-yellow-400 mb-2 border-b border-zinc-700 pb-2">ช่องทางติดต่อ</h3>
                     <p class="text-gray-300 mb-8">ติดต่อสอบถามข้อมูลเพิ่มเติมได้ผ่านช่องทางโซเชียลมีเดียด้านล่างนี้</p>
-                    <div id="displayContactList" class="flex flex-wrap justify-center items-center gap-6"></div>
+                    <!-- แดชบอร์ดแสดงช่องทางติดต่อแบบ 1 บรรทัด 1 โลโก้ -->
+                    <div id="displayContactList" class="flex flex-col items-center gap-3 max-w-md mx-auto w-full"></div>
                 </div>
 
                 <!-- Admin Dashboard -->
@@ -149,8 +150,8 @@
                                 <option value="Twitter">Twitter / X</option>
                                 <option value="อื่นๆ">อื่นๆ</option>
                             </select>
-                            <input type="text" id="contactName" placeholder="ชื่อเพจ / ไอดี เช่น พัน.นศท. รร.บ้านบึง" class="bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm">
-                            <input type="url" id="contactUrl" placeholder="ลิงก์ URL (https://...)" class="bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm">
+                            <input type="text" id="contactName" placeholder="ชื่อเพจ / ไอดี หรือเบอร์โทร" class="bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm">
+                            <input type="url" id="contactUrl" placeholder="ลิงก์ URL หรือ tel:..." class="bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm">
                         </div>
                         <button onclick="addContactChannel()" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-sm font-bold text-white w-full mb-3">เพิ่มช่องทางติดต่อ</button>
                         <div id="adminContactList" class="space-y-2 max-h-40 overflow-y-auto"></div>
@@ -383,7 +384,8 @@
             { platform: "Facebook", name: "พัน.นศท.รร.บ้านบึง อุตสาหกรรมมนุเคราะห์", url: "#" },
             { platform: "Line", name: "@bbu_army", url: "#" },
             { platform: "YouTube", name: "พัน.นศท.รร.บ้านบึง", url: "#" },
-            { platform: "Instagram", name: "@bbu_nsat", url: "#" }
+            { platform: "Instagram", name: "@bbu_nsat", url: "#" },
+            { platform: "อื่นๆ", name: "089-123-4567", url: "tel:0891234567" }
         ];
         let defaultMotto = "มีวินัย ใฝ่ศึกษา เสียสละเพื่อส่วนรวม";
 
@@ -563,21 +565,22 @@
             }
         }
 
-        // ฟังก์ชันคืนค่า SVG ไอคอนโซเชียลมีเดียสไตล์มินิมอลตามรูปตัวอย่าง
+        // ฟังก์ชันคืนค่า SVG ไอคอนโซเชียลมีเดีย หรือ เบอร์โทร (กรณีเลือก "อื่นๆ")
         function getSocialSvg(platform) {
-            p = platform.toLowerCase();
+            let p = platform.toLowerCase();
             if (p.includes('facebook')) {
-                return `<svg class="w-7 h-7 fill-current text-zinc-900" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>`;
+                return `<svg class="w-6 h-6 fill-current text-zinc-900" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>`;
             } else if (p.includes('line')) {
-                return `<svg class="w-7 h-7 fill-current text-zinc-900" viewBox="0 0 24 24"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .348-.285.63-.632.63-.349 0-.63-.282-.63-.63V8.108c0-.271.174-.51.433-.596.062-.02.13-.03.197-.03.212 0 .39.09.51.25l2.444 3.317V8.108c0-.345.285-.63.63-.63.349 0 .631.285.631.63v4.771zm-5.741 0c0 .348-.285.63-.63.63-.349 0-.63-.282-.63-.63V8.108c0-.345.281-.63.63-.63.345 0 .63.285.63.63v4.771zm-2.466.63H4.864c-.349 0-.63-.285-.63-.63V8.108c0-.345.281-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.349 0 .63.283.63.63 0 .344-.281.629-.63.629M24 10.311C24 4.615 18.627 0 12 0S0 4.615 0 10.311c0 5.093 4.675 9.388 11.006 10.149.429.083.996.257 1.141.592.13.303.084 1.107.042 1.371-.129.805-.584 2.977-.611 3.149-.071.464-.326 1.815 1.517 1.002 1.843-.814 9.945-5.857 13.567-10.021C23.364 14.887 24 12.723 24 10.311"/></svg>`;
+                return `<svg class="w-6 h-6 fill-current text-zinc-900" viewBox="0 0 24 24"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .348-.285.63-.632.63-.349 0-.63-.282-.63-.63V8.108c0-.271.174-.51.433-.596.062-.02.13-.03.197-.03.212 0 .39.09.51.25l2.444 3.317V8.108c0-.345.285-.63.63-.63.349 0 .631.285.631.63v4.771zm-5.741 0c0 .348-.285.63-.63.63-.349 0-.63-.282-.63-.63V8.108c0-.345.281-.63.63-.63.345 0 .63.285.63.63v4.771zm-2.466.63H4.864c-.349 0-.63-.285-.63-.63V8.108c0-.345.281-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.349 0 .63.283.63.63 0 .344-.281.629-.63.629M24 10.311C24 4.615 18.627 0 12 0S0 4.615 0 10.311c0 5.093 4.675 9.388 11.006 10.149.429.083.996.257 1.141.592.13.303.084 1.107.042 1.371-.129.805-.584 2.977-.611 3.149-.071.464-.326 1.815 1.517 1.002 1.843-.814 9.945-5.857 13.567-10.021C23.364 14.887 24 12.723 24 10.311"/></svg>`;
             } else if (p.includes('youtube')) {
-                return `<svg class="w-7 h-7 fill-current text-zinc-900" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>`;
+                return `<svg class="w-6 h-6 fill-current text-zinc-900" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>`;
             } else if (p.includes('instagram')) {
-                return `<svg class="w-7 h-7 fill-current text-zinc-900" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>`;
+                return `<svg class="w-6 h-6 fill-current text-zinc-900" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>`;
             } else if (p.includes('twitter') || p.includes('x')) {
-                return `<svg class="w-7 h-7 fill-current text-zinc-900" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>`;
+                return `<svg class="w-6 h-6 fill-current text-zinc-900" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>`;
             } else {
-                return `<svg class="w-7 h-7 fill-current text-zinc-900" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>`;
+                // รูปเบอร์โทรสำหรับหมวด "อื่นๆ" หรือเบอร์โทรศัพท์
+                return `<svg class="w-6 h-6 fill-current text-zinc-900" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>`;
             }
         }
 
@@ -591,15 +594,17 @@
                 if(display) {
                     let a = document.createElement('a');
                     a.href = c.url && c.url !== '#' ? c.url : '#';
-                    a.target = "_blank";
-                    // ปรับสไตล์ให้เป็นปุ่มวงกลมสีขาวขอบดำ มีเงา และโชว์โลโก้ตรงกลางแบบในรูปตัวอย่าง
-                    a.className = "flex flex-col items-center group cursor-pointer p-2";
-                    a.title = `${c.platform}: ${c.name}`;
+                    if (c.url && c.url !== '#') a.target = "_blank";
+                    // จัดสไตล์แบบ 1 บรรทัด 1 โลโก้ พร้อมชื่อกำกับชัดเจน
+                    a.className = "flex items-center gap-3 w-full bg-zinc-800 hover:bg-zinc-700/80 p-3 rounded-xl border border-zinc-700/80 transition duration-200 text-left group";
                     a.innerHTML = `
-                        <div class="w-16 h-16 bg-white border-2 border-zinc-300 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:border-yellow-400 transition-all duration-300">
+                        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center shrink-0 shadow group-hover:scale-105 transition">
                             ${getSocialSvg(c.platform)}
                         </div>
-                        <span class="text-xs text-gray-200 mt-2 max-w-[100px] truncate text-center group-hover:text-yellow-300 transition">${c.platform}</span>
+                        <div class="overflow-hidden">
+                            <div class="text-xs text-yellow-400 font-semibold">${c.platform}:</div>
+                            <div class="text-sm text-gray-200 truncate">${c.name}</div>
+                        </div>
                     `;
                     display.appendChild(a);
                 }
@@ -608,8 +613,8 @@
                     let div = document.createElement('div');
                     div.className = "flex justify-between items-center bg-zinc-900 p-2.5 rounded border border-zinc-700 text-xs";
                     div.innerHTML = `
-                        <div><span class="text-yellow-300 font-bold">[${c.platform}]</span> <span class="text-gray-300 ml-2">${c.name}</span></div>
-                        <button onclick="deleteContact(${index})" class="bg-red-600 hover:bg-red-700 px-2 py-1 rounded text-white font-bold">ลบ</button>
+                        <div class="truncate"><span class="text-yellow-300 font-bold">[${c.platform}]</span> <span class="text-gray-300 ml-2">${c.name}</span></div>
+                        <button onclick="deleteContact(${index})" class="bg-red-600 hover:bg-red-700 px-2 py-1 rounded text-white font-bold shrink-0 ml-2">ลบ</button>
                     `;
                     adminList.appendChild(div);
                 }
@@ -629,7 +634,7 @@
                 document.getElementById('contactUrl').value = '';
                 alert("เพิ่มช่องทางติดต่อสำเร็จ!");
             } else {
-                alert("กรุณากรอกชื่อเพจหรือไอดีติดต่อ");
+                alert("กรุณากรอกชื่อเพจหรือข้อมูลติดต่อ");
             }
         }
 
