@@ -117,7 +117,6 @@
                 <div id="sec-contact" class="content-section hidden py-6 bg-zinc-900/80 backdrop-blur rounded-2xl p-8 border border-zinc-700/50 shadow-xl text-center">
                     <h3 class="text-2xl font-bold text-yellow-400 mb-2 border-b border-zinc-700 pb-2">ช่องทางติดต่อ</h3>
                     <p class="text-gray-300 mb-8">ติดต่อสอบถามข้อมูลเพิ่มเติมได้ผ่านช่องทางโซเชียลมีเดียด้านล่างนี้</p>
-                    <!-- แดชบอร์ดแสดงช่องทางติดต่อแบบ 1 บรรทัด 1 โลโก้ -->
                     <div id="displayContactList" class="flex flex-col items-center gap-3 max-w-md mx-auto w-full"></div>
                 </div>
 
@@ -128,7 +127,7 @@
                         <button onclick="adminLogout()" class="bg-zinc-700 hover:bg-zinc-600 text-white px-3 py-1.5 rounded text-sm font-semibold">ออกจากระบบ Admin</button>
                     </div>
                     
-                    <!-- แก้ไขคำขวัญ & จัดการทั่วไป -->
+                    <!-- แก้ไขคำขวัญ -->
                     <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700 mb-6">
                         <h4 class="font-bold text-yellow-400 mb-2">แก้ไขคำขวัญประจำกองพัน</h4>
                         <div class="flex gap-2">
@@ -381,10 +380,10 @@
             { rankName: "ร.ท. สมชาย ใจมั่น", position: "นายทหารฝ่ายยุทธการ", image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80" }
         ];
         let defaultContacts = [
-            { platform: "Facebook", name: "พัน.นศท.รร.บ้านบึง อุตสาหกรรมมนุเคราะห์", url: "#" },
-            { platform: "Line", name: "@bbu_army", url: "#" },
-            { platform: "YouTube", name: "พัน.นศท.รร.บ้านบึง", url: "#" },
-            { platform: "Instagram", name: "@bbu_nsat", url: "#" },
+            { platform: "Facebook", name: "พัน.นศท.รร.บ้านบึง อุตสาหกรรมมนุเคราะห์", url: "https://facebook.com" },
+            { platform: "Line", name: "@bbu_army", url: "https://line.me" },
+            { platform: "YouTube", name: "พัน.นศท.รร.บ้านบึง", url: "https://youtube.com" },
+            { platform: "Instagram", name: "@bbu_nsat", url: "https://instagram.com" },
             { platform: "อื่นๆ", name: "089-123-4567", url: "tel:0891234567" }
         ];
         let defaultMotto = "มีวินัย ใฝ่ศึกษา เสียสละเพื่อส่วนรวม";
@@ -565,7 +564,6 @@
             }
         }
 
-        // ฟังก์ชันคืนค่า SVG ไอคอนโซเชียลมีเดีย หรือ เบอร์โทร (กรณีเลือก "อื่นๆ")
         function getSocialSvg(platform) {
             let p = platform.toLowerCase();
             if (p.includes('facebook')) {
@@ -579,7 +577,6 @@
             } else if (p.includes('twitter') || p.includes('x')) {
                 return `<svg class="w-6 h-6 fill-current text-zinc-900" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>`;
             } else {
-                // รูปเบอร์โทรสำหรับหมวด "อื่นๆ" หรือเบอร์โทรศัพท์
                 return `<svg class="w-6 h-6 fill-current text-zinc-900" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>`;
             }
         }
@@ -593,9 +590,13 @@
             contactData.forEach((c, index) => {
                 if(display) {
                     let a = document.createElement('a');
-                    a.href = c.url && c.url !== '#' ? c.url : '#';
-                    if (c.url && c.url !== '#') a.target = "_blank";
-                    // จัดสไตล์แบบ 1 บรรทัด 1 โลโก้ พร้อมชื่อกำกับชัดเจน
+                    // แก้ไขให้รองรับลิงก์จริง และเปิดหน้าใหม่ทันทีเมื่อกด
+                    let targetUrl = c.url && c.url.trim() !== '' ? c.url : '#';
+                    a.href = targetUrl;
+                    if (targetUrl !== '#') {
+                        a.target = "_blank";
+                        a.rel = "noopener noreferrer";
+                    }
                     a.className = "flex items-center gap-3 w-full bg-zinc-800 hover:bg-zinc-700/80 p-3 rounded-xl border border-zinc-700/80 transition duration-200 text-left group";
                     a.innerHTML = `
                         <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center shrink-0 shadow group-hover:scale-105 transition">
@@ -613,7 +614,7 @@
                     let div = document.createElement('div');
                     div.className = "flex justify-between items-center bg-zinc-900 p-2.5 rounded border border-zinc-700 text-xs";
                     div.innerHTML = `
-                        <div class="truncate"><span class="text-yellow-300 font-bold">[${c.platform}]</span> <span class="text-gray-300 ml-2">${c.name}</span></div>
+                        <div class="truncate"><span class="text-yellow-300 font-bold">[${c.platform}]</span> <span class="text-gray-300 ml-2">${c.name}</span> <span class="text-gray-500 ml-2">(${c.url || '#'})</span></div>
                         <button onclick="deleteContact(${index})" class="bg-red-600 hover:bg-red-700 px-2 py-1 rounded text-white font-bold shrink-0 ml-2">ลบ</button>
                     `;
                     adminList.appendChild(div);
