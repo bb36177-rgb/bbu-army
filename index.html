@@ -279,6 +279,24 @@
         <footer class="text-center text-xs text-gray-500 py-2">จัดทำโดย ฝ่ายอำนวยการ 4</footer>
     </div>
 
+    <!-- Firebase (ใช้เก็บข้อมูลกลาง ให้ทุกเครื่อง/มือถือเห็นข้อมูลตรงกัน) -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyB2NNrYCR87fIqA_BF14Wmh4ZFDLd8-Kuw",
+            authDomain: "bbu-nsat-web.firebaseapp.com",
+            projectId: "bbu-nsat-web",
+            storageBucket: "bbu-nsat-web.firebasestorage.app",
+            messagingSenderId: "97691900083",
+            appId: "1:97691900083:web:9b3ee4abc48d6e2aa2b8c6"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const siteDocRef = db.collection('siteData').doc('main');
+    </script>
+
     <script>
         const CURRENT_VERSION = "2026.09.19-v4-autosquare";
         if (localStorage.getItem('bbu_web_version') !== CURRENT_VERSION) {
@@ -293,11 +311,41 @@
             { rankName: "ร.ท. สมชาย ใจมั่น", position: "นายทหารฝ่ายยุทธการ", image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80" }
         ];
 
-        let newsData = JSON.parse(localStorage.getItem('bbu_news')) || defaultNews;
-        let applicants = JSON.parse(localStorage.getItem('bbu_applicants')) || [];
-        let commandData = JSON.parse(localStorage.getItem('bbu_command')) || defaultCommand;
+        let newsData = [];
+        let applicants = [];
+        let commandData = [];
+        let dataLoaded = false;
 
         let activeImageData = null;
+
+        // ระบบซิงค์ข้อมูลกลางผ่าน Firestore แทน localStorage
+        // ทุกเครื่อง/มือถือที่เปิดเว็บจะอ่าน-เขียนข้อมูลชุดเดียวกันจากที่นี่
+        function renderAll() {
+            renderNews();
+            renderCommandBoard();
+            updateAdminStats();
+        }
+
+        siteDocRef.onSnapshot((doc) => {
+            if (doc.exists) {
+                let data = doc.data();
+                newsData = data.news || defaultNews;
+                commandData = data.command || defaultCommand;
+                applicants = data.applicants || [];
+            } else {
+                // ยังไม่เคยมีข้อมูลใน Firestore เลย ให้สร้างค่าเริ่มต้นไว้ครั้งแรก
+                newsData = defaultNews;
+                commandData = defaultCommand;
+                applicants = [];
+                siteDocRef.set({ news: newsData, command: commandData, applicants: applicants })
+                    .catch((err) => console.error("สร้างข้อมูลเริ่มต้นไม่สำเร็จ:", err));
+            }
+            dataLoaded = true;
+            renderAll();
+        }, (err) => {
+            console.error("เชื่อมต่อ Firestore ไม่สำเร็จ:", err);
+            alert("ไม่สามารถเชื่อมต่อฐานข้อมูลได้ กรุณาตรวจสอบอินเทอร์เน็ต");
+        });
 
         // ระบบจัดกึ่งกลางและตัดภาพเป็นสี่เหลี่ยมจัตุรัสอัตโนมัติแบบแกลเลอรีมือถือ
         function processAutoSquareImage(input, previewBoxId) {
@@ -333,9 +381,14 @@
         }
 
         function saveDataToStorage() {
-            localStorage.setItem('bbu_news', JSON.stringify(newsData));
-            localStorage.setItem('bbu_command', JSON.stringify(commandData));
-            localStorage.setItem('bbu_applicants', JSON.stringify(applicants));
+            siteDocRef.set({
+                news: newsData,
+                command: commandData,
+                applicants: applicants
+            }).catch((err) => {
+                console.error("บันทึกข้อมูลไม่สำเร็จ:", err);
+                alert("บันทึกข้อมูลไม่สำเร็จ กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ตแล้วลองใหม่");
+            });
         }
 
         function renderCommandBoard() {
@@ -660,9 +713,9 @@
             a.download = `รายชื่อผู้สมัคร_นศท_รร.บบ_${new Date().toLocaleDateString()}.csv`;
             a.click();
         }
-
-        renderNews();
-        renderCommandBoard();
+        // หมายเหตุ: ไม่ต้องเรียก renderNews()/renderCommandBoard() ตรงนี้แล้ว
+        // เพราะ onSnapshot ของ Firestore ด้านบนจะโหลดข้อมูลและ render ให้อัตโนมัติ
+        // ทันทีที่เชื่อมต่อสำเร็จ (ทั้งตอนเปิดหน้าเว็บครั้งแรก และทุกครั้งที่มีการแก้ไขจากเครื่องอื่น)
     </script>
 </body>
 </html>
