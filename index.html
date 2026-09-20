@@ -35,7 +35,7 @@
 
         <div class="text-center my-auto py-8">
             <div class="inline-block p-3 bg-zinc-900/80 backdrop-blur-md rounded-2xl border border-yellow-500/50 shadow-2xl mb-6 max-w-xl mx-auto">
-                <img src="19-9-69.png" alt="สถิตในดวงใจตราบนิจนิรันดร์" class="w-full h-auto object-cover rounded-xl border border-yellow-400">
+                <img src="19-9-69.png" alt="สถิตในดวงใจตราบนิจนิรันดร์" class="w-full h-auto object-cover rounded-xl border border-yellow-400" onerror="this.style.display='none'">
             </div>
             <h2 class="text-xl md:text-3xl font-bold text-yellow-400 mb-8 drop-shadow-md">
                 กองพันนักศึกษาวิชาทหาร โรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"
@@ -76,8 +76,8 @@
                     <button onclick="showSection('motto')" class="hover:text-yellow-400 px-3 py-1 rounded transition">คำขวัญประจำกองพัน</button>
                     <button onclick="showSection('news')" class="hover:text-yellow-400 px-3 py-1 rounded transition">ข่าวสาร</button>
                     <button onclick="showSection('contact')" class="hover:text-yellow-400 px-3 py-1 rounded transition">ช่องทางติดต่อ</button>
-                    <button onclick="handleAdminClick()" id="adminNavBtn" class="bg-red-700 hover:bg-red-800 px-3 py-1.5 rounded text-white font-bold text-sm border border-red-500 transition">
-                        ⚙ แดชบอร์ด Admin
+                    <button onclick="handleAdminNavClick()" id="dynamicAdminNavBtn" class="bg-blue-700 hover:bg-blue-800 px-3 py-1.5 rounded text-white font-bold text-sm border border-blue-500 transition">
+                        เข้าสู่ระบบ Admin
                     </button>
                 </nav>
             </header>
@@ -149,18 +149,17 @@
                                 <option value="YouTube">YouTube</option>
                                 <option value="Twitter">Twitter / X</option>
                                 <option value="เบอร์โทรศัพท์">เบอร์โทรศัพท์</option>
-                                <option value="อื่นๆ">อื่นๆ</option>
+                                <option value="อื่นๆ">อื่นๆ (ไอคอนโทร)</option>
                             </select>
-                            <input type="text" id="contactName" placeholder="ชื่อเพจ / ไอดี" class="bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm">
-                            <!-- ช่องใส่เบอร์โทรศัพท์เพิ่มเติมตามที่ขอ -->
-                            <input type="tel" id="contactPhoneInput" placeholder="ใส่เบอร์ เช่น 0812345678" class="bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm">
+                            <input type="text" id="contactName" placeholder="ชื่อเพจ / เบอร์ / ไอดี" class="bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm">
+                            <input type="tel" id="contactPhoneInput" placeholder="ใส่เบอร์ เช่น 0812345678" class="bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm hidden">
                             <input type="url" id="contactUrl" placeholder="ลิงก์ URL (ถ้ามี)" class="bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm">
                         </div>
                         <div class="flex gap-2">
                             <button onclick="saveContactChannel()" id="saveContactBtn" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-sm font-bold text-white w-full mb-3">เพิ่มช่องทางติดต่อ</button>
                             <button onclick="resetContactForm()" id="cancelContactBtn" class="hidden bg-zinc-700 hover:bg-zinc-600 px-4 py-2 rounded text-sm font-bold text-white mb-3">ยกเลิก</button>
                         </div>
-                        <div id="adminContactList" class="space-y-2 max-h-40 overflow-y-auto"></div>
+                        <div id="adminContactList" class="space-y-2 max-h-48 overflow-y-auto"></div>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
@@ -191,11 +190,11 @@
                         <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700">
                             <h4 id="newsFormTitle" class="font-bold text-yellow-400 mb-2">เพิ่มข่าวสารใหม่</h4>
                             <input type="hidden" id="editNewsIndex" value="-1">
-                            <input type="text" id="newsTitleInput" placeholder="1. หัวข้อข่าว..." class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm mb-2">
-                            <textarea id="newsDescInput" placeholder="2. เนื้อหาข่าว..." class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm mb-2 h-20"></textarea>
+                            <input type="text" id="newsTitleInput" placeholder="หัวข้อข่าว..." class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm mb-2">
+                            <textarea id="newsDescInput" placeholder="เนื้อหาข่าว..." class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm mb-2 h-20"></textarea>
                             
                             <div class="bg-zinc-900 p-2.5 rounded border border-zinc-700 mb-2 text-xs">
-                                <span class="text-yellow-300 font-semibold block mb-1">3. รูปภาพประกอบข่าว (เลือกแล้วปรับเลื่อนครอบตัดได้)</span>
+                                <span class="text-yellow-300 font-semibold block mb-1">รูปภาพประกอบข่าว (เลือกแล้วปรับเลื่อนครอบตัดได้)</span>
                                 <input type="file" id="newsFile" accept="image/*" onchange="openCropper(this, 'news')" class="w-full text-gray-300 text-xs file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-zinc-700 file:text-white hover:file:bg-zinc-600 mb-2">
                                 <div id="newsPreviewBox" class="hidden text-center mt-2">
                                     <p class="text-emerald-400 text-[10px] mb-1">✔ ครอบตัดรูปภาพเรียบร้อย</p>
@@ -216,12 +215,12 @@
                             <h5 id="commandFormTitle" class="text-sm font-bold text-yellow-300 mb-2">เพิ่มกำลังพลในบอร์ด</h5>
                             <input type="hidden" id="editCommandIndex" value="-1">
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2">
-                                <input type="text" id="cmdRankName" placeholder="1. ยศ - ชื่อ" class="bg-zinc-800 border border-zinc-700 rounded p-2 text-white text-sm">
-                                <input type="text" id="cmdPosition" placeholder="2. ตำแหน่ง" class="bg-zinc-800 border border-zinc-700 rounded p-2 text-white text-sm">
+                                <input type="text" id="cmdRankName" placeholder="ยศ - ชื่อ" class="bg-zinc-800 border border-zinc-700 rounded p-2 text-white text-sm">
+                                <input type="text" id="cmdPosition" placeholder="ตำแหน่ง" class="bg-zinc-800 border border-zinc-700 rounded p-2 text-white text-sm">
                             </div>
                             
                             <div class="bg-zinc-800 p-2.5 rounded border border-zinc-700 mb-2 text-xs">
-                                <span class="text-yellow-300 font-semibold block mb-1">3. รูปภาพกำลังพล (เลือกแล้วปรับเลื่อนครอบตัดได้)</span>
+                                <span class="text-yellow-300 font-semibold block mb-1">รูปภาพกำลังพล (เลือกแล้วปรับเลื่อนครอบตัดได้)</span>
                                 <input type="file" id="cmdFile" accept="image/*" onchange="openCropper(this, 'command')" class="w-full text-gray-300 text-xs file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-zinc-700 file:text-white hover:file:bg-zinc-600 mb-2">
                                 <div id="cmdPreviewBox" class="hidden text-center mt-2">
                                     <p class="text-emerald-400 text-[10px] mb-1">✔ จัดรูปวงกลมเรียบร้อย</p>
@@ -238,9 +237,27 @@
                     </div>
 
                     <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700 mb-6">
-                        <div class="flex justify-between items-center mb-3">
-                            <h4 class="font-bold text-yellow-400">รายชื่อผู้สมัครเข้าเป็นนักศึกษาวิชาทหาร</h4>
-                            <button onclick="exportToCSV()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-3 py-1.5 rounded font-bold">📥 ส่งออกเป็น Excel (CSV)</button>
+                        <div class="flex flex-col sm:flex-row justify-between items-center mb-3 gap-2">
+                            <h4 class="font-bold text-yellow-400">รายชื่อผู้สมัครเข้าเป็นนักศึกษาวิชาทหาร (เรียงตามห้องและตัวอักษร)</h4>
+                            <div class="flex gap-2 items-center w-full sm:w-auto">
+                                <select id="filterRoom" onchange="updateAdminStats()" class="bg-zinc-900 border border-zinc-700 rounded p-1.5 text-white text-xs">
+                                    <option value="">ทุกห้องเรียน</option>
+                                    <option value="ม.4/1">ม.4/1</option>
+                                    <option value="ม.4/2">ม.4/2</option>
+                                    <option value="ม.4/3">ม.4/3</option>
+                                    <option value="ม.4/4">ม.4/4</option>
+                                    <option value="ม.4/5">ม.4/5</option>
+                                    <option value="ม.4/6">ม.4/6</option>
+                                    <option value="ม.4/7">ม.4/7</option>
+                                    <option value="ม.4/8">ม.4/8</option>
+                                    <option value="ม.4/9">ม.4/9</option>
+                                    <option value="ม.4/10">ม.4/10</option>
+                                    <option value="ม.4/11">ม.4/11</option>
+                                    <option value="ม.4/12">ม.4/12</option>
+                                    <option value="ม.4/13">ม.4/13</option>
+                                </select>
+                                <button onclick="exportToCSV()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-3 py-1.5 rounded font-bold shrink-0">📥 ส่งออก Excel</button>
+                            </div>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="w-full text-left text-sm text-gray-300">
@@ -248,6 +265,7 @@
                                     <tr>
                                         <th class="p-2">ลำดับ</th>
                                         <th class="p-2">ชื่อ - สกุล</th>
+                                        <th class="p-2">ห้อง</th>
                                         <th class="p-2">ชั้นปีที่สมัคร</th>
                                         <th class="p-2">เบอร์โทรศัพท์</th>
                                         <th class="p-2">ช่องทางติดต่อ</th>
@@ -256,7 +274,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="applicantTableBody">
-                                    <tr><td colspan="7" class="p-3 text-center text-gray-500">ยังไม่มีผู้สมัครในระบบ</td></tr>
+                                    <tr><td colspan="8" class="p-3 text-center text-gray-500">ยังไม่มีผู้สมัครในระบบ</td></tr>
                                 </tbody>
                             </table>
                         </div>
@@ -264,7 +282,7 @@
 
                     <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700">
                         <h4 class="font-bold text-yellow-400 mb-3">จัดการข่าวสารที่มีอยู่</h4>
-                        <div id="adminNewsList" class="space-y-2"></div>
+                        <div id="adminNewsList" class="space-y-2 max-h-48 overflow-y-auto"></div>
                     </div>
                 </div>
             </main>
@@ -284,8 +302,8 @@
                 </div>
                 <span class="text-xs font-bold text-yellow-300">พัน.นศท.รร.บบ.</span>
             </div>
-            <button onclick="handleAdminClick()" class="bg-red-700 hover:bg-red-800 text-white px-3 py-1.5 rounded-xl text-xs font-bold border border-red-500 shadow-lg transition">
-                ⚙ เข้าสู่ระบบ Admin
+            <button onclick="handleAdminNavClick()" id="registerAdminBtn" class="bg-blue-700 hover:bg-blue-800 text-white px-3 py-1.5 rounded-xl text-xs font-bold border border-blue-500 shadow-lg transition">
+                เข้าสู่ระบบ Admin
             </button>
         </div>
 
@@ -293,18 +311,51 @@
             <button onclick="goToIntro()" class="mb-4 bg-zinc-800 hover:bg-zinc-700 px-3 py-1.5 rounded text-sm text-yellow-400">⬅ กลับหน้าแรก</button>
             <h2 class="text-2xl font-bold text-yellow-400 mb-4">สมัครเข้าเป็นนักศึกษาวิชาทหาร โรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"</h2>
             <form onsubmit="submitRegister(event)" class="space-y-4">
-                <div>
-                    <label class="block text-sm text-gray-300 mb-1">ชื่อ - สกุล</label>
-                    <input type="text" id="regName" required class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white" placeholder="เช่น ด.ช.รักชาติ ยิ่งชีพ">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                    <div>
+                        <label class="block text-sm text-gray-300 mb-1">คำนำหน้าชื่อ</label>
+                        <select id="regPrefix" class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white">
+                            <option value="นาย">นาย</option>
+                            <option value="นางสาว">นางสาว</option>
+                            <option value="เด็กชาย">เด็กชาย</option>
+                            <option value="เด็กหญิง">เด็กหญิง</option>
+                        </select>
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label class="block text-sm text-gray-300 mb-1">ชื่อ - สกุล (ไม่ต้องใส่คำนำหน้า)</label>
+                        <input type="text" id="regName" required class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white" placeholder="รักชาติ ยิ่งชีพ">
+                    </div>
                 </div>
-                <div>
-                    <label class="block text-sm text-gray-300 mb-1">ชั้นปีที่สมัคร</label>
-                    <select id="regYear" class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white">
-                        <option>นศท. ชั้นปีที่ 1</option>
-                        <option>นศท. ชั้นปีที่ 2</option>
-                        <option>นศท. ชั้นปีที่ 3</option>
-                    </select>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm text-gray-300 mb-1">ห้องเรียน</label>
+                        <select id="regRoom" class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white">
+                            <option value="ม.4/1">ม.4/1</option>
+                            <option value="ม.4/2">ม.4/2</option>
+                            <option value="ม.4/3">ม.4/3</option>
+                            <option value="ม.4/4">ม.4/4</option>
+                            <option value="ม.4/5">ม.4/5</option>
+                            <option value="ม.4/6">ม.4/6</option>
+                            <option value="ม.4/7">ม.4/7</option>
+                            <option value="ม.4/8">ม.4/8</option>
+                            <option value="ม.4/9">ม.4/9</option>
+                            <option value="ม.4/10">ม.4/10</option>
+                            <option value="ม.4/11">ม.4/11</option>
+                            <option value="ม.4/12">ม.4/12</option>
+                            <option value="ม.4/13">ม.4/13</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-300 mb-1">ชั้นปีที่สมัคร</label>
+                        <select id="regYear" class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white">
+                            <option>นศท. ชั้นปีที่ 1</option>
+                            <option>นศท. ชั้นปีที่ 2</option>
+                            <option>นศท. ชั้นปีที่ 3</option>
+                        </select>
+                    </div>
                 </div>
+
                 <div>
                     <label class="block text-sm text-gray-300 mb-1">เบอร์โทรศัพท์ที่ติดต่อได้</label>
                     <input type="tel" id="regPhone" required class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white" placeholder="เช่น 0812345678">
@@ -319,9 +370,10 @@
                             <option value="Line">Line</option>
                             <option value="YouTube">YouTube</option>
                             <option value="Twitter">Twitter / X</option>
+                            <option value="เบอร์โทรศัพท์">เบอร์โทรศัพท์</option>
                             <option value="อื่นๆ">อื่นๆ</option>
                         </select>
-                        <input type="text" id="regContactName" class="bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm focus:outline-none focus:border-yellow-400" placeholder="ชื่อเพจ / ไอดี เช่น พัน.นศท. รร.บ้านบึง">
+                        <input type="text" id="regContactName" class="bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm focus:outline-none focus:border-yellow-400" placeholder="ชื่อเพจ / เบอร์ / ไอดี">
                     </div>
                 </div>
                 <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg shadow-lg">ยืนยันการสมัคร</button>
@@ -389,8 +441,6 @@
         let defaultContacts = [
             { platform: "Facebook", name: "พัน.นศท.รร.บ้านบึง อุตสาหกรรมมนุเคราะห์", url: "https://facebook.com" },
             { platform: "Line", name: "@bbu_army", url: "https://line.me" },
-            { platform: "YouTube", name: "พัน.นศท.รร.บ้านบึง", url: "https://youtube.com" },
-            { platform: "Instagram", name: "@bbu_nsat", url: "https://instagram.com" },
             { platform: "เบอร์โทรศัพท์", name: "089-123-4567", url: "tel:0891234567" }
         ];
         let defaultMotto = "มีวินัย ใฝ่ศึกษา เสียสละเพื่อส่วนรวม";
@@ -407,7 +457,20 @@
         let cropTargetType = '';
         let imgX = 0, imgY = 0, isDragging = false, startX = 0, startY = 0;
 
+        function updateAdminNavButton() {
+            let btn1 = document.getElementById('dynamicAdminNavBtn');
+            let btn2 = document.getElementById('registerAdminBtn');
+            if (isAdmin) {
+                if(btn1) { btn1.innerText = "⚙ แดชบอร์ด Admin"; btn1.className = "bg-red-700 hover:bg-red-800 px-3 py-1.5 rounded text-white font-bold text-sm border border-red-500 transition"; }
+                if(btn2) { btn2.innerText = "⚙ แดชบอร์ด Admin"; btn2.className = "bg-red-700 hover:bg-red-800 px-3 py-1.5 rounded-xl text-xs font-bold border border-red-500 shadow-lg transition"; }
+            } else {
+                if(btn1) { btn1.innerText = "เข้าสู่ระบบ Admin"; btn1.className = "bg-blue-700 hover:bg-blue-800 px-3 py-1.5 rounded text-white font-bold text-sm border border-blue-500 transition"; }
+                if(btn2) { btn2.innerText = "เข้าสู่ระบบ Admin"; btn2.className = "bg-blue-700 hover:bg-blue-800 px-3 py-1.5 rounded-xl text-xs font-bold border border-blue-500 shadow-lg transition"; }
+            }
+        }
+
         function renderAll() {
+            updateAdminNavButton();
             renderNews();
             renderCommandBoard();
             renderContacts();
@@ -576,7 +639,6 @@
             if (p.includes('facebook')) {
                 return `<svg class="w-6 h-6 fill-current text-zinc-900" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>`;
             } else if (p.includes('tiktok')) {
-                // แก้ไขโลโก้ TikTok ตัวจริง
                 return `<svg class="w-6 h-6 fill-current text-zinc-900" viewBox="0 0 24 24"><path d="M19.589 6.686a4.793 4.793 0 0 1-3.77-4.242V2h-3.445v13.672a2.896 2.896 0 0 1-5.201 1.743l-.002-.001.002-.001a2.895 2.895 0 0 1 3.183-4.51v-3.5a6.329 6.329 0 0 0-5.394 10.692 6.33 6.33 0 0 0 10.857-4.424V8.687a8.182 8.182 0 0 0 4.773 1.526V6.79a4.853 4.853 0 0 1-1.01-.104z"/></svg>`;
             } else if (p.includes('line')) {
                 return `<svg class="w-6 h-6 fill-current text-zinc-900" viewBox="0 0 24 24"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .348-.285.63-.632.63-.349 0-.63-.282-.63-.63V8.108c0-.271.174-.51.433-.596.062-.02.13-.03.197-.03.212 0 .39.09.51.25l2.444 3.317V8.108c0-.345.285-.63.63-.63.349 0 .631.285.631.63v4.771zm-5.741 0c0 .348-.285.63-.63.63-.349 0-.63-.282-.63-.63V8.108c0-.345.281-.63.63-.63.345 0 .63.285.63.63v4.771zm-2.466.63H4.864c-.349 0-.63-.285-.63-.63V8.108c0-.345.281-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.349 0 .63.283.63.63 0 .344-.281.629-.63.629M24 10.311C24 4.615 18.627 0 12 0S0 4.615 0 10.311c0 5.093 4.675 9.388 11.006 10.149.429.083.996.257 1.141.592.13.303.084 1.107.042 1.371-.129.805-.584 2.977-.611 3.149-.071.464-.326 1.815 1.517 1.002 1.843-.814 9.945-5.857 13.567-10.021C23.364 14.887 24 12.723 24 10.311"/></svg>`;
@@ -586,7 +648,7 @@
                 return `<svg class="w-6 h-6 fill-current text-zinc-900" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>`;
             } else if (p.includes('twitter') || p.includes('x')) {
                 return `<svg class="w-6 h-6 fill-current text-zinc-900" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>`;
-            } else if (p.includes('โทร') || p.includes('phone')) {
+            } else if (p.includes('โทร') || p.includes('phone') || p.includes('อื่นๆ')) {
                 return `<svg class="w-6 h-6 fill-current text-zinc-900" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>`;
             } else {
                 return `<svg class="w-6 h-6 fill-current text-zinc-900" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>`;
@@ -598,7 +660,7 @@
             let phoneInput = document.getElementById('contactPhoneInput');
             let urlInput = document.getElementById('contactUrl');
             
-            if (platform === 'เบอร์โทรศัพท์') {
+            if (platform === 'เบอร์โทรศัพท์' || platform === 'อื่นๆ') {
                 phoneInput.classList.remove('hidden');
                 urlInput.placeholder = "ระบบจะใส่ tel:... ให้อัตโนมัติ";
             } else {
@@ -619,7 +681,6 @@
                     let a = document.createElement('a');
                     let targetUrl = c.url && c.url.trim() !== '' ? c.url : '#';
                     
-                    // หากเป็นเบอร์โทรหรือขึ้นต้นด้วย tel: ให้เปิดในแอปโทรออก
                     if (targetUrl.startsWith('tel:')) {
                         a.href = targetUrl;
                     } else if (targetUrl !== '#') {
@@ -647,8 +708,10 @@
                     let div = document.createElement('div');
                     div.className = "flex justify-between items-center bg-zinc-900 p-2.5 rounded border border-zinc-700 text-xs";
                     div.innerHTML = `
-                        <div class="truncate"><span class="text-yellow-300 font-bold">[${c.platform}]</span> <span class="text-gray-300 ml-2">${c.name}</span> <span class="text-gray-500 ml-2">(${c.url || '#'})</span></div>
-                        <div class="flex gap-1.5 shrink-0 ml-2">
+                        <div class="truncate"><span class="text-yellow-300 font-bold">[${c.platform}]</span> <span class="text-gray-300 ml-2">${c.name}</span></div>
+                        <div class="flex gap-1 shrink-0 ml-2">
+                            <button onclick="moveContact(${index}, -1)" class="bg-zinc-700 hover:bg-zinc-600 px-2 py-1 rounded text-white font-bold" ${index === 0 ? 'disabled style="opacity:0.4"' : ''}>⬆ เลื่อนขึ้น</button>
+                            <button onclick="moveContact(${index}, 1)" class="bg-zinc-700 hover:bg-zinc-600 px-2 py-1 rounded text-white font-bold" ${index === contactData.length - 1 ? 'disabled style="opacity:0.4"' : ''}>⬇ เลื่อนลง</button>
                             <button onclick="editContact(${index})" class="bg-amber-600 hover:bg-amber-700 px-2 py-1 rounded text-white font-bold">แก้ไข</button>
                             <button onclick="deleteContact(${index})" class="bg-red-600 hover:bg-red-700 px-2 py-1 rounded text-white font-bold">ลบ</button>
                         </div>
@@ -658,6 +721,16 @@
             });
         }
 
+        function moveContact(index, direction) {
+            let targetIndex = index + direction;
+            if (targetIndex < 0 || targetIndex >= contactData.length) return;
+            let temp = contactData[index];
+            contactData[index] = contactData[targetIndex];
+            contactData[targetIndex] = temp;
+            saveDataToStorage();
+            renderContacts();
+        }
+
         function saveContactChannel() {
             let platform = document.getElementById('contactPlatform').value;
             let name = document.getElementById('contactName').value.trim();
@@ -665,9 +738,11 @@
             let url = document.getElementById('contactUrl').value.trim();
             let editIndex = parseInt(document.getElementById('editContactIndex').value);
 
-            if (platform === 'เบอร์โทรศัพท์' && phoneVal) {
+            if ((platform === 'เบอร์โทรศัพท์' || platform === 'อื่นๆ') && phoneVal) {
                 if (!name) name = phoneVal;
                 url = 'tel:' + phoneVal.replace(/[^0-9+]/g, '');
+            } else if (platform === 'อื่นๆ' && name && !url && !phoneVal) {
+                url = 'tel:' + name.replace(/[^0-9+]/g, '');
             } else if (!url) {
                 url = '#';
             }
@@ -694,9 +769,9 @@
             document.getElementById('contactName').value = c.name;
             
             let phoneInput = document.getElementById('contactPhoneInput');
-            if (c.platform === 'เบอร์โทรศัพท์' || c.url.startsWith('tel:')) {
+            if (c.platform === 'เบอร์โทรศัพท์' || c.platform === 'อื่นๆ' || c.url.startsWith('tel:')) {
                 phoneInput.classList.remove('hidden');
-                phoneInput.value = c.url.replace('tel:', '');
+                phoneInput.value = c.url.startsWith('tel:') ? c.url.replace('tel:', '') : c.name;
             } else {
                 phoneInput.classList.add('hidden');
                 phoneInput.value = '';
@@ -752,13 +827,15 @@
                     row.className = "flex justify-between items-center bg-zinc-900 p-2.5 rounded border border-zinc-700 text-xs";
                     row.innerHTML = `
                         <div class="flex items-center space-x-2 truncate">
-                            <img src="${item.image || 'https://via.placeholder.com/50'}" class="w-8 h-8 rounded-full object-cover">
-                            <div>
+                            <img src="${item.image || 'https://via.placeholder.com/50'}" class="w-8 h-8 rounded-full object-cover shrink-0">
+                            <div class="truncate">
                                 <span class="font-bold text-yellow-200">${item.rankName}</span>
                                 <span class="text-gray-400 ml-2">(${item.position})</span>
                             </div>
                         </div>
-                        <div class="flex gap-1.5 shrink-0">
+                        <div class="flex gap-1 shrink-0 ml-2">
+                            <button onclick="moveCommand(${index}, -1)" class="bg-zinc-700 hover:bg-zinc-600 px-2 py-1 rounded text-white font-bold" ${index === 0 ? 'disabled style="opacity:0.4"' : ''}>⬆ เลื่อนขึ้น</button>
+                            <button onclick="moveCommand(${index}, 1)" class="bg-zinc-700 hover:bg-zinc-600 px-2 py-1 rounded text-white font-bold" ${index === commandData.length - 1 ? 'disabled style="opacity:0.4"' : ''}>⬇ เลื่อนลง</button>
                             <button onclick="editCommand(${index})" class="bg-amber-600 hover:bg-amber-700 px-2 py-1 rounded text-white font-bold">แก้ไข</button>
                             <button onclick="deleteCommand(${index})" class="bg-red-600 hover:bg-red-700 px-2 py-1 rounded text-white font-bold">ลบ</button>
                         </div>
@@ -768,6 +845,16 @@
             });
         }
 
+        function moveCommand(index, direction) {
+            let targetIndex = index + direction;
+            if (targetIndex < 0 || targetIndex >= commandData.length) return;
+            let temp = commandData[index];
+            commandData[index] = commandData[targetIndex];
+            commandData[targetIndex] = temp;
+            saveDataToStorage();
+            renderCommandBoard();
+        }
+
         function renderNews() {
             let list = document.getElementById('newsList');
             let adminList = document.getElementById('adminNewsList');
@@ -775,28 +862,42 @@
             if (adminList) adminList.innerHTML = '';
 
             newsData.forEach((item, index) => {
-                let div = document.createElement('div');
-                div.className = "bg-zinc-800 p-4 rounded-xl border border-zinc-700";
-                div.innerHTML = `
-                    <h4 class="font-bold text-yellow-300 text-lg">${item.title}</h4>
-                    <p class="text-sm text-gray-300 mt-2 whitespace-pre-line">${item.desc}</p>
-                    ${item.image ? `<div class="mt-3 overflow-hidden rounded-lg border border-zinc-700 max-h-72 flex justify-center bg-black/40"><img src="${item.image}" alt="รูปข่าว" onclick="openLightbox('${item.image}')" class="object-contain max-h-72 w-full cursor-pointer hover:opacity-95 transition"></div>` : ''}
-                `;
-                if(list) list.appendChild(div);
+                if (list) {
+                    let div = document.createElement('div');
+                    div.className = "bg-zinc-800 p-4 rounded-xl border border-zinc-700";
+                    div.innerHTML = `
+                        <h4 class="font-bold text-yellow-300 text-lg">${item.title}</h4>
+                        <p class="text-sm text-gray-300 mt-2 whitespace-pre-line">${item.desc}</p>
+                        ${item.image ? `<div class="mt-3 overflow-hidden rounded-lg border border-zinc-700 max-h-72 flex justify-center bg-black/40"><img src="${item.image}" alt="รูปข่าว" onclick="openLightbox('${item.image}')" class="object-contain max-h-72 w-full cursor-pointer hover:opacity-95 transition"></div>` : ''}
+                    `;
+                    list.appendChild(div);
+                }
 
                 if (adminList) {
                     let adminDiv = document.createElement('div');
                     adminDiv.className = "flex justify-between items-center bg-zinc-900 p-3 rounded border border-zinc-700 text-sm";
                     adminDiv.innerHTML = `
                         <span class="font-medium text-yellow-200 truncate max-w-xs">${index + 1}. ${item.title}</span>
-                        <div class="flex gap-2">
-                            <button onclick="editNews(${index})" class="bg-amber-600 hover:bg-amber-700 px-2.5 py-1 rounded text-xs font-bold text-white">แก้ไข</button>
-                            <button onclick="deleteNews(${index})" class="bg-red-600 hover:bg-red-700 px-2.5 py-1 rounded text-xs font-bold text-white">ลบ</button>
+                        <div class="flex gap-1 shrink-0 ml-2">
+                            <button onclick="moveNews(${index}, -1)" class="bg-zinc-700 hover:bg-zinc-600 px-2 py-1 rounded text-white text-xs font-bold" ${index === 0 ? 'disabled style="opacity:0.4"' : ''}>⬆ เลื่อนขึ้น</button>
+                            <button onclick="moveNews(${index}, 1)" class="bg-zinc-700 hover:bg-zinc-600 px-2 py-1 rounded text-white text-xs font-bold" ${index === newsData.length - 1 ? 'disabled style="opacity:0.4"' : ''}>⬇ เลื่อนลง</button>
+                            <button onclick="editNews(${index})" class="bg-amber-600 hover:bg-amber-700 px-2 py-1 rounded text-xs font-bold text-white">แก้ไข</button>
+                            <button onclick="deleteNews(${index})" class="bg-red-600 hover:bg-red-700 px-2 py-1 rounded text-xs font-bold text-white">ลบ</button>
                         </div>
                     `;
                     adminList.appendChild(adminDiv);
                 }
             });
+        }
+
+        function moveNews(index, direction) {
+            let targetIndex = index + direction;
+            if (targetIndex < 0 || targetIndex >= newsData.length) return;
+            let temp = newsData[index];
+            newsData[index] = newsData[targetIndex];
+            newsData[targetIndex] = temp;
+            saveDataToStorage();
+            renderNews();
         }
 
         function enterMainSite() {
@@ -824,7 +925,7 @@
             if(secId === 'admin') updateAdminStats();
         }
 
-        function handleAdminClick() {
+        function handleAdminNavClick() {
             if (isAdmin) {
                 enterMainSite();
                 showSection('admin');
@@ -834,6 +935,7 @@
                     isAdmin = true;
                     localStorage.setItem('bbu_is_admin', 'true');
                     alert("เข้าสู่ระบบ Admin สำเร็จ!");
+                    updateAdminNavButton();
                     enterMainSite();
                     showSection('admin');
                 } else if (pass !== null) {
@@ -846,6 +948,7 @@
             isAdmin = false;
             localStorage.removeItem('bbu_is_admin');
             alert("ออกจากระบบ Admin เรียบร้อยแล้ว");
+            updateAdminNavButton();
             goToIntro();
         }
 
@@ -914,7 +1017,7 @@
             if (title && desc) {
                 let finalImg = activeImageData || (editIndex !== -1 ? newsData[editIndex].image : '');
                 if (editIndex === -1) {
-                    newsData.unshift({ title, desc, image: finalImg });
+                    newsData.push({ title, desc, image: finalImg });
                     alert("เพิ่มข่าวสารสำเร็จ!");
                 } else {
                     newsData[editIndex] = { title, desc, image: finalImg };
@@ -965,7 +1068,10 @@
 
         function submitRegister(e) {
             e.preventDefault();
-            let name = document.getElementById('regName').value;
+            let prefix = document.getElementById('regPrefix').value;
+            let rawName = document.getElementById('regName').value.trim();
+            let name = prefix + " " + rawName;
+            let room = document.getElementById('regRoom').value;
             let year = document.getElementById('regYear').value;
             let phone = document.getElementById('regPhone').value;
             
@@ -975,7 +1081,7 @@
             
             let date = new Date().toLocaleDateString('th-TH');
 
-            applicants.push({ name, year, phone, contact, date });
+            applicants.push({ name, room, year, phone, contact, date });
             saveDataToStorage();
             
             alert("บันทึกข้อมูลการสมัครเรียบร้อยแล้ว!");
@@ -985,9 +1091,9 @@
             goToIntro();
         }
 
-        function deleteApplicant(index) {
+        function deleteApplicant(indexInFiltered, fullIndex) {
             if (confirm("คุณต้องการลบข้อมูลผู้สมัครรายนี้ใช่หรือไม่?")) {
-                applicants.splice(index, 1);
+                applicants.splice(fullIndex, 1);
                 saveDataToStorage();
                 updateAdminStats();
                 alert("ลบข้อมูลผู้สมัครสำเร็จ!");
@@ -1008,24 +1114,44 @@
             document.getElementById('chartY2Bar').style.width = (y2Count / maxCount * 100) + "%";
             document.getElementById('chartY3Bar').style.width = (y3Count / maxCount * 100) + "%";
 
+            let selectedRoom = document.getElementById('filterRoom').value;
+
+            // จัดเรียงข้อมูลผู้สมัครตามห้องเรียน (ม.4/1 ถึง ม.4/13) และเรียงตามตัวอักษรชื่อ
+            let indexedApplicants = applicants.map((app, origIndex) => ({ ...app, origIndex }));
+            
+            indexedApplicants.sort((a, b) => {
+                let roomA = a.room || "ม.4/0";
+                let roomB = b.room || "ม.4/0";
+                let numA = parseInt(roomA.replace('ม.4/', '')) || 0;
+                let numB = parseInt(roomB.replace('ม.4/', '')) || 0;
+                if (numA !== numB) return numA - numB;
+                return a.name.localeCompare(b.name, 'th');
+            });
+
+            let filtered = indexedApplicants;
+            if (selectedRoom) {
+                filtered = indexedApplicants.filter(app => app.room === selectedRoom);
+            }
+
             let tbody = document.getElementById('applicantTableBody');
-            if (applicants.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" class="p-3 text-center text-gray-500">ยังไม่มีผู้สมัครในระบบ</td></tr>`;
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="8" class="p-3 text-center text-gray-500">ยังไม่มีผู้สมัครในระบบตามเงื่อนไข</td></tr>`;
                 return;
             }
             tbody.innerHTML = '';
-            applicants.forEach((app, index) => {
+            filtered.forEach((app, index) => {
                 let tr = document.createElement('tr');
                 tr.className = "border-b border-zinc-700/50 hover:bg-zinc-700/20";
                 tr.innerHTML = `
                     <td class="p-2">${index + 1}</td>
                     <td class="p-2">${app.name}</td>
+                    <td class="p-2 font-bold text-yellow-300">${app.room || '-'}</td>
                     <td class="p-2">${app.year}</td>
                     <td class="p-2">${app.phone}</td>
                     <td class="p-2">${app.contact}</td>
                     <td class="p-2">${app.date}</td>
                     <td class="p-2 text-center">
-                        <button onclick="deleteApplicant(${index})" class="bg-red-600 hover:bg-red-700 text-white text-xs px-2 py-1 rounded">ลบ</button>
+                        <button onclick="deleteApplicant(${index}, ${app.origIndex})" class="bg-red-600 hover:bg-red-700 text-white text-xs px-2 py-1 rounded">ลบ</button>
                     </td>
                 `;
                 tbody.appendChild(tr);
@@ -1037,9 +1163,17 @@
                 alert("ยังไม่มีข้อมูลผู้สมัครสำหรับส่งออก");
                 return;
             }
-            let csvContent = "\uFEFFลำดับ,ชื่อ-สกุล,ชั้นปีที่สมัคร,เบอร์โทรศัพท์,ช่องทางติดต่อ,วันที่สมัคร\n";
-            applicants.forEach((app, index) => {
-                csvContent += `${index + 1},"${app.name}","${app.year}","${app.phone}","${app.contact}",${app.date}\n`;
+            let csvContent = "\uFEFFลำดับ,ชื่อ-สกุล,ห้อง,ชั้นปีที่สมัคร,เบอร์โทรศัพท์,ช่องทางติดต่อ,วันที่สมัคร\n";
+            
+            let sorted = [...applicants].sort((a, b) => {
+                let numA = parseInt((a.room || "ม.4/0").replace('ม.4/', '')) || 0;
+                let numB = parseInt((b.room || "ม.4/0").replace('ม.4/', '')) || 0;
+                if (numA !== numB) return numA - numB;
+                return a.name.localeCompare(b.name, 'th');
+            });
+
+            sorted.forEach((app, index) => {
+                csvContent += `${index + 1},"${app.name}","${app.room || '-'}","${app.year}","${app.phone}","${app.contact}",${app.date}\n`;
             });
             let blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             let url = URL.createObjectURL(blob);
