@@ -442,15 +442,16 @@
     <div id="cropperModal" class="hidden fixed inset-0 bg-black/90 z-50 flex flex-col items-center justify-center p-4">
         <div class="bg-zinc-900 border border-yellow-500/50 p-5 rounded-2xl max-w-md w-full shadow-2xl text-center">
             <h3 class="text-lg font-bold text-yellow-400 mb-2">ปรับตำแหน่งและเลือกมุมมองรูปภาพ</h3>
-            <p class="text-xs text-gray-400 mb-4">ใช้แถบเลื่อนเพื่อซูม หรือลากเพื่อปรับมุมมองตามต้องการ</p>
-            
-            <div class="relative w-full h-64 bg-black rounded-lg overflow-hidden border border-zinc-700 flex items-center justify-center mb-4">
-                <canvas id="cropCanvas" class="cursor-grab active:grabbing"></canvas>
+            <p class="text-xs text-gray-400 mb-4">ลากรูปเพื่อเลื่อนตำแหน่ง • ใช้สองนิ้วบีบ/ขยายเพื่อซูม (หรือใช้แถบเลื่อน)</p>
+
+            <div class="relative w-full aspect-square max-w-[320px] mx-auto bg-black rounded-lg overflow-hidden border border-zinc-700 mb-4 touch-none select-none">
+                <canvas id="cropCanvas" class="w-full h-full block cursor-grab active:cursor-grabbing"></canvas>
+                <div id="cropGuideOverlay" class="absolute inset-0 pointer-events-none"></div>
             </div>
 
-            <div class="mb-4 text-left">
-                <label class="text-xs text-gray-300 block mb-1">ซูมภาพ (Zoom):</label>
-                <input type="range" id="zoomRange" min="1" max="3" step="0.05" value="1" oninput="updateCropView()" class="w-full accent-yellow-500">
+            <div class="mb-4 text-left flex items-center gap-3">
+                <span class="text-xs text-gray-300 shrink-0">🔍 ซูม:</span>
+                <input type="range" id="zoomRange" min="1" max="3" step="0.01" value="1" oninput="onZoomSliderChange()" class="w-full accent-yellow-500">
             </div>
 
             <div class="flex gap-2">
@@ -515,7 +516,11 @@
         let cropImageObj = new Image();
         let cropCanvas, cropCtx;
         let cropTargetType = '';
-        let imgX = 0, imgY = 0, isDragging = false, startX = 0, startY = 0;
+        const CROP_RES = 500; // internal resolution captured for the final image
+        let cImg = { natW: 0, natH: 0, baseScale: 1, zoom: 1, offsetX: 0, offsetY: 0 };
+        let isDragging = false, dragStartClientX = 0, dragStartClientY = 0, dragStartOffX = 0, dragStartOffY = 0;
+        let pinchStartDist = 0, pinchStartZoom = 1;
+        let pendingNewsImages = [];
 
         function updateAdminNavButton() {
             let btn1 = document.getElementById('dynamicAdminNavBtn');
@@ -718,13 +723,13 @@
                 }
             });
         }
-
+ 
         function toggleRegOpen() {
             regOpen = !regOpen;
             saveDataToStorage();
             renderRegStatus();
         }
-
+ 
         function renderMotto() {
             let el = document.getElementById('displayMotto');
             if(el) el.innerText = `"${mottoText}"`;
@@ -1551,3 +1556,4 @@
     </script>
 </body>
 </html>
+ 
