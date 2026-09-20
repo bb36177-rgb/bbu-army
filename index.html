@@ -15,6 +15,10 @@
             background-position: center;
             background-attachment: fixed;
         }
+        /* เพิ่มสไตล์แก้ปัญหาตัวหนังสือทับกัน */
+        .fixed-line-height {
+            line-height: 1.5; /* เพิ่มระยะห่างระหว่างบรรทัด */
+        }
     </style>
 </head>
 <body class="military-bg min-h-screen text-white flex flex-col justify-between">
@@ -37,7 +41,8 @@
             <div class="inline-block p-3 bg-zinc-900/80 backdrop-blur-md rounded-2xl border border-yellow-500/50 shadow-2xl mb-6 max-w-xl mx-auto">
                 <img src="19-9-69.png" alt="สถิตในดวงใจตราบนิจนิรันดร์" class="w-full h-auto object-cover rounded-xl border border-yellow-400" onerror="this.style.display='none'">
             </div>
-            <h2 class="text-xl md:text-3xl font-bold text-yellow-400 mb-8 drop-shadow-md">
+            <!-- แก้ไขตรงนี้: เพิ่ม fixed-line-height และเว้นระยะด้านล่าง -->
+            <h2 class="text-xl md:text-3xl font-bold text-yellow-400 mb-8 drop-shadow-md fixed-line-height px-4">
                 กองพันนักศึกษาวิชาทหาร โรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"
             </h2>
             <div class="flex flex-col justify-center items-center gap-4 max-w-md mx-auto w-full px-4">
@@ -85,10 +90,11 @@
             <main class="p-6 md:p-10 max-w-5xl mx-auto w-full">
                 <!-- Home Section -->
                 <div id="sec-home" class="content-section text-center py-10 bg-zinc-900/80 backdrop-blur rounded-2xl p-8 border border-zinc-700/50 shadow-xl">
-                    <h2 class="text-2xl md:text-4xl font-bold text-yellow-400 mb-6">
+                    <!-- แก้ไขตรงนี้: เพิ่ม fixed-line-height ให้หัวข้อหน้าหลักด้วย -->
+                    <h2 class="text-2xl md:text-4xl font-bold text-yellow-400 mb-6 fixed-line-height">
                         ยินดีต้อนรับเข้าสู่เว็บไซต์ของกองพันนักศึกษาวิชาทหารโรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"
                     </h2>
-                    <p class="text-gray-300 text-base md:text-lg max-w-2xl mx-auto">
+                    <p class="text-gray-300 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
                         เว็บไซต์ทางการสำหรับประชาสัมพันธ์ข้อมูลข่าวสาร การบังคับบัญชา และระเบียบปฏิบัติของนักศึกษาวิชาทหาร โรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"
                     </p>
                 </div>
