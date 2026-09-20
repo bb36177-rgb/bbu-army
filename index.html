@@ -86,7 +86,7 @@
             <main class="p-6 md:p-10 max-w-5xl mx-auto w-full">
                 <!-- Home Section -->
                 <div id="sec-home" class="content-section text-center py-10 bg-zinc-900/80 backdrop-blur rounded-2xl p-8 border border-zinc-700/50 shadow-xl">
-                    <h2 class="text-2xl md:text-4xl font-bold text-yellow-400 mb-6">
+                    <h2 class="text-2xl md:text-4xl font-bold text-yellow-400 mb-6 leading-relaxed">
                         ยินดีต้อนรับเข้าสู่เว็บไซต์ของกองพันนักศึกษาวิชาทหารโรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"
                     </h2>
                     <p class="text-gray-300 text-base md:text-lg max-w-2xl mx-auto mb-10">
@@ -94,11 +94,11 @@
                     </p>
 
                     <!-- PR News (ข่าวประชาสัมพันธ์) -->
-                    <div class="text-left">
-                        <div class="flex justify-between items-center mb-4 px-1">
-                            <h3 class="text-xl md:text-2xl font-bold text-yellow-400 border-b-2 border-yellow-500 pb-1">ข่าวประชาสัมพันธ์</h3>
+                    <div class="text-center mt-12">
+                        <div class="inline-block mb-6 border-b-2 border-yellow-500 pb-1">
+                            <h3 class="text-xl md:text-2xl font-bold text-yellow-400">ข่าวประชาสัมพันธ์</h3>
                         </div>
-                        <div id="prNewsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"></div>
+                        <div id="prNewsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 text-left"></div>
                     </div>
                 </div>
 
@@ -136,209 +136,234 @@
                         <button onclick="adminLogout()" class="bg-zinc-700 hover:bg-zinc-600 text-white px-3 py-1.5 rounded text-sm font-semibold">ออกจากระบบ Admin</button>
                     </div>
                     
-                    <!-- แก้ไขคำขวัญ -->
-                    <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700 mb-6">
-                        <h4 class="font-bold text-yellow-400 mb-2">แก้ไขคำขวัญประจำกองพัน</h4>
-                        <div class="flex gap-2">
-                            <input type="text" id="mottoInput" placeholder="พิมพ์คำขวัญประจำกองพัน..." class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm">
-                            <button onclick="saveMotto()" class="bg-yellow-600 hover:bg-yellow-700 px-4 py-2 rounded text-sm font-bold text-white shrink-0">บันทึกคำขวัญ</button>
-                        </div>
-                    </div>
-
-                    <!-- จัดการช่องทางติดต่อ -->
-                    <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700 mb-6">
-                        <h4 id="contactFormTitle" class="font-bold text-yellow-400 mb-2">จัดการช่องทางติดต่อโซเชียลและเบอร์โทรศัพท์</h4>
-                        <input type="hidden" id="editContactIndex" value="-1">
-                        <div class="grid grid-cols-1 sm:grid-cols-4 gap-2 mb-2">
-                            <select id="contactPlatform" class="bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm" onchange="onPlatformChange()">
-                                <option value="Facebook">Facebook</option>
-                                <option value="TikTok">TikTok</option>
-                                <option value="Instagram">Instagram</option>
-                                <option value="Line">Line</option>
-                                <option value="YouTube">YouTube</option>
-                                <option value="Twitter">Twitter / X</option>
-                                <option value="เบอร์โทรศัพท์">เบอร์โทรศัพท์</option>
-                                <option value="อื่นๆ">อื่นๆ</option>
-                            </select>
-                            <textarea id="contactName" placeholder="ชื่อเพจ / เบอร์ / ไอดี (กด Enter เพื่อขึ้นบรรทัดใหม่ได้)" rows="1" class="bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm resize-y min-h-[2.5rem]"></textarea>
-                            <input type="tel" id="contactPhoneInput" placeholder="ใส่เบอร์ เช่น 0812345678" class="bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm hidden">
-                            <input type="url" id="contactUrl" placeholder="ลิงก์ URL (ถ้ามี)" class="bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm">
-                        </div>
-                        <!-- ส่วนอัปโหลดรูปภาพเฉพาะกรณีเลือก "อื่นๆ" -->
-                        <div id="contactFileBox" class="bg-zinc-900 p-2.5 rounded border border-zinc-700 mb-2 text-xs hidden">
-                            <span class="text-yellow-300 font-semibold block mb-1">อัปโหลดรูปภาพ (สำหรับหัวข้ออื่นๆ)</span>
-                            <input type="file" id="contactFile" accept="image/*" onchange="openCropper(this, 'contact')" class="w-full text-gray-300 text-xs file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-zinc-700 file:text-white hover:file:bg-zinc-600 mb-2">
-                            <div id="contactPreviewBox" class="hidden text-center mt-2">
-                                <p class="text-emerald-400 text-[10px] mb-1">✔ เลือกรูปภาพเรียบร้อย</p>
-                                <img id="contactPreviewImg" class="w-24 h-24 object-cover mx-auto rounded border border-yellow-500">
+                    <!-- หมวดหมู่: ตั้งค่าระบบทั่วไป -->
+                    <div class="mb-8 p-4 bg-zinc-950/40 rounded-xl border border-zinc-800">
+                        <h4 class="text-lg font-bold text-yellow-400 mb-4 border-l-4 border-yellow-500 pl-2">📌 ตั้งค่าทั่วไปและสถานะระบบ</h4>
+                        
+                        <!-- แก้ไขคำขวัญ -->
+                        <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700 mb-4">
+                            <h5 class="font-bold text-yellow-300 text-sm mb-2">แก้ไขคำขวัญประจำกองพัน</h5>
+                            <div class="flex gap-2">
+                                <input type="text" id="mottoInput" placeholder="พิมพ์คำขวัญประจำกองพัน..." class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm">
+                                <button onclick="saveMotto()" class="bg-yellow-600 hover:bg-yellow-700 px-4 py-2 rounded text-sm font-bold text-white shrink-0">บันทึกคำขวัญ</button>
                             </div>
                         </div>
-                        <div class="flex gap-2">
-                            <button onclick="saveContactChannel()" id="saveContactBtn" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-sm font-bold text-white w-full mb-3">เพิ่มช่องทางติดต่อ</button>
-                            <button onclick="resetContactForm()" id="cancelContactBtn" class="hidden bg-zinc-700 hover:bg-zinc-600 px-4 py-2 rounded text-sm font-bold text-white mb-3">ยกเลิก</button>
-                        </div>
-                        <div id="adminContactList" class="space-y-2 max-h-48 overflow-y-auto"></div>
-                    </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                        <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700 flex flex-col justify-between">
+                        <!-- เปิด/ปิด รับสมัคร นศท. -->
+                        <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700 flex flex-col sm:flex-row justify-between items-center gap-3">
                             <div>
-                                <h4 class="font-bold text-yellow-400 mb-2">สถิติภาพรวมเว็บไซต์</h4>
-                                <p class="text-gray-300">จำนวนผู้สมัคร นศท. ทั้งหมด: <span id="applicantCount" class="font-bold text-blue-400">0</span> คน</p>
+                                <h5 class="font-bold text-yellow-300 text-sm">สถานะช่องรับสมัคร นศท.</h5>
+                                <p class="text-xs text-gray-400 mt-1">เมื่อปิด ผู้ใช้จะไม่สามารถกดสมัครเข้าเป็นนักศึกษาวิชาทหารได้</p>
                             </div>
-                            <div class="mt-4 pt-4 border-t border-zinc-700">
-                                <p class="text-xs text-yellow-300 mb-2 font-semibold">📈 กราฟแสดงสถิติผู้สมัครแยกตามชั้นปี</p>
-                                <div class="space-y-2 text-xs">
+                            <button onclick="toggleRegOpen()" id="regToggleBtn" class="px-5 py-2 rounded-lg text-sm font-bold shrink-0"></button>
+                        </div>
+                    </div>
+
+                    <!-- หมวดหมู่: จัดการช่องทางติดต่อ -->
+                    <div class="mb-8 p-4 bg-zinc-950/40 rounded-xl border border-zinc-800">
+                        <h4 class="text-lg font-bold text-yellow-400 mb-4 border-l-4 border-yellow-500 pl-2">📞 จัดการช่องทางติดต่อ</h4>
+                        <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700">
+                            <h5 id="contactFormTitle" class="font-bold text-yellow-300 text-sm mb-2">จัดการช่องทางติดต่อโซเชียลและเบอร์โทรศัพท์</h5>
+                            <input type="hidden" id="editContactIndex" value="-1">
+                            <div class="grid grid-cols-1 sm:grid-cols-4 gap-2 mb-2">
+                                <select id="contactPlatform" class="bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm" onchange="onPlatformChange()">
+                                    <option value="Facebook">Facebook</option>
+                                    <option value="TikTok">TikTok</option>
+                                    <option value="Instagram">Instagram</option>
+                                    <option value="Line">Line</option>
+                                    <option value="YouTube">YouTube</option>
+                                    <option value="Twitter">Twitter / X</option>
+                                    <option value="เบอร์โทรศัพท์">เบอร์โทรศัพท์</option>
+                                    <option value="อื่นๆ">อื่นๆ</option>
+                                </select>
+                                <textarea id="contactName" placeholder="ชื่อเพจ / เบอร์ / ไอดี (กด Enter เพื่อขึ้นบรรทัดใหม่ได้)" rows="1" class="bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm resize-y min-h-[2.5rem]"></textarea>
+                                <input type="tel" id="contactPhoneInput" placeholder="ใส่เบอร์ เช่น 0812345678" class="bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm hidden">
+                                <input type="url" id="contactUrl" placeholder="ลิงก์ URL (ถ้ามี)" class="bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm">
+                            </div>
+                            <div id="contactFileBox" class="bg-zinc-900 p-2.5 rounded border border-zinc-700 mb-2 text-xs hidden">
+                                <span class="text-yellow-300 font-semibold block mb-1">อัปโหลดรูปภาพ (สำหรับหัวข้ออื่นๆ)</span>
+                                <input type="file" id="contactFile" accept="image/*" onchange="openCropper(this, 'contact')" class="w-full text-gray-300 text-xs file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-zinc-700 file:text-white hover:file:bg-zinc-600 mb-2">
+                                <div id="contactPreviewBox" class="hidden text-center mt-2">
+                                    <p class="text-emerald-400 text-[10px] mb-1">✔ เลือกรูปภาพเรียบร้อย</p>
+                                    <img id="contactPreviewImg" class="w-24 h-24 object-cover mx-auto rounded border border-yellow-500">
+                                </div>
+                            </div>
+                            <div class="flex gap-2">
+                                <button onclick="saveContactChannel()" id="saveContactBtn" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-sm font-bold text-white w-full mb-3">เพิ่มช่องทางติดต่อ</button>
+                                <button onclick="resetContactForm()" id="cancelContactBtn" class="hidden bg-zinc-700 hover:bg-zinc-600 px-4 py-2 rounded text-sm font-bold text-white mb-3">ยกเลิก</button>
+                            </div>
+                            <div id="adminContactList" class="space-y-2 max-h-48 overflow-y-auto"></div>
+                        </div>
+                    </div>
+
+                    <!-- หมวดหมู่: บอร์ดการบังคับบัญชา -->
+                    <div class="mb-8 p-4 bg-zinc-950/40 rounded-xl border border-zinc-800">
+                        <h4 class="text-lg font-bold text-yellow-400 mb-4 border-l-4 border-yellow-500 pl-2">🎖 บอร์ดการบังคับบัญชา</h4>
+                        <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700">
+                            <div class="bg-zinc-900 p-3 rounded-lg border border-zinc-700 mb-4">
+                                <h5 id="commandFormTitle" class="text-sm font-bold text-yellow-300 mb-2">เพิ่มกำลังพลในบอร์ด</h5>
+                                <input type="hidden" id="editCommandIndex" value="-1">
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2">
+                                    <input type="text" id="cmdRankName" placeholder="ยศ - ชื่อ" class="bg-zinc-800 border border-zinc-700 rounded p-2 text-white text-sm">
+                                    <input type="text" id="cmdPosition" placeholder="ตำแหน่ง" class="bg-zinc-800 border border-zinc-700 rounded p-2 text-white text-sm">
+                                    <select id="cmdColumn" class="bg-zinc-800 border border-zinc-700 rounded p-2 text-white text-sm">
+                                        <option value="ผกท.">ผกท. (ผู้กำกับ)</option>
+                                        <option value="รอง.ผกท.">รอง.ผกท. (รองผู้กำกับ)</option>
+                                        <option value="รอง หน.ฝ.1">รอง หน.ฝ.1</option>
+                                        <option value="รอง หน.ฝ.2">รอง หน.ฝ.2</option>
+                                        <option value="รอง หน.ฝ.3">รอง หน.ฝ.3</option>
+                                        <option value="รอง หน.ฝ.4">รอง หน.ฝ.4</option>
+                                        <option value="ลูก ฝ.">ลูก ฝ. (ฝ่ายอำนวยการ)</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="bg-zinc-800 p-2.5 rounded border border-zinc-700 mb-2 text-xs">
+                                    <span class="text-yellow-300 font-semibold block mb-1">รูปภาพกำลังพล (เลือกแล้วปรับเลื่อนครอบตัดได้)</span>
+                                    <input type="file" id="cmdFile" accept="image/*" onchange="openCropper(this, 'command')" class="w-full text-gray-300 text-xs file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-zinc-700 file:text-white hover:file:bg-zinc-600 mb-2">
+                                    <div id="cmdPreviewBox" class="hidden text-center mt-2">
+                                        <p class="text-emerald-400 text-[10px] mb-1">✔ จัดรูปวงกลมเรียบร้อย</p>
+                                        <img id="cmdPreviewImg" class="w-20 h-20 object-cover mx-auto rounded-full border border-yellow-500">
+                                    </div>
+                                </div>
+
+                                <div class="flex gap-2">
+                                    <button onclick="saveCommandStaff()" id="saveCommandBtn" class="bg-blue-600 hover:bg-blue-700 px-4 py-1.5 rounded text-xs font-bold text-white">บันทึกข้อมูลกำลังพล</button>
+                                    <button onclick="resetCommandForm()" id="cancelCommandBtn" class="hidden bg-zinc-700 hover:bg-zinc-600 px-3 py-1.5 rounded text-xs font-bold text-white">ยกเลิก</button>
+                                </div>
+                            </div>
+                            <div id="adminCommandList" class="space-y-2 max-h-60 overflow-y-auto"></div>
+                        </div>
+                    </div>
+
+                    <!-- หมวดหมู่: ข่าวสารและกิจกรรม -->
+                    <div class="mb-8 p-4 bg-zinc-950/40 rounded-xl border border-zinc-800">
+                        <h4 class="text-lg font-bold text-yellow-400 mb-4 border-l-4 border-yellow-500 pl-2">📰 จัดการข่าวสารและประชาสัมพันธ์</h4>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <!-- เพิ่ม/แก้ไข ข่าวสารกิจกรรม -->
+                            <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700 flex flex-col">
+                                <h5 id="newsFormTitle" class="font-bold text-yellow-300 text-sm mb-2">เพิ่มข่าวสารใหม่ (ใส่ภาพได้หลายภาพ)</h5>
+                                <input type="hidden" id="editNewsIndex" value="-1">
+                                <input type="text" id="newsTitleInput" placeholder="หัวข้อข่าว..." class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm mb-2">
+                                <input type="text" id="newsDateInput" placeholder="วันที่ (เช่น 6 พฤษภาคม 2569) เว้นว่างเพื่อใช้วันที่ปัจจุบัน" class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm mb-2">
+                                <textarea id="newsDescInput" placeholder="เนื้อหาข่าว..." class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm mb-2 h-20"></textarea>
+                                
+                                <div class="bg-zinc-900 p-2.5 rounded border border-zinc-700 mb-2 text-xs">
+                                    <span class="text-yellow-300 font-semibold block mb-1">เพิ่มรูปภาพประกอบข่าว (เลือกได้มากกว่า 1 ภาพ)</span>
+                                    <input type="file" id="newsMultiFile" accept="image/*" multiple onchange="handleMultiNewsImages(this)" class="w-full text-gray-300 text-xs file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-zinc-700 file:text-white hover:file:bg-zinc-600 mb-2">
+                                    <div id="newsMultiPreviewContainer" class="flex flex-wrap gap-2 mt-2"></div>
+                                </div>
+
+                                <div class="flex gap-2 mt-auto">
+                                    <button onclick="saveNews()" id="saveNewsBtn" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded text-sm font-bold text-white w-full">บันทึกข่าวสาร</button>
+                                    <button onclick="resetNewsForm()" id="cancelNewsBtn" class="hidden bg-zinc-700 hover:bg-zinc-600 px-3 py-2 rounded text-sm font-bold text-white">ยกเลิก</button>
+                                </div>
+                            </div>
+
+                            <!-- เพิ่ม/แก้ไข ข่าวประชาสัมพันธ์ -->
+                            <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700 flex flex-col">
+                                <h5 id="prNewsFormTitle" class="font-bold text-yellow-300 text-sm mb-2">เพิ่มข่าวประชาสัมพันธ์ใหม่</h5>
+                                <input type="hidden" id="editPrNewsIndex" value="-1">
+                                <input type="text" id="prNewsTitleInput" placeholder="หัวข้อ/คำอธิบายสั้นๆ (ไม่บังคับ)" class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm mb-2">
+                                <div class="bg-zinc-900 p-2.5 rounded border border-zinc-700 mb-2 text-xs">
+                                    <span class="text-yellow-300 font-semibold block mb-1">รูปภาพข่าวประชาสัมพันธ์ (โปสเตอร์/ภาพข่าว)</span>
+                                    <input type="file" id="prNewsFile" accept="image/*" onchange="openCropper(this, 'prnews')" class="w-full text-gray-300 text-xs file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-zinc-700 file:text-white hover:file:bg-zinc-600 mb-2">
+                                    <div id="prNewsPreviewBox" class="hidden text-center mt-2">
+                                        <p class="text-emerald-400 text-[10px] mb-1">✔ เลือกรูปภาพเรียบร้อย</p>
+                                        <img id="prNewsPreviewImg" class="w-24 h-24 object-cover mx-auto rounded border border-yellow-500">
+                                    </div>
+                                </div>
+                                <div class="flex gap-2 mb-3 mt-auto">
+                                    <button onclick="savePrNews()" id="savePrNewsBtn" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded text-sm font-bold text-white w-full">บันทึกข่าวประชาสัมพันธ์</button>
+                                    <button onclick="resetPrNewsForm()" id="cancelPrNewsBtn" class="hidden bg-zinc-700 hover:bg-zinc-600 px-3 py-2 rounded text-sm font-bold text-white">ยกเลิก</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- รายการข่าวสารที่มีอยู่ -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700">
+                                <h5 class="font-bold text-yellow-300 text-sm mb-3">รายการข่าวสาร (ประมวลภาพกิจกรรม)</h5>
+                                <div id="adminNewsList" class="space-y-2 max-h-48 overflow-y-auto"></div>
+                            </div>
+                            <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700">
+                                <h5 class="font-bold text-yellow-300 text-sm mb-3">รายการข่าวประชาสัมพันธ์</h5>
+                                <div id="adminPrNewsList" class="space-y-2 max-h-48 overflow-y-auto"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- หมวดหมู่: ข้อมูลผู้สมัครและสถิติ -->
+                    <div class="p-4 bg-zinc-950/40 rounded-xl border border-zinc-800">
+                        <h4 class="text-lg font-bold text-yellow-400 mb-4 border-l-4 border-yellow-500 pl-2">📊 สถิติและรายชื่อผู้สมัคร นศท.</h4>
+                        
+                        <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700 mb-6">
+                            <h5 class="font-bold text-yellow-300 text-sm mb-3">📈 กราฟสรุปสถิติผู้สมัครแยกตามชั้นปี</h5>
+                            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+                                <div class="bg-zinc-900 p-3 rounded-lg border border-zinc-700 text-center">
+                                    <span class="text-xs text-gray-400 block">ผู้สมัครทั้งหมด</span>
+                                    <span id="applicantCount" class="text-2xl font-bold text-blue-400">0</span> <span class="text-xs text-gray-300">คน</span>
+                                </div>
+                                <div class="md:col-span-3 space-y-2 text-xs">
                                     <div>
                                         <div class="flex justify-between mb-1 text-gray-300"><span>ชั้นปีที่ 1</span><span id="chartY1Count">0 คน</span></div>
-                                        <div class="w-full bg-zinc-900 rounded-full h-3 overflow-hidden border border-zinc-700"><div id="chartY1Bar" class="bg-blue-500 h-3 rounded-full transition-all duration-500" style="width: 0%"></div></div>
+                                        <div class="w-full bg-zinc-900 rounded-full h-3.5 overflow-hidden border border-zinc-700"><div id="chartY1Bar" class="bg-blue-500 h-3.5 rounded-full transition-all duration-500" style="width: 0%"></div></div>
                                     </div>
                                     <div>
                                         <div class="flex justify-between mb-1 text-gray-300"><span>ชั้นปีที่ 2</span><span id="chartY2Count">0 คน</span></div>
-                                        <div class="w-full bg-zinc-900 rounded-full h-3 overflow-hidden border border-zinc-700"><div id="chartY2Bar" class="bg-green-500 h-3 rounded-full transition-all duration-500" style="width: 0%"></div></div>
+                                        <div class="w-full bg-zinc-900 rounded-full h-3.5 overflow-hidden border border-zinc-700"><div id="chartY2Bar" class="bg-green-500 h-3.5 rounded-full transition-all duration-500" style="width: 0%"></div></div>
                                     </div>
                                     <div>
                                         <div class="flex justify-between mb-1 text-gray-300"><span>ชั้นปีที่ 3</span><span id="chartY3Count">0 คน</span></div>
-                                        <div class="w-full bg-zinc-900 rounded-full h-3 overflow-hidden border border-zinc-700"><div id="chartY3Bar" class="bg-amber-500 h-3 rounded-full transition-all duration-500" style="width: 0%"></div></div>
+                                        <div class="w-full bg-zinc-900 rounded-full h-3.5 overflow-hidden border border-zinc-700"><div id="chartY3Bar" class="bg-amber-500 h-3.5 rounded-full transition-all duration-500" style="width: 0%"></div></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700">
-                            <h4 id="newsFormTitle" class="font-bold text-yellow-400 mb-2">เพิ่มข่าวสารใหม่</h4>
-                            <input type="hidden" id="editNewsIndex" value="-1">
-                            <input type="text" id="newsTitleInput" placeholder="หัวข้อข่าว..." class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm mb-2">
-                            <input type="text" id="newsDateInput" placeholder="วันที่ (เช่น 6 พฤษภาคม 2569) เว้นว่างเพื่อใช้วันที่ปัจจุบัน" class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm mb-2">
-                            <textarea id="newsDescInput" placeholder="เนื้อหาข่าว..." class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm mb-2 h-20"></textarea>
-                            
-                            <div class="bg-zinc-900 p-2.5 rounded border border-zinc-700 mb-2 text-xs">
-                                <span class="text-yellow-300 font-semibold block mb-1">รูปภาพประกอบข่าว (เลือกแล้วปรับเลื่อนครอบตัดได้)</span>
-                                <input type="file" id="newsFile" accept="image/*" onchange="openCropper(this, 'news')" class="w-full text-gray-300 text-xs file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-zinc-700 file:text-white hover:file:bg-zinc-600 mb-2">
-                                <div id="newsPreviewBox" class="hidden text-center mt-2">
-                                    <p class="text-emerald-400 text-[10px] mb-1">✔ ครอบตัดรูปภาพเรียบร้อย</p>
-                                    <img id="newsPreviewImg" class="w-24 h-24 object-cover mx-auto rounded border border-yellow-500">
+                            <div class="flex flex-col sm:flex-row justify-between items-center mb-3 gap-2">
+                                <h5 class="font-bold text-yellow-300 text-sm">รายชื่อผู้สมัครเข้าเป็นนักศึกษาวิชาทหาร</h5>
+                                <div class="flex gap-2 items-center w-full sm:w-auto">
+                                    <select id="filterRoom" onchange="updateAdminStats()" class="bg-zinc-900 border border-zinc-700 rounded p-1.5 text-white text-xs">
+                                        <option value="">ทุกห้องเรียน</option>
+                                        <option value="ม.4/1">ม.4/1</option>
+                                        <option value="ม.4/2">ม.4/2</option>
+                                        <option value="ม.4/3">ม.4/3</option>
+                                        <option value="ม.4/4">ม.4/4</option>
+                                        <option value="ม.4/5">ม.4/5</option>
+                                        <option value="ม.4/6">ม.4/6</option>
+                                        <option value="ม.4/7">ม.4/7</option>
+                                        <option value="ม.4/8">ม.4/8</option>
+                                        <option value="ม.4/9">ม.4/9</option>
+                                        <option value="ม.4/10">ม.4/10</option>
+                                        <option value="ม.4/11">ม.4/11</option>
+                                        <option value="ม.4/12">ม.4/12</option>
+                                        <option value="ม.4/13">ม.4/13</option>
+                                    </select>
+                                    <button onclick="exportToCSV()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-3 py-1.5 rounded font-bold shrink-0">📥 ส่งออก Excel</button>
                                 </div>
                             </div>
-
-                            <div class="flex gap-2">
-                                <button onclick="saveNews()" id="saveNewsBtn" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded text-sm font-bold text-white w-full">บันทึกข่าวสาร</button>
-                                <button onclick="resetNewsForm()" id="cancelNewsBtn" class="hidden bg-zinc-700 hover:bg-zinc-600 px-3 py-2 rounded text-sm font-bold text-white">ยกเลิก</button>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left text-sm text-gray-300">
+                                    <thead class="bg-zinc-900 text-yellow-300">
+                                        <tr>
+                                            <th class="p-2">ลำดับ</th>
+                                            <th class="p-2">ชื่อ - สกุล</th>
+                                            <th class="p-2">ห้อง</th>
+                                            <th class="p-2">ชั้นปีที่สมัคร</th>
+                                            <th class="p-2">เบอร์โทรศัพท์</th>
+                                            <th class="p-2">ช่องทางติดต่อ</th>
+                                            <th class="p-2">วันที่สมัคร</th>
+                                            <th class="p-2 text-center">จัดการ</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="applicantTableBody">
+                                        <tr><td colspan="8" class="p-3 text-center text-gray-500">ยังไม่มีผู้สมัครในระบบ</td></tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700 mb-6">
-                        <h4 class="font-bold text-yellow-400 mb-3">จัดการบอร์ดการบังคับบัญชา</h4>
-                        <div class="bg-zinc-900 p-3 rounded-lg border border-zinc-700 mb-4">
-                            <h5 id="commandFormTitle" class="text-sm font-bold text-yellow-300 mb-2">เพิ่มกำลังพลในบอร์ด</h5>
-                            <input type="hidden" id="editCommandIndex" value="-1">
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2">
-                                <input type="text" id="cmdRankName" placeholder="ยศ - ชื่อ" class="bg-zinc-800 border border-zinc-700 rounded p-2 text-white text-sm">
-                                <input type="text" id="cmdPosition" placeholder="ตำแหน่ง" class="bg-zinc-800 border border-zinc-700 rounded p-2 text-white text-sm">
-                                <select id="cmdColumn" class="bg-zinc-800 border border-zinc-700 rounded p-2 text-white text-sm">
-                                    <option value="ผกท.">ผกท. (คอลัมน์ที่ 1)</option>
-                                    <option value="รอง.ผกท.">รอง.ผกท. (คอลัมน์ที่ 2)</option>
-                                    <option value="ฝ.1">ฝ.1</option>
-                                    <option value="ฝ.2">ฝ.2</option>
-                                    <option value="ฝ.3">ฝ.3</option>
-                                    <option value="ฝ.4">ฝ.4</option>
-                                </select>
-                            </div>
-                            
-                            <div class="bg-zinc-800 p-2.5 rounded border border-zinc-700 mb-2 text-xs">
-                                <span class="text-yellow-300 font-semibold block mb-1">รูปภาพกำลังพล (เลือกแล้วปรับเลื่อนครอบตัดได้)</span>
-                                <input type="file" id="cmdFile" accept="image/*" onchange="openCropper(this, 'command')" class="w-full text-gray-300 text-xs file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-zinc-700 file:text-white hover:file:bg-zinc-600 mb-2">
-                                <div id="cmdPreviewBox" class="hidden text-center mt-2">
-                                    <p class="text-emerald-400 text-[10px] mb-1">✔ จัดรูปวงกลมเรียบร้อย</p>
-                                    <img id="cmdPreviewImg" class="w-20 h-20 object-cover mx-auto rounded-full border border-yellow-500">
-                                </div>
-                            </div>
-
-                            <div class="flex gap-2">
-                                <button onclick="saveCommandStaff()" id="saveCommandBtn" class="bg-blue-600 hover:bg-blue-700 px-4 py-1.5 rounded text-xs font-bold text-white">บันทึกข้อมูลกำลังพล</button>
-                                <button onclick="resetCommandForm()" id="cancelCommandBtn" class="hidden bg-zinc-700 hover:bg-zinc-600 px-3 py-1.5 rounded text-xs font-bold text-white">ยกเลิก</button>
-                            </div>
-                        </div>
-                        <div id="adminCommandList" class="space-y-2 max-h-48 overflow-y-auto"></div>
-                    </div>
-
-                    <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700 mb-6">
-                        <div class="flex flex-col sm:flex-row justify-between items-center mb-3 gap-2">
-                            <h4 class="font-bold text-yellow-400">รายชื่อผู้สมัครเข้าเป็นนักศึกษาวิชาทหาร (เรียงตามห้องและตัวอักษร)</h4>
-                            <div class="flex gap-2 items-center w-full sm:w-auto">
-                                <select id="filterRoom" onchange="updateAdminStats()" class="bg-zinc-900 border border-zinc-700 rounded p-1.5 text-white text-xs">
-                                    <option value="">ทุกห้องเรียน</option>
-                                    <option value="ม.4/1">ม.4/1</option>
-                                    <option value="ม.4/2">ม.4/2</option>
-                                    <option value="ม.4/3">ม.4/3</option>
-                                    <option value="ม.4/4">ม.4/4</option>
-                                    <option value="ม.4/5">ม.4/5</option>
-                                    <option value="ม.4/6">ม.4/6</option>
-                                    <option value="ม.4/7">ม.4/7</option>
-                                    <option value="ม.4/8">ม.4/8</option>
-                                    <option value="ม.4/9">ม.4/9</option>
-                                    <option value="ม.4/10">ม.4/10</option>
-                                    <option value="ม.4/11">ม.4/11</option>
-                                    <option value="ม.4/12">ม.4/12</option>
-                                    <option value="ม.4/13">ม.4/13</option>
-                                </select>
-                                <button onclick="exportToCSV()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-3 py-1.5 rounded font-bold shrink-0">📥 ส่งออก Excel</button>
-                            </div>
-                        </div>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left text-sm text-gray-300">
-                                <thead class="bg-zinc-900 text-yellow-300">
-                                    <tr>
-                                        <th class="p-2">ลำดับ</th>
-                                        <th class="p-2">ชื่อ - สกุล</th>
-                                        <th class="p-2">ห้อง</th>
-                                        <th class="p-2">ชั้นปีที่สมัคร</th>
-                                        <th class="p-2">เบอร์โทรศัพท์</th>
-                                        <th class="p-2">ช่องทางติดต่อ</th>
-                                        <th class="p-2">วันที่สมัคร</th>
-                                        <th class="p-2 text-center">จัดการ</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="applicantTableBody">
-                                    <tr><td colspan="8" class="p-3 text-center text-gray-500">ยังไม่มีผู้สมัครในระบบ</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700 mb-6">
-                        <h4 class="font-bold text-yellow-400 mb-3">จัดการข่าวสารที่มีอยู่ (ประมวลภาพกิจกรรม)</h4>
-                        <div id="adminNewsList" class="space-y-2 max-h-48 overflow-y-auto"></div>
-                    </div>
-
-                    <!-- จัดการข่าวประชาสัมพันธ์ -->
-                    <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700 mb-6">
-                        <h4 id="prNewsFormTitle" class="font-bold text-yellow-400 mb-2">เพิ่มข่าวประชาสัมพันธ์ใหม่</h4>
-                        <input type="hidden" id="editPrNewsIndex" value="-1">
-                        <input type="text" id="prNewsTitleInput" placeholder="หัวข้อ/คำอธิบายสั้นๆ (ไม่บังคับ)" class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm mb-2">
-                        <div class="bg-zinc-900 p-2.5 rounded border border-zinc-700 mb-2 text-xs">
-                            <span class="text-yellow-300 font-semibold block mb-1">รูปภาพข่าวประชาสัมพันธ์ (โปสเตอร์/ภาพข่าว)</span>
-                            <input type="file" id="prNewsFile" accept="image/*" onchange="openCropper(this, 'prnews')" class="w-full text-gray-300 text-xs file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-zinc-700 file:text-white hover:file:bg-zinc-600 mb-2">
-                            <div id="prNewsPreviewBox" class="hidden text-center mt-2">
-                                <p class="text-emerald-400 text-[10px] mb-1">✔ เลือกรูปภาพเรียบร้อย</p>
-                                <img id="prNewsPreviewImg" class="w-24 h-24 object-cover mx-auto rounded border border-yellow-500">
-                            </div>
-                        </div>
-                        <div class="flex gap-2 mb-3">
-                            <button onclick="savePrNews()" id="savePrNewsBtn" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded text-sm font-bold text-white w-full">บันทึกข่าวประชาสัมพันธ์</button>
-                            <button onclick="resetPrNewsForm()" id="cancelPrNewsBtn" class="hidden bg-zinc-700 hover:bg-zinc-600 px-3 py-2 rounded text-sm font-bold text-white">ยกเลิก</button>
-                        </div>
-                        <div id="adminPrNewsList" class="space-y-2 max-h-48 overflow-y-auto"></div>
-                    </div>
-
-                    <!-- เปิด/ปิด รับสมัคร นศท. -->
-                    <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700 flex flex-col sm:flex-row justify-between items-center gap-3">
-                        <div>
-                            <h4 class="font-bold text-yellow-400">สถานะช่องรับสมัคร นศท.</h4>
-                            <p class="text-xs text-gray-400 mt-1">เมื่อปิด ผู้ใช้จะไม่สามารถกดสมัครเข้าเป็นนักศึกษาวิชาทหารได้</p>
-                        </div>
-                        <button onclick="toggleRegOpen()" id="regToggleBtn" class="px-5 py-2 rounded-lg text-sm font-bold shrink-0"></button>
                     </div>
                 </div>
             </main>
@@ -438,20 +463,19 @@
         <footer class="text-center text-xs text-gray-500 py-2">จัดทำโดย ฝ่ายอำนวยการ 4</footer>
     </div>
 
-    <!-- Image Cropper Modal -->
+    <!-- Image Cropper Modal (Samsung Gallery Style) -->
     <div id="cropperModal" class="hidden fixed inset-0 bg-black/90 z-50 flex flex-col items-center justify-center p-4">
         <div class="bg-zinc-900 border border-yellow-500/50 p-5 rounded-2xl max-w-md w-full shadow-2xl text-center">
             <h3 class="text-lg font-bold text-yellow-400 mb-2">ปรับตำแหน่งและเลือกมุมมองรูปภาพ</h3>
-            <p class="text-xs text-gray-400 mb-4">ลากรูปเพื่อเลื่อนตำแหน่ง • ใช้สองนิ้วบีบ/ขยายเพื่อซูม (หรือใช้แถบเลื่อน)</p>
-
-            <div class="relative w-full aspect-square max-w-[320px] mx-auto bg-black rounded-lg overflow-hidden border border-zinc-700 mb-4 touch-none select-none">
-                <canvas id="cropCanvas" class="w-full h-full block cursor-grab active:cursor-grabbing"></canvas>
-                <div id="cropGuideOverlay" class="absolute inset-0 pointer-events-none"></div>
+            <p class="text-xs text-gray-400 mb-4">ซูมและเลื่อนรูปภาพให้อยู่ในกรอบที่ต้องการ (สไตล์แกลเลอรี)</p>
+            
+            <div id="cropViewport" class="relative w-full h-64 bg-black rounded-lg overflow-hidden border border-zinc-700 flex items-center justify-center mb-4 cursor-grab active:grabbing select-none touch-none">
+                <img id="cropSourceImg" class="absolute max-w-none pointer-events-none" alt="Crop Source">
             </div>
 
-            <div class="mb-4 text-left flex items-center gap-3">
-                <span class="text-xs text-gray-300 shrink-0">🔍 ซูม:</span>
-                <input type="range" id="zoomRange" min="1" max="3" step="0.01" value="1" oninput="onZoomSliderChange()" class="w-full accent-yellow-500">
+            <div class="mb-4 text-left">
+                <label class="text-xs text-gray-300 block mb-1">ซูมภาพ (Zoom):</label>
+                <input type="range" id="zoomRange" min="1" max="3" step="0.01" value="1" oninput="onZoomChange()" class="w-full accent-yellow-500">
             </div>
 
             <div class="flex gap-2">
@@ -490,9 +514,9 @@
     <script>
         let isAdmin = localStorage.getItem('bbu_is_admin') === 'true';
         
-        let defaultNews = [{ title: "เปิดรับสมัครนักศึกษาวิชาทหาร ประจำปีการศึกษา", date: new Date().toLocaleDateString('th-TH', {day:'numeric', month:'long', year:'numeric'}), desc: "สามารถตรวจสอบรายละเอียดการสมัครผ่านหน้าสมัคร นศท. ได้ทันที", image: "" }];
+        let defaultNews = [{ title: "เปิดรับสมัครนักศึกษาวิชาทหาร ประจำปีการศึกษา", date: new Date().toLocaleDateString('th-TH', {day:'numeric', month:'long', year:'numeric'}), desc: "สามารถตรวจสอบรายละเอียดการสมัครผ่านหน้าสมัคร นศท. ได้ทันที", images: [] }];
         let defaultPrNews = [];
-        const COMMAND_COLUMNS = ["ผกท.", "รอง.ผกท.", "ฝ.1", "ฝ.2", "ฝ.3", "ฝ.4"];
+        const COMMAND_COLUMNS = ["ผกท.", "รอง.ผกท.", "รอง หน.ฝ.1", "รอง หน.ฝ.2", "รอง หน.ฝ.3", "รอง หน.ฝ.4", "ลูก ฝ."];
         let defaultCommand = [
             { rankName: "ผกท.ณรงค์ศักดิ์ ปิยปากร", position: "ผู้กำกับนักศึกษาวิชาทหารโรงเรียนบ้านบึง \"อุตสาหกรรมมนุเคราะห์\"", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80", column: "ผกท." },
             { rankName: "ร.ท. สมชาย ใจมั่น", position: "นายทหารฝ่ายยุทธการ", image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80", column: "รอง.ผกท." }
@@ -512,15 +536,14 @@
         let mottoText = defaultMotto;
         let regOpen = true;
         let activeImageData = null;
+        let currentMultiNewsImages = [];
 
-        let cropImageObj = new Image();
-        let cropCanvas, cropCtx;
+        // Samsung Gallery Style Cropper Variables
         let cropTargetType = '';
-        const CROP_RES = 500; // internal resolution captured for the final image
-        let cImg = { natW: 0, natH: 0, baseScale: 1, zoom: 1, offsetX: 0, offsetY: 0 };
-        let isDragging = false, dragStartClientX = 0, dragStartClientY = 0, dragStartOffX = 0, dragStartOffY = 0;
-        let pinchStartDist = 0, pinchStartZoom = 1;
-        let pendingNewsImages = [];
+        let cropImgObj = new Image();
+        let scale = 1, minScale = 1;
+        let posX = 0, posY = 0;
+        let isDraggingCrop = false, startDragX = 0, startDragY = 0;
 
         function updateAdminNavButton() {
             let btn1 = document.getElementById('dynamicAdminNavBtn');
@@ -549,6 +572,13 @@
             if (doc.exists) {
                 let data = doc.data();
                 newsData = data.news || defaultNews;
+                // ปรับปรุงข้อมูลเก่าที่เป็น image เดี่ยว ให้รองรับ images อาเรย์
+                newsData = newsData.map(n => {
+                    if(!n.images) {
+                        n.images = n.image ? [n.image] : [];
+                    }
+                    return n;
+                });
                 prNewsData = data.prNews || defaultPrNews;
                 commandData = data.command || defaultCommand;
                 applicants = data.applicants || [];
@@ -584,91 +614,137 @@
             });
         }
 
+        // ===== Samsung Gallery Style Cropper Logic =====
         function openCropper(input, type) {
             if (input.files && input.files[0]) {
                 cropTargetType = type;
                 let reader = new FileReader();
                 reader.onload = function(e) {
-                    cropImageObj.onload = function() {
-                        cropCanvas = document.getElementById('cropCanvas');
-                        cropCtx = cropCanvas.getContext('2d');
-                        cropCanvas.width = 250;
-                        cropCanvas.height = 250;
-                        
-                        imgX = (cropCanvas.width - cropImageObj.width) / 2;
-                        imgY = (cropCanvas.height - cropImageObj.height) / 2;
-                        document.getElementById('zoomRange').value = 1;
+                    cropImgObj.onload = function() {
+                        let viewport = document.getElementById('cropViewport');
+                        let vw = viewport.clientWidth;
+                        let vh = viewport.clientHeight;
 
-                        initCropEvents();
-                        updateCropView();
+                        // คำนวณ Scale เริ่มต้นให้ครอบคลุมกรอบพอดี (เหมือนแกลเลอรี)
+                        let scaleX = vw / cropImgObj.width;
+                        let scaleY = vh / cropImgObj.height;
+                        minScale = Math.max(scaleX, scaleY);
+                        scale = minScale;
+
+                        let zoomRange = document.getElementById('zoomRange');
+                        zoomRange.min = minScale;
+                        zoomRange.max = minScale * 3;
+                        zoomRange.step = 0.01;
+                        zoomRange.value = scale;
+
+                        posX = (vw - cropImgObj.width * scale) / 2;
+                        posY = (vh - cropImgObj.height * scale) / 2;
+
+                        initCropTransformEvents(viewport);
+                        updateCropTransformUI();
                         document.getElementById('cropperModal').classList.remove('hidden');
                     }
-                    cropImageObj.src = e.target.result;
+                    cropImgObj.src = e.target.result;
                 }
                 reader.readAsDataURL(input.files[0]);
             }
         }
 
-        function initCropEvents() {
-            cropCanvas.onmousedown = function(e) {
-                isDragging = true;
-                startX = e.clientX - imgX;
-                startY = e.clientY - imgY;
+        function initCropTransformEvents(viewport) {
+            let imgEl = document.getElementById('cropSourceImg');
+            
+            imgEl.onmousedown = null;
+            viewport.onmousedown = function(e) {
+                isDraggingCrop = true;
+                startDragX = e.clientX - posX;
+                startDragY = e.clientY - posY;
             };
-            window.onmouseup = function() { isDragging = false; };
-            cropCanvas.onmousemove = function(e) {
-                if (!isDragging) return;
-                imgX = e.clientX - startX;
-                imgY = e.clientY - startY;
-                updateCropView();
+            window.onmouseup = function() { isDraggingCrop = false; };
+            window.onmousemove = function(e) {
+                if (!isDraggingCrop) return;
+                posX = e.clientX - startDragX;
+                posY = e.clientY - startDragY;
+                constrainCropPosition(viewport);
+                updateCropTransformUI();
             };
 
-            cropCanvas.ontouchstart = function(e) {
-                isDragging = true;
-                let touch = e.touches[0];
-                startX = touch.clientX - imgX;
-                startY = touch.clientY - imgY;
+            viewport.ontouchstart = function(e) {
+                if (e.touches.length === 1) {
+                    isDraggingCrop = true;
+                    let touch = e.touches[0];
+                    startDragX = touch.clientX - posX;
+                    startDragY = touch.clientY - posY;
+                }
             };
-            window.ontouchend = function() { isDragging = false; };
-            cropCanvas.ontouchmove = function(e) {
-                if (!isDragging) return;
+            window.ontouchend = function() { isDraggingCrop = false; };
+            window.ontouchmove = function(e) {
+                if (!isDraggingCrop || e.touches.length !== 1) return;
                 let touch = e.touches[0];
-                imgX = touch.clientX - startX;
-                imgY = touch.clientY - startY;
-                updateCropView();
+                posX = touch.clientX - startDragX;
+                posY = touch.clientY - startDragY;
+                constrainCropPosition(viewport);
+                updateCropTransformUI();
             };
         }
 
-        function updateCropView() {
-            if(!cropCtx) return;
-            let zoom = parseFloat(document.getElementById('zoomRange').value);
-            cropCtx.clearRect(0, 0, cropCanvas.width, cropCanvas.height);
-            cropCtx.save();
-            cropCtx.translate(cropCanvas.width / 2, cropCanvas.height / 2);
-            cropCtx.scale(zoom, zoom);
-            cropCtx.drawImage(cropImageObj, imgX - cropCanvas.width/2, imgY - cropCanvas.height/2);
-            cropCtx.restore();
+        function constrainCropPosition(viewport) {
+            let vw = viewport.clientWidth;
+            let vh = viewport.clientHeight;
+            let imgW = cropImgObj.width * scale;
+            let imgH = cropImgObj.height * scale;
+
+            if (posX > 0) posX = 0;
+            if (posX < vw - imgW) posX = vw - imgW;
+            if (posY > 0) posY = 0;
+            if (posY < vh - imgH) posY = vh - imgH;
+        }
+
+        function onZoomChange() {
+            let zoomRange = document.getElementById('zoomRange');
+            let viewport = document.getElementById('cropViewport');
+            let oldScale = scale;
+            scale = parseFloat(zoomRange.value);
+
+            let vw = viewport.clientWidth;
+            let vh = viewport.clientHeight;
+            let centerX = vw / 2;
+            let centerY = vh / 2;
+
+            posX = centerX - (centerX - posX) * (scale / oldScale);
+            posY = centerY - (centerY - posY) * (scale / oldScale);
+
+            constrainCropPosition(viewport);
+            updateCropTransformUI();
+        }
+
+        function updateCropTransformUI() {
+            let imgEl = document.getElementById('cropSourceImg');
+            imgEl.src = cropImgObj.src;
+            imgEl.style.width = cropImgObj.width + 'px';
+            imgEl.style.height = cropImgObj.height + 'px';
+            imgEl.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
+            imgEl.style.transformOrigin = 'top left';
         }
 
         function confirmCrop() {
-            let tempCanvas = document.createElement('canvas');
-            let tCtx = tempCanvas.getContext('2d');
-            let size = 600;
-            tempCanvas.width = size;
-            tempCanvas.height = size;
+            let viewport = document.getElementById('cropViewport');
+            let vw = viewport.clientWidth;
+            let vh = viewport.clientHeight;
 
-            let zoom = parseFloat(document.getElementById('zoomRange').value);
-            tCtx.translate(size / 2, size / 2);
-            tCtx.scale(zoom, zoom);
-            tCtx.drawImage(cropImageObj, (imgX - cropCanvas.width/2) * (size/cropCanvas.width), (imgY - cropCanvas.height/2) * (size/cropCanvas.height));
+            let canvas = document.createElement('canvas');
+            canvas.width = 600;
+            canvas.height = 600;
+            let ctx = canvas.getContext('2d');
 
-            activeImageData = tempCanvas.toDataURL('image/jpeg', 0.9);
+            let srcX = -posX / scale;
+            let srcY = -posY / scale;
+            let srcW = vw / scale;
+            let srcH = vh / scale;
 
-            if (cropTargetType === 'news') {
-                let box = document.getElementById('newsPreviewBox');
-                box.classList.remove('hidden');
-                box.querySelector('img').src = activeImageData;
-            } else if (cropTargetType === 'command') {
+            ctx.drawImage(cropImgObj, srcX, srcY, srcW, srcH, 0, 0, canvas.width, canvas.height);
+            activeImageData = canvas.toDataURL('image/jpeg', 0.9);
+
+            if (cropTargetType === 'command') {
                 let box = document.getElementById('cmdPreviewBox');
                 box.classList.remove('hidden');
                 box.querySelector('img').src = activeImageData;
@@ -686,10 +762,45 @@
 
         function closeCropper() {
             document.getElementById('cropperModal').classList.add('hidden');
-            if(cropTargetType === 'news') document.getElementById('newsFile').value = '';
             if(cropTargetType === 'command') document.getElementById('cmdFile').value = '';
             if(cropTargetType === 'contact') document.getElementById('contactFile').value = '';
             if(cropTargetType === 'prnews') document.getElementById('prNewsFile').value = '';
+        }
+
+        // Handle Multiple Images for News
+        function handleMultiNewsImages(input) {
+            if (input.files) {
+                let files = Array.from(input.files);
+                let container = document.getElementById('newsMultiPreviewContainer');
+                
+                files.forEach(file => {
+                    let reader = new FileReader();
+                    reader.onload = function(e) {
+                        currentMultiNewsImages.push(e.target.result);
+                        renderNewsMultiPreviews();
+                    }
+                    reader.readAsDataURL(file);
+                });
+            }
+        }
+
+        function renderNewsMultiPreviews() {
+            let container = document.getElementById('newsMultiPreviewContainer');
+            container.innerHTML = '';
+            currentMultiNewsImages.forEach((imgSrc, idx) => {
+                let wrap = document.createElement('div');
+                wrap.className = "relative inline-block";
+                wrap.innerHTML = `
+                    <img src="${imgSrc}" class="w-16 h-16 object-cover rounded border border-yellow-500">
+                    <button type="button" onclick="removeMultiNewsImg(${idx})" class="absolute -top-1 -right-1 bg-red-600 text-white rounded-full w-5 h-5 text-[10px] font-bold flex items-center justify-center">✕</button>
+                `;
+                container.appendChild(wrap);
+            });
+        }
+
+        function removeMultiNewsImg(idx) {
+            currentMultiNewsImages.splice(idx, 1);
+            renderNewsMultiPreviews();
         }
 
         function openLightbox(imgSrc) {
@@ -723,13 +834,13 @@
                 }
             });
         }
- 
+
         function toggleRegOpen() {
             regOpen = !regOpen;
             saveDataToStorage();
             renderRegStatus();
         }
- 
+
         function renderMotto() {
             let el = document.getElementById('displayMotto');
             if(el) el.innerText = `"${mottoText}"`;
@@ -855,8 +966,8 @@
                     div.innerHTML = `
                         <div class="truncate"><span class="text-yellow-300 font-bold">[${c.platform}]</span> <span class="text-gray-300 ml-2">${c.name}</span></div>
                         <div class="flex gap-1 shrink-0 ml-2">
-                            <button onclick="moveContact(${index}, -1)" class="bg-zinc-700 hover:bg-zinc-600 px-2 py-1 rounded text-white font-bold" ${index === 0 ? 'disabled style="opacity:0.4"' : ''}>⬆ เลื่อนขึ้น</button>
-                            <button onclick="moveContact(${index}, 1)" class="bg-zinc-700 hover:bg-zinc-600 px-2 py-1 rounded text-white font-bold" ${index === contactData.length - 1 ? 'disabled style="opacity:0.4"' : ''}>⬇ เลื่อนลง</button>
+                            <button onclick="moveContact(${index}, -1)" class="bg-zinc-700 hover:bg-zinc-600 px-2 py-1 rounded text-white font-bold" ${index === 0 ? 'disabled style="opacity:0.4"' : ''}>⬆</button>
+                            <button onclick="moveContact(${index}, 1)" class="bg-zinc-700 hover:bg-zinc-600 px-2 py-1 rounded text-white font-bold" ${index === contactData.length - 1 ? 'disabled style="opacity:0.4"' : ''}>⬇</button>
                             <button onclick="editContact(${index})" class="bg-amber-600 hover:bg-amber-700 px-2 py-1 rounded text-white font-bold">แก้ไข</button>
                             <button onclick="deleteContact(${index})" class="bg-red-600 hover:bg-red-700 px-2 py-1 rounded text-white font-bold">ลบ</button>
                         </div>
@@ -987,7 +1098,6 @@
         }
 
         function getColumnItems(col) {
-            // returns [{item, origIndex}] preserving order of appearance in commandData
             return commandData.map((item, origIndex) => ({ item, origIndex })).filter(x => (x.item.column || "ผกท.") === col);
         }
 
@@ -999,25 +1109,31 @@
             if (grid) {
                 let topCol = getColumnItems("ผกท.");
                 let deputyCol = getColumnItems("รอง.ผกท.");
-                let staffCols = ["ฝ.1", "ฝ.2", "ฝ.3", "ฝ.4"].map(c => ({ label: c, people: getColumnItems(c) }));
+                let staffCols = [
+                    { label: "รอง หน.ฝ.1", people: getColumnItems("รอง หน.ฝ.1") },
+                    { label: "รอง หน.ฝ.2", people: getColumnItems("รอง หน.ฝ.2") },
+                    { label: "รอง หน.ฝ.3", people: getColumnItems("รอง หน.ฝ.3") },
+                    { label: "รอง หน.ฝ.4", people: getColumnItems("รอง หน.ฝ.4") }
+                ];
+                let subStaff = getColumnItems("ลูก ฝ.");
 
                 let html = `<div class="flex flex-col items-center">`;
 
-                // ผกท. level
+                // ผกท.
                 html += `<div class="flex flex-col items-center gap-2">${topCol.map(x => commandCardHtml(x.item)).join('')}</div>`;
-                if (topCol.length && (deputyCol.length || staffCols.some(c => c.people.length))) {
+                if (topCol.length && (deputyCol.length || staffCols.some(c => c.people.length) || subStaff.length)) {
                     html += `<div class="w-0.5 h-6 bg-yellow-500/70"></div>`;
                 }
 
-                // รอง.ผกท. level
+                // รอง.ผกท.
                 if (deputyCol.length) {
                     html += `<div class="flex flex-col items-center gap-2">${deputyCol.map(x => commandCardHtml(x.item)).join('')}</div>`;
-                    if (staffCols.some(c => c.people.length)) {
+                    if (staffCols.some(c => c.people.length) || subStaff.length) {
                         html += `<div class="w-0.5 h-6 bg-yellow-500/70"></div>`;
                     }
                 }
 
-                // ฝ.1-4 level, connected by a horizontal bar
+                // รอง หน.ฝ. 1-4
                 if (staffCols.some(c => c.people.length)) {
                     html += `<div class="w-full relative" style="height:1px;">
                         <div class="absolute bg-yellow-500/70" style="left:12.5%; right:12.5%; top:0; height:2px;"></div>
@@ -1026,12 +1142,23 @@
                     staffCols.forEach(col => {
                         html += `<div class="flex flex-col items-center gap-3 relative">
                             <div class="w-0.5 h-4 bg-yellow-500/70 absolute -top-6"></div>
-                            <div class="text-yellow-400 font-bold text-sm mb-1 bg-zinc-800 px-3 py-1 rounded-full border border-yellow-500/50">${col.label}</div>`;
+                            <div class="text-yellow-400 font-bold text-xs mb-1 bg-zinc-800 px-3 py-1 rounded-full border border-yellow-500/50 text-center">${col.label}</div>`;
                         col.people.forEach((x, i) => {
                             if (i > 0) html += `<div class="w-0.5 h-3 bg-yellow-500/50"></div>`;
                             html += commandCardHtml(x.item);
                         });
                         html += `</div>`;
+                    });
+                    html += `</div>`;
+                }
+
+                // ลูก ฝ. (ไม่จำกัดจำนวน เพิ่มต่อลงมาด้านล่างได้)
+                if (subStaff.length) {
+                    html += `<div class="w-0.5 h-6 bg-yellow-500/70 mt-4"></div>`;
+                    html += `<div class="text-yellow-400 font-bold text-sm my-2 bg-zinc-800 px-4 py-1.5 rounded-full border border-yellow-500/50">กำลังพล ลูก ฝ. (ไม่จำกัดจำนวน)</div>`;
+                    html += `<div class="flex flex-wrap justify-center gap-4 mt-2 max-w-3xl">`;
+                    subStaff.forEach(x => {
+                        html += commandCardHtml(x.item);
                     });
                     html += `</div>`;
                 }
@@ -1046,11 +1173,20 @@
             if (adminList) {
                 COMMAND_COLUMNS.forEach(col => {
                     let items = getColumnItems(col);
-                    if (items.length === 0) return;
+                    if (items.length === 0 && col !== "ลูก ฝ.") return;
                     let header = document.createElement('div');
-                    header.className = "text-xs font-bold text-yellow-400 mt-2 mb-1";
+                    header.className = "text-xs font-bold text-yellow-400 mt-3 mb-1";
                     header.innerText = `— ${col} —`;
                     adminList.appendChild(header);
+
+                    if (items.length === 0) {
+                        let emptyMsg = document.createElement('div');
+                        emptyMsg.className = "text-gray-500 text-[11px] italic pl-2";
+                        emptyMsg.innerText = "ยังไม่มีกำลังพลในส่วนนี้";
+                        adminList.appendChild(emptyMsg);
+                        return;
+                    }
+
                     items.forEach((x, i) => {
                         let item = x.item, origIndex = x.origIndex;
                         let row = document.createElement('div');
@@ -1091,11 +1227,30 @@
 
         const calendarSvg = `<svg class="w-4 h-4 inline-block mr-1 -mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>`;
 
-        function newsCardHtml(item) {
+        // ตัวแปรสำหรับเก็บตำแหน่งภาพปัจจุบันใน Slider ของการ์ดข่าว
+        let currentNewsImageIndex = {};
+
+        function newsCardHtml(item, globalIndex) {
+            let images = item.images && item.images.length > 0 ? item.images : (item.image ? [item.image] : []);
+            let curImgIdx = currentNewsImageIndex[globalIndex] || 0;
+            if (curImgIdx >= images.length) curImgIdx = 0;
+
+            let displayImg = images.length > 0 ? images[curImgIdx] : 'https://via.placeholder.com/400x220?text=%E0%B8%9E%E0%B8%B1%E0%B8%99.%E0%B8%99%E0%B8%A8%E0%B8%97.';
+
+            let sliderControls = '';
+            if (images.length > 1) {
+                sliderControls = `
+                    <button onclick="changeNewsSlide(${globalIndex}, -1, ${images.length})" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black text-white p-1.5 rounded-full text-xs font-bold transition">❮</button>
+                    <button onclick="changeNewsSlide(${globalIndex}, 1, ${images.length})" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black text-white p-1.5 rounded-full text-xs font-bold transition">❯</button>
+                    <div class="absolute top-2 right-2 bg-black/60 text-yellow-300 text-[10px] px-2 py-0.5 rounded-full font-bold">${curImgIdx + 1} / ${images.length}</div>
+                `;
+            }
+
             return `
                 <div class="bg-zinc-800 rounded-xl overflow-hidden border border-zinc-700 shadow-lg flex flex-col">
                     <div class="relative">
-                        <img src="${item.image || 'https://via.placeholder.com/400x220?text=%E0%B8%9E%E0%B8%B1%E0%B8%99.%E0%B8%99%E0%B8%A8%E0%B8%97.'}" alt="${item.title}" onclick="${item.image ? `openLightbox('${item.image}')` : ''}" class="w-full h-44 object-cover ${item.image ? 'cursor-pointer' : ''}">
+                        <img src="${displayImg}" alt="${item.title}" onclick="${images.length > 0 ? `openLightbox('${displayImg}')` : ''}" class="w-full h-44 object-cover ${images.length > 0 ? 'cursor-pointer' : ''}">
+                        ${sliderControls}
                         <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 to-transparent p-3 pt-8">
                             <h4 class="font-bold text-yellow-300 text-base leading-snug">${item.title}</h4>
                         </div>
@@ -1103,9 +1258,16 @@
                     <div class="p-4 flex flex-col flex-1">
                         <div class="text-xs text-gray-400 mb-2">${calendarSvg}${item.date || ''}</div>
                         <p class="text-sm text-gray-300 whitespace-pre-line line-clamp-4 flex-1">${item.desc}</p>
-                        ${item.image ? `<button onclick="openLightbox('${item.image}')" class="mt-3 bg-zinc-700 hover:bg-zinc-600 text-yellow-300 text-sm font-bold py-2 rounded-lg border border-zinc-600 transition">ภาพกิจกรรม</button>` : ''}
                     </div>
                 </div>`;
+        }
+
+        function changeNewsSlide(newsIdx, direction, total) {
+            if (!currentNewsImageIndex[newsIdx]) currentNewsImageIndex[newsIdx] = 0;
+            currentNewsImageIndex[newsIdx] += direction;
+            if (currentNewsImageIndex[newsIdx] < 0) currentNewsImageIndex[newsIdx] = total - 1;
+            if (currentNewsImageIndex[newsIdx] >= total) currentNewsImageIndex[newsIdx] = 0;
+            renderNews();
         }
 
         function renderNews() {
@@ -1117,7 +1279,7 @@
             newsData.forEach((item, index) => {
                 if (list) {
                     let div = document.createElement('div');
-                    div.innerHTML = newsCardHtml(item);
+                    div.innerHTML = newsCardHtml(item, index);
                     list.appendChild(div.firstElementChild);
                 }
 
@@ -1127,8 +1289,8 @@
                     adminDiv.innerHTML = `
                         <span class="font-medium text-yellow-200 truncate max-w-xs">${index + 1}. ${item.title}</span>
                         <div class="flex gap-1 shrink-0 ml-2">
-                            <button onclick="moveNews(${index}, -1)" class="bg-zinc-700 hover:bg-zinc-600 px-2 py-1 rounded text-white text-xs font-bold" ${index === 0 ? 'disabled style="opacity:0.4"' : ''}>⬆ เลื่อนขึ้น</button>
-                            <button onclick="moveNews(${index}, 1)" class="bg-zinc-700 hover:bg-zinc-600 px-2 py-1 rounded text-white text-xs font-bold" ${index === newsData.length - 1 ? 'disabled style="opacity:0.4"' : ''}>⬇ เลื่อนลง</button>
+                            <button onclick="moveNews(${index}, -1)" class="bg-zinc-700 hover:bg-zinc-600 px-2 py-1 rounded text-white text-xs font-bold" ${index === 0 ? 'disabled style="opacity:0.4"' : ''}>⬆</button>
+                            <button onclick="moveNews(${index}, 1)" class="bg-zinc-700 hover:bg-zinc-600 px-2 py-1 rounded text-white text-xs font-bold" ${index === newsData.length - 1 ? 'disabled style="opacity:0.4"' : ''}>⬇</button>
                             <button onclick="editNews(${index})" class="bg-amber-600 hover:bg-amber-700 px-2 py-1 rounded text-xs font-bold text-white">แก้ไข</button>
                             <button onclick="deleteNews(${index})" class="bg-red-600 hover:bg-red-700 px-2 py-1 rounded text-xs font-bold text-white">ลบ</button>
                         </div>
@@ -1148,7 +1310,7 @@
             renderNews();
         }
 
-        // ===== PR News (ข่าวประชาสัมพันธ์) — separate manageable list, poster-style cards =====
+        // ===== PR News (ข่าวประชาสัมพันธ์) =====
         function renderPrNews() {
             let grid = document.getElementById('prNewsGrid');
             let adminList = document.getElementById('adminPrNewsList');
@@ -1379,13 +1541,17 @@
             let editIndex = parseInt(document.getElementById('editNewsIndex').value);
 
             if (title && desc) {
-                let finalImg = activeImageData || (editIndex !== -1 ? newsData[editIndex].image : '');
+                let finalImages = [...currentMultiNewsImages];
+                if (finalImages.length === 0 && editIndex !== -1) {
+                    finalImages = newsData[editIndex].images || (newsData[editIndex].image ? [newsData[editIndex].image] : []);
+                }
                 let finalDate = dateVal || new Date().toLocaleDateString('th-TH', {day:'numeric', month:'long', year:'numeric'});
+                
                 if (editIndex === -1) {
-                    newsData.unshift({ title, date: finalDate, desc, image: finalImg });
+                    newsData.unshift({ title, date: finalDate, desc, images: finalImages });
                     alert("เพิ่มข่าวสารสำเร็จ!");
                 } else {
-                    newsData[editIndex] = { title, date: finalDate, desc, image: finalImg };
+                    newsData[editIndex] = { title, date: finalDate, desc, images: finalImages };
                     alert("แก้ไขข่าวสารสำเร็จ!");
                 }
                 saveDataToStorage();
@@ -1401,12 +1567,10 @@
             document.getElementById('newsDateInput').value = item.date || '';
             document.getElementById('newsDescInput').value = item.desc;
             document.getElementById('editNewsIndex').value = index;
-            activeImageData = item.image;
-            if(item.image) {
-                let box = document.getElementById('newsPreviewBox');
-                box.classList.remove('hidden');
-                box.querySelector('img').src = item.image;
-            }
+            
+            currentMultiNewsImages = item.images ? [...item.images] : (item.image ? [item.image] : []);
+            renderNewsMultiPreviews();
+
             document.getElementById('newsFormTitle').innerText = "แก้ไขข่าวสาร";
             document.getElementById('saveNewsBtn').innerText = "อัปเดตข่าวสาร";
             document.getElementById('cancelNewsBtn').classList.remove('hidden');
@@ -1416,10 +1580,10 @@
             document.getElementById('newsTitleInput').value = '';
             document.getElementById('newsDateInput').value = '';
             document.getElementById('newsDescInput').value = '';
-            document.getElementById('newsFile').value = '';
-            document.getElementById('newsPreviewBox').classList.add('hidden');
+            document.getElementById('newsMultiFile').value = '';
+            currentMultiNewsImages = [];
+            renderNewsMultiPreviews();
             document.getElementById('editNewsIndex').value = '-1';
-            activeImageData = null;
             document.getElementById('newsFormTitle').innerText = "เพิ่มข่าวสารใหม่";
             document.getElementById('saveNewsBtn').innerText = "บันทึกข่าวสาร";
             document.getElementById('cancelNewsBtn').classList.add('hidden');
@@ -1556,4 +1720,3 @@
     </script>
 </body>
 </html>
- 
