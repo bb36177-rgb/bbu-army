@@ -95,11 +95,8 @@
 
                     <!-- PR News (ข่าวประชาสัมพันธ์) -->
                     <div class="text-center mt-12">
-                        <div class="flex flex-col sm:flex-row justify-between items-center mb-6 border-b-2 border-yellow-500 pb-2 gap-4">
+                        <div class="inline-block mb-6 border-b-2 border-yellow-500 pb-1">
                             <h3 class="text-xl md:text-2xl font-bold text-yellow-400">ข่าวประชาสัมพันธ์</h3>
-                            <button onclick="showSection('news')" class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-xl text-sm font-bold shadow-md transition flex items-center gap-2">
-                                <span>📸 ดูภาพกิจกรรมทั้งหมด</span>
-                            </button>
                         </div>
                         <div id="prNewsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 text-left"></div>
                     </div>
@@ -1120,11 +1117,13 @@
 
                 let html = `<div class="flex flex-col items-center">`;
 
+                // ผกท.
                 html += `<div class="flex flex-col items-center gap-2">${topCol.map(x => commandCardHtml(x.item)).join('')}</div>`;
                 if (topCol.length && (deputyCol.length || staffCols.some(c => c.people.length) || subStaff.length)) {
                     html += `<div class="w-0.5 h-6 bg-yellow-500/70"></div>`;
                 }
 
+                // รอง.ผกท.
                 if (deputyCol.length) {
                     html += `<div class="flex flex-col items-center gap-2">${deputyCol.map(x => commandCardHtml(x.item)).join('')}</div>`;
                     if (staffCols.some(c => c.people.length) || subStaff.length) {
@@ -1132,6 +1131,7 @@
                     }
                 }
 
+                // รอง หน.ฝ. 1-4
                 if (staffCols.some(c => c.people.length)) {
                     html += `<div class="w-full relative" style="height:1px;">
                         <div class="absolute bg-yellow-500/70" style="left:12.5%; right:12.5%; top:0; height:2px;"></div>
@@ -1150,6 +1150,7 @@
                     html += `</div>`;
                 }
 
+                // ลูก ฝ. (ไม่จำกัดจำนวน เพิ่มต่อลงมาด้านล่างได้)
                 if (subStaff.length) {
                     html += `<div class="w-0.5 h-6 bg-yellow-500/70 mt-4"></div>`;
                     html += `<div class="text-yellow-400 font-bold text-sm my-2 bg-zinc-800 px-4 py-1.5 rounded-full border border-yellow-500/50">กำลังพล ลูก ฝ. (ไม่จำกัดจำนวน)</div>`;
