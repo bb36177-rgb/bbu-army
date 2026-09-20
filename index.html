@@ -7,17 +7,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { font-family: 'Sarabun', sans-serif; }
+        body { font-family: 'Sarabun', sans-serif; line-height: 1.8; }
+        h1, h2, h3, h4, h5, h6 { line-height: 1.6; padding-top: 0.15em; }
         .military-bg {
             background: linear-gradient(rgba(10, 25, 12, 0.88), rgba(5, 15, 8, 0.92)), 
                         url('https://st.depositphotos.com/1868209/3939/i/450/depositphotos_39398843-Thai-army-green-woodland-digital-camouflage-fabric-texture-backg.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-        }
-        /* เพิ่มสไตล์แก้ปัญหาตัวหนังสือทับกัน */
-        .fixed-line-height {
-            line-height: 1.5; /* เพิ่มระยะห่างระหว่างบรรทัด */
         }
     </style>
 </head>
@@ -28,7 +25,7 @@
         <div class="flex justify-between items-center w-full">
             <div onclick="location.reload()" class="flex items-center space-x-3 cursor-pointer group">
                 <div class="w-12 h-12 md:w-16 md:h-16 bg-yellow-500 rounded-full flex items-center justify-center border-2 border-white shadow-lg overflow-hidden group-hover:scale-105 transition">
-                    <span class="text-xs font-bold text-black text-center">พัน.นศท.</span>
+                    <span class="text-xs font-bold text-black text-center leading-none">พัน.นศท.</span>
                 </div>
                 <div>
                     <h1 class="text-base md:text-xl font-bold text-yellow-300">พัน.นศท.รร.บบ.</h1>
@@ -41,15 +38,14 @@
             <div class="inline-block p-3 bg-zinc-900/80 backdrop-blur-md rounded-2xl border border-yellow-500/50 shadow-2xl mb-6 max-w-xl mx-auto">
                 <img src="19-9-69.png" alt="สถิตในดวงใจตราบนิจนิรันดร์" class="w-full h-auto object-cover rounded-xl border border-yellow-400" onerror="this.style.display='none'">
             </div>
-            <!-- แก้ไขตรงนี้: เพิ่ม fixed-line-height และเว้นระยะด้านล่าง -->
-            <h2 class="text-xl md:text-3xl font-bold text-yellow-400 mb-8 drop-shadow-md fixed-line-height px-4">
+            <h2 class="text-xl md:text-3xl font-bold text-yellow-400 mb-8 drop-shadow-md">
                 กองพันนักศึกษาวิชาทหาร โรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"
             </h2>
             <div class="flex flex-col justify-center items-center gap-4 max-w-md mx-auto w-full px-4">
                 <button onclick="enterMainSite()" class="w-full bg-emerald-700/90 hover:bg-emerald-600 text-white text-base md:text-lg font-bold py-3.5 px-6 rounded-xl shadow-xl transition transform hover:scale-[1.02] border border-emerald-500/60 backdrop-blur-sm">
                     เข้าสู่เว็บไซต์หลัก
                 </button>
-                <button onclick="openRegisterPage()" class="w-full bg-sky-700/90 hover:bg-sky-600 text-white text-base md:text-lg font-bold py-3.5 px-6 rounded-xl shadow-xl transition transform hover:scale-[1.02] border border-sky-500/60 backdrop-blur-sm">
+                <button onclick="openRegisterPage()" class="reg-open-btn w-full bg-sky-700/90 hover:bg-sky-600 text-white text-base md:text-lg font-bold py-3.5 px-6 rounded-xl shadow-xl transition transform hover:scale-[1.02] border border-sky-500/60 backdrop-blur-sm">
                     สมัครเข้าเป็นนักศึกษาวิชาทหาร
                 </button>
             </div>
@@ -69,7 +65,7 @@
                         <span>⬅ กลับหน้าแรก</span>
                     </button>
                     <div onclick="showSection('home')" class="flex items-center space-x-2 cursor-pointer group">
-                        <div class="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center font-bold text-black text-xs group-hover:scale-105 transition border border-white">
+                        <div class="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center font-bold text-black text-xs leading-none text-center group-hover:scale-105 transition border border-white">
                             พัน.นศท.
                         </div>
                         <span class="font-bold text-sm md:text-base text-yellow-400">พัน.นศท.รร.บบ.</span>
@@ -90,19 +86,26 @@
             <main class="p-6 md:p-10 max-w-5xl mx-auto w-full">
                 <!-- Home Section -->
                 <div id="sec-home" class="content-section text-center py-10 bg-zinc-900/80 backdrop-blur rounded-2xl p-8 border border-zinc-700/50 shadow-xl">
-                    <!-- แก้ไขตรงนี้: เพิ่ม fixed-line-height ให้หัวข้อหน้าหลักด้วย -->
-                    <h2 class="text-2xl md:text-4xl font-bold text-yellow-400 mb-6 fixed-line-height">
+                    <h2 class="text-2xl md:text-4xl font-bold text-yellow-400 mb-6">
                         ยินดีต้อนรับเข้าสู่เว็บไซต์ของกองพันนักศึกษาวิชาทหารโรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"
                     </h2>
-                    <p class="text-gray-300 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+                    <p class="text-gray-300 text-base md:text-lg max-w-2xl mx-auto mb-10">
                         เว็บไซต์ทางการสำหรับประชาสัมพันธ์ข้อมูลข่าวสาร การบังคับบัญชา และระเบียบปฏิบัติของนักศึกษาวิชาทหาร โรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"
                     </p>
+
+                    <!-- PR News (ข่าวประชาสัมพันธ์) -->
+                    <div class="text-left">
+                        <div class="flex justify-between items-center mb-4 px-1">
+                            <h3 class="text-xl md:text-2xl font-bold text-yellow-400 border-b-2 border-yellow-500 pb-1">ข่าวประชาสัมพันธ์</h3>
+                        </div>
+                        <div id="prNewsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"></div>
+                    </div>
                 </div>
 
                 <!-- Command Board -->
-                <div id="sec-command" class="content-section hidden py-6 bg-zinc-900/80 backdrop-blur rounded-2xl p-8 border border-zinc-700/50 shadow-xl">
+                <div id="sec-command" class="content-section hidden py-6 bg-zinc-900/80 backdrop-blur rounded-2xl p-8 border border-zinc-700/50 shadow-xl overflow-x-auto">
                     <h3 class="text-2xl font-bold text-yellow-400 mb-6 border-b border-zinc-700 pb-2">บอร์ดการบังคับบัญชา</h3>
-                    <div id="commandGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"></div>
+                    <div id="commandGrid" class="min-w-[900px]"></div>
                 </div>
 
                 <!-- Motto -->
@@ -115,8 +118,8 @@
 
                 <!-- News -->
                 <div id="sec-news" class="content-section hidden py-6 bg-zinc-900/80 backdrop-blur rounded-2xl p-8 border border-zinc-700/50 shadow-xl">
-                    <h3 class="text-2xl font-bold text-yellow-400 mb-4 border-b border-zinc-700 pb-2">ข่าวสารและประกาศ</h3>
-                    <div id="newsList" class="space-y-4"></div>
+                    <h3 class="text-2xl font-bold text-yellow-400 mb-6 border-b border-zinc-700 pb-2">ประมวลภาพกิจกรรม</h3>
+                    <div id="newsList" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"></div>
                 </div>
 
                 <!-- Contact -->
@@ -157,7 +160,7 @@
                                 <option value="เบอร์โทรศัพท์">เบอร์โทรศัพท์</option>
                                 <option value="อื่นๆ">อื่นๆ</option>
                             </select>
-                            <input type="text" id="contactName" placeholder="ชื่อเพจ / เบอร์ / ไอดี" class="bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm">
+                            <textarea id="contactName" placeholder="ชื่อเพจ / เบอร์ / ไอดี (กด Enter เพื่อขึ้นบรรทัดใหม่ได้)" rows="1" class="bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm resize-y min-h-[2.5rem]"></textarea>
                             <input type="tel" id="contactPhoneInput" placeholder="ใส่เบอร์ เช่น 0812345678" class="bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm hidden">
                             <input type="url" id="contactUrl" placeholder="ลิงก์ URL (ถ้ามี)" class="bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm">
                         </div>
@@ -206,6 +209,7 @@
                             <h4 id="newsFormTitle" class="font-bold text-yellow-400 mb-2">เพิ่มข่าวสารใหม่</h4>
                             <input type="hidden" id="editNewsIndex" value="-1">
                             <input type="text" id="newsTitleInput" placeholder="หัวข้อข่าว..." class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm mb-2">
+                            <input type="text" id="newsDateInput" placeholder="วันที่ (เช่น 6 พฤษภาคม 2569) เว้นว่างเพื่อใช้วันที่ปัจจุบัน" class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm mb-2">
                             <textarea id="newsDescInput" placeholder="เนื้อหาข่าว..." class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm mb-2 h-20"></textarea>
                             
                             <div class="bg-zinc-900 p-2.5 rounded border border-zinc-700 mb-2 text-xs">
@@ -229,9 +233,17 @@
                         <div class="bg-zinc-900 p-3 rounded-lg border border-zinc-700 mb-4">
                             <h5 id="commandFormTitle" class="text-sm font-bold text-yellow-300 mb-2">เพิ่มกำลังพลในบอร์ด</h5>
                             <input type="hidden" id="editCommandIndex" value="-1">
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2">
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2">
                                 <input type="text" id="cmdRankName" placeholder="ยศ - ชื่อ" class="bg-zinc-800 border border-zinc-700 rounded p-2 text-white text-sm">
                                 <input type="text" id="cmdPosition" placeholder="ตำแหน่ง" class="bg-zinc-800 border border-zinc-700 rounded p-2 text-white text-sm">
+                                <select id="cmdColumn" class="bg-zinc-800 border border-zinc-700 rounded p-2 text-white text-sm">
+                                    <option value="ผกท.">ผกท. (คอลัมน์ที่ 1)</option>
+                                    <option value="รอง.ผกท.">รอง.ผกท. (คอลัมน์ที่ 2)</option>
+                                    <option value="ฝ.1">ฝ.1</option>
+                                    <option value="ฝ.2">ฝ.2</option>
+                                    <option value="ฝ.3">ฝ.3</option>
+                                    <option value="ฝ.4">ฝ.4</option>
+                                </select>
                             </div>
                             
                             <div class="bg-zinc-800 p-2.5 rounded border border-zinc-700 mb-2 text-xs">
@@ -295,9 +307,38 @@
                         </div>
                     </div>
 
-                    <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700">
-                        <h4 class="font-bold text-yellow-400 mb-3">จัดการข่าวสารที่มีอยู่</h4>
+                    <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700 mb-6">
+                        <h4 class="font-bold text-yellow-400 mb-3">จัดการข่าวสารที่มีอยู่ (ประมวลภาพกิจกรรม)</h4>
                         <div id="adminNewsList" class="space-y-2 max-h-48 overflow-y-auto"></div>
+                    </div>
+
+                    <!-- จัดการข่าวประชาสัมพันธ์ -->
+                    <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700 mb-6">
+                        <h4 id="prNewsFormTitle" class="font-bold text-yellow-400 mb-2">เพิ่มข่าวประชาสัมพันธ์ใหม่</h4>
+                        <input type="hidden" id="editPrNewsIndex" value="-1">
+                        <input type="text" id="prNewsTitleInput" placeholder="หัวข้อ/คำอธิบายสั้นๆ (ไม่บังคับ)" class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm mb-2">
+                        <div class="bg-zinc-900 p-2.5 rounded border border-zinc-700 mb-2 text-xs">
+                            <span class="text-yellow-300 font-semibold block mb-1">รูปภาพข่าวประชาสัมพันธ์ (โปสเตอร์/ภาพข่าว)</span>
+                            <input type="file" id="prNewsFile" accept="image/*" onchange="openCropper(this, 'prnews')" class="w-full text-gray-300 text-xs file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-zinc-700 file:text-white hover:file:bg-zinc-600 mb-2">
+                            <div id="prNewsPreviewBox" class="hidden text-center mt-2">
+                                <p class="text-emerald-400 text-[10px] mb-1">✔ เลือกรูปภาพเรียบร้อย</p>
+                                <img id="prNewsPreviewImg" class="w-24 h-24 object-cover mx-auto rounded border border-yellow-500">
+                            </div>
+                        </div>
+                        <div class="flex gap-2 mb-3">
+                            <button onclick="savePrNews()" id="savePrNewsBtn" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded text-sm font-bold text-white w-full">บันทึกข่าวประชาสัมพันธ์</button>
+                            <button onclick="resetPrNewsForm()" id="cancelPrNewsBtn" class="hidden bg-zinc-700 hover:bg-zinc-600 px-3 py-2 rounded text-sm font-bold text-white">ยกเลิก</button>
+                        </div>
+                        <div id="adminPrNewsList" class="space-y-2 max-h-48 overflow-y-auto"></div>
+                    </div>
+
+                    <!-- เปิด/ปิด รับสมัคร นศท. -->
+                    <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700 flex flex-col sm:flex-row justify-between items-center gap-3">
+                        <div>
+                            <h4 class="font-bold text-yellow-400">สถานะช่องรับสมัคร นศท.</h4>
+                            <p class="text-xs text-gray-400 mt-1">เมื่อปิด ผู้ใช้จะไม่สามารถกดสมัครเข้าเป็นนักศึกษาวิชาทหารได้</p>
+                        </div>
+                        <button onclick="toggleRegOpen()" id="regToggleBtn" class="px-5 py-2 rounded-lg text-sm font-bold shrink-0"></button>
                     </div>
                 </div>
             </main>
@@ -312,7 +353,7 @@
     <div id="registerPage" class="hidden min-h-screen flex flex-col justify-between text-white p-6">
         <div class="flex justify-between items-center w-full">
             <div onclick="goToIntro()" class="flex items-center space-x-2 bg-zinc-900/90 backdrop-blur border border-zinc-700 px-3 py-1.5 rounded-xl cursor-pointer hover:bg-zinc-800 transition shadow-lg">
-                <div class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center font-bold text-black text-[10px] border border-white">
+                <div class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center font-bold text-black text-[10px] leading-none text-center border border-white">
                     พัน.นศท.
                 </div>
                 <span class="text-xs font-bold text-yellow-300">พัน.นศท.รร.บบ.</span>
@@ -448,10 +489,12 @@
     <script>
         let isAdmin = localStorage.getItem('bbu_is_admin') === 'true';
         
-        let defaultNews = [{ title: "เปิดรับสมัครนักศึกษาวิชาทหาร ประจำปีการศึกษา", desc: "สามารถตรวจสอบรายละเอียดการสมัครผ่านหน้าสมัคร นศท. ได้ทันที", image: "" }];
+        let defaultNews = [{ title: "เปิดรับสมัครนักศึกษาวิชาทหาร ประจำปีการศึกษา", date: new Date().toLocaleDateString('th-TH', {day:'numeric', month:'long', year:'numeric'}), desc: "สามารถตรวจสอบรายละเอียดการสมัครผ่านหน้าสมัคร นศท. ได้ทันที", image: "" }];
+        let defaultPrNews = [];
+        const COMMAND_COLUMNS = ["ผกท.", "รอง.ผกท.", "ฝ.1", "ฝ.2", "ฝ.3", "ฝ.4"];
         let defaultCommand = [
-            { rankName: "ผกท.ณรงค์ศักดิ์ ปิยปากร", position: "ผู้กำกับนักศึกษาวิชาทหารโรงเรียนบ้านบึง \"อุตสาหกรรมมนุเคราะห์\"", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80" },
-            { rankName: "ร.ท. สมชาย ใจมั่น", position: "นายทหารฝ่ายยุทธการ", image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80" }
+            { rankName: "ผกท.ณรงค์ศักดิ์ ปิยปากร", position: "ผู้กำกับนักศึกษาวิชาทหารโรงเรียนบ้านบึง \"อุตสาหกรรมมนุเคราะห์\"", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80", column: "ผกท." },
+            { rankName: "ร.ท. สมชาย ใจมั่น", position: "นายทหารฝ่ายยุทธการ", image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80", column: "รอง.ผกท." }
         ];
         let defaultContacts = [
             { platform: "Facebook", name: "พัน.นศท.รร.บ้านบึง อุตสาหกรรมมนุเคราะห์", url: "https://facebook.com", image: "" },
@@ -461,10 +504,12 @@
         let defaultMotto = "มีวินัย ใฝ่ศึกษา เสียสละเพื่อส่วนรวม";
 
         let newsData = [];
+        let prNewsData = [];
         let applicants = [];
         let commandData = [];
         let contactData = [];
         let mottoText = defaultMotto;
+        let regOpen = true;
         let activeImageData = null;
 
         let cropImageObj = new Image();
@@ -487,9 +532,11 @@
         function renderAll() {
             updateAdminNavButton();
             renderNews();
+            renderPrNews();
             renderCommandBoard();
             renderContacts();
             renderMotto();
+            renderRegStatus();
             updateAdminStats();
         }
 
@@ -497,17 +544,21 @@
             if (doc.exists) {
                 let data = doc.data();
                 newsData = data.news || defaultNews;
+                prNewsData = data.prNews || defaultPrNews;
                 commandData = data.command || defaultCommand;
                 applicants = data.applicants || [];
                 contactData = data.contacts || defaultContacts;
                 mottoText = data.motto || defaultMotto;
+                regOpen = (data.regOpen === undefined) ? true : data.regOpen;
             } else {
                 newsData = defaultNews;
+                prNewsData = defaultPrNews;
                 commandData = defaultCommand;
                 applicants = [];
                 contactData = defaultContacts;
                 mottoText = defaultMotto;
-                siteDocRef.set({ news: newsData, command: commandData, applicants: applicants, contacts: contactData, motto: mottoText });
+                regOpen = true;
+                siteDocRef.set({ news: newsData, prNews: prNewsData, command: commandData, applicants: applicants, contacts: contactData, motto: mottoText, regOpen: regOpen });
             }
             renderAll();
         }, (err) => {
@@ -517,10 +568,12 @@
         function saveDataToStorage() {
             siteDocRef.set({
                 news: newsData,
+                prNews: prNewsData,
                 command: commandData,
                 applicants: applicants,
                 contacts: contactData,
-                motto: mottoText
+                motto: mottoText,
+                regOpen: regOpen
             }).catch((err) => {
                 alert("บันทึกข้อมูลไม่สำเร็จ กรุณาตรวจสอบอินเทอร์เน็ต");
             });
@@ -618,6 +671,10 @@
                 let box = document.getElementById('contactPreviewBox');
                 box.classList.remove('hidden');
                 box.querySelector('img').src = activeImageData;
+            } else if (cropTargetType === 'prnews') {
+                let box = document.getElementById('prNewsPreviewBox');
+                box.classList.remove('hidden');
+                box.querySelector('img').src = activeImageData;
             }
             closeCropper();
         }
@@ -627,6 +684,7 @@
             if(cropTargetType === 'news') document.getElementById('newsFile').value = '';
             if(cropTargetType === 'command') document.getElementById('cmdFile').value = '';
             if(cropTargetType === 'contact') document.getElementById('contactFile').value = '';
+            if(cropTargetType === 'prnews') document.getElementById('prNewsFile').value = '';
         }
 
         function openLightbox(imgSrc) {
@@ -635,6 +693,36 @@
         }
         function closeLightbox() {
             document.getElementById('lightboxModal').classList.add('hidden');
+        }
+
+        function renderRegStatus() {
+            let btn = document.getElementById('regToggleBtn');
+            if (btn) {
+                if (regOpen) {
+                    btn.innerText = "🟢 เปิดรับสมัคร (คลิกเพื่อปิด)";
+                    btn.className = "px-5 py-2 rounded-lg text-sm font-bold shrink-0 bg-emerald-600 hover:bg-emerald-700 text-white";
+                } else {
+                    btn.innerText = "🔴 ปิดรับสมัคร (คลิกเพื่อเปิด)";
+                    btn.className = "px-5 py-2 rounded-lg text-sm font-bold shrink-0 bg-red-600 hover:bg-red-700 text-white";
+                }
+            }
+            document.querySelectorAll('.reg-open-btn').forEach(b => {
+                if (regOpen) {
+                    b.disabled = false;
+                    b.classList.remove('opacity-50', 'cursor-not-allowed');
+                    b.innerText = "สมัครเข้าเป็นนักศึกษาวิชาทหาร";
+                } else {
+                    b.disabled = true;
+                    b.classList.add('opacity-50', 'cursor-not-allowed');
+                    b.innerText = "ขณะนี้ปิดรับสมัครชั่วคราว";
+                }
+            });
+        }
+
+        function toggleRegOpen() {
+            regOpen = !regOpen;
+            saveDataToStorage();
+            renderRegStatus();
         }
 
         function renderMotto() {
@@ -723,7 +811,7 @@
                             </div>
                             <div class="overflow-hidden">
                                 <div class="text-xs text-yellow-400 font-semibold">${c.platform}:</div>
-                                <div class="text-sm text-gray-200 truncate">${c.name} (คลิกเพื่อดูรูปภาพ)</div>
+                                <div class="text-sm text-gray-200 whitespace-pre-line">${c.name} (คลิกเพื่อดูรูปภาพ)</div>
                             </div>
                         `;
                         container.appendChild(btn);
@@ -748,7 +836,7 @@
                             </div>
                             <div class="overflow-hidden">
                                 <div class="text-xs text-yellow-400 font-semibold">${c.platform}:</div>
-                                <div class="text-sm text-gray-200 truncate">${c.name}</div>
+                                <div class="text-sm text-gray-200 whitespace-pre-line">${c.name}</div>
                             </div>
                         `;
                         container.appendChild(a);
@@ -884,55 +972,135 @@
             }
         }
 
+        function commandCardHtml(item) {
+            return `
+                <div class="bg-zinc-800 p-3 rounded-xl border border-zinc-700 text-center flex flex-col items-center shadow-md w-40 mx-auto">
+                    <img src="${item.image || 'https://via.placeholder.com/150'}" alt="${item.rankName}" onclick="openLightbox('${item.image}')" class="w-20 h-20 object-cover rounded-full border-2 border-yellow-400 mb-2 shadow cursor-pointer hover:scale-105 transition">
+                    <h4 class="font-bold text-yellow-300 text-sm leading-snug">${item.rankName}</h4>
+                    <p class="text-[11px] text-gray-300 mt-1 leading-snug">${item.position}</p>
+                </div>`;
+        }
+
+        function getColumnItems(col) {
+            // returns [{item, origIndex}] preserving order of appearance in commandData
+            return commandData.map((item, origIndex) => ({ item, origIndex })).filter(x => (x.item.column || "ผกท.") === col);
+        }
+
         function renderCommandBoard() {
             let grid = document.getElementById('commandGrid');
             let adminList = document.getElementById('adminCommandList');
-            if (grid) grid.innerHTML = '';
             if (adminList) adminList.innerHTML = '';
 
-            commandData.forEach((item, index) => {
-                if (grid) {
-                    let card = document.createElement('div');
-                    card.className = "bg-zinc-800 p-4 rounded-xl border border-zinc-700 text-center flex flex-col items-center shadow-md";
-                    card.innerHTML = `
-                        <img src="${item.image || 'https://via.placeholder.com/150'}" alt="${item.rankName}" onclick="openLightbox('${item.image}')" class="w-28 h-28 object-cover rounded-full border-2 border-yellow-400 mb-3 shadow cursor-pointer hover:scale-105 transition">
-                        <h4 class="font-bold text-yellow-300 text-base">${item.rankName}</h4>
-                        <p class="text-xs text-gray-300 mt-1">${item.position}</p>
-                    `;
-                    grid.appendChild(card);
+            if (grid) {
+                let topCol = getColumnItems("ผกท.");
+                let deputyCol = getColumnItems("รอง.ผกท.");
+                let staffCols = ["ฝ.1", "ฝ.2", "ฝ.3", "ฝ.4"].map(c => ({ label: c, people: getColumnItems(c) }));
+
+                let html = `<div class="flex flex-col items-center">`;
+
+                // ผกท. level
+                html += `<div class="flex flex-col items-center gap-2">${topCol.map(x => commandCardHtml(x.item)).join('')}</div>`;
+                if (topCol.length && (deputyCol.length || staffCols.some(c => c.people.length))) {
+                    html += `<div class="w-0.5 h-6 bg-yellow-500/70"></div>`;
                 }
 
-                if (adminList) {
-                    let row = document.createElement('div');
-                    row.className = "flex justify-between items-center bg-zinc-900 p-2.5 rounded border border-zinc-700 text-xs";
-                    row.innerHTML = `
-                        <div class="flex items-center space-x-2 truncate">
-                            <img src="${item.image || 'https://via.placeholder.com/50'}" class="w-8 h-8 rounded-full object-cover shrink-0">
-                            <div class="truncate">
-                                <span class="font-bold text-yellow-200">${item.rankName}</span>
-                                <span class="text-gray-400 ml-2">(${item.position})</span>
-                            </div>
-                        </div>
-                        <div class="flex gap-1 shrink-0 ml-2">
-                            <button onclick="moveCommand(${index}, -1)" class="bg-zinc-700 hover:bg-zinc-600 px-2 py-1 rounded text-white font-bold" ${index === 0 ? 'disabled style="opacity:0.4"' : ''}>⬆ เลื่อนขึ้น</button>
-                            <button onclick="moveCommand(${index}, 1)" class="bg-zinc-700 hover:bg-zinc-600 px-2 py-1 rounded text-white font-bold" ${index === commandData.length - 1 ? 'disabled style="opacity:0.4"' : ''}>⬇ เลื่อนลง</button>
-                            <button onclick="editCommand(${index})" class="bg-amber-600 hover:bg-amber-700 px-2 py-1 rounded text-white font-bold">แก้ไข</button>
-                            <button onclick="deleteCommand(${index})" class="bg-red-600 hover:bg-red-700 px-2 py-1 rounded text-white font-bold">ลบ</button>
-                        </div>
-                    `;
-                    adminList.appendChild(row);
+                // รอง.ผกท. level
+                if (deputyCol.length) {
+                    html += `<div class="flex flex-col items-center gap-2">${deputyCol.map(x => commandCardHtml(x.item)).join('')}</div>`;
+                    if (staffCols.some(c => c.people.length)) {
+                        html += `<div class="w-0.5 h-6 bg-yellow-500/70"></div>`;
+                    }
                 }
-            });
+
+                // ฝ.1-4 level, connected by a horizontal bar
+                if (staffCols.some(c => c.people.length)) {
+                    html += `<div class="w-full relative" style="height:1px;">
+                        <div class="absolute bg-yellow-500/70" style="left:12.5%; right:12.5%; top:0; height:2px;"></div>
+                    </div>`;
+                    html += `<div class="grid grid-cols-4 gap-4 w-full pt-6">`;
+                    staffCols.forEach(col => {
+                        html += `<div class="flex flex-col items-center gap-3 relative">
+                            <div class="w-0.5 h-4 bg-yellow-500/70 absolute -top-6"></div>
+                            <div class="text-yellow-400 font-bold text-sm mb-1 bg-zinc-800 px-3 py-1 rounded-full border border-yellow-500/50">${col.label}</div>`;
+                        col.people.forEach((x, i) => {
+                            if (i > 0) html += `<div class="w-0.5 h-3 bg-yellow-500/50"></div>`;
+                            html += commandCardHtml(x.item);
+                        });
+                        html += `</div>`;
+                    });
+                    html += `</div>`;
+                }
+
+                html += `</div>`;
+                if (commandData.length === 0) {
+                    html = `<p class="text-gray-400 text-sm text-center">ยังไม่มีข้อมูลกำลังพลในบอร์ดบังคับบัญชา</p>`;
+                }
+                grid.innerHTML = html;
+            }
+
+            if (adminList) {
+                COMMAND_COLUMNS.forEach(col => {
+                    let items = getColumnItems(col);
+                    if (items.length === 0) return;
+                    let header = document.createElement('div');
+                    header.className = "text-xs font-bold text-yellow-400 mt-2 mb-1";
+                    header.innerText = `— ${col} —`;
+                    adminList.appendChild(header);
+                    items.forEach((x, i) => {
+                        let item = x.item, origIndex = x.origIndex;
+                        let row = document.createElement('div');
+                        row.className = "flex justify-between items-center bg-zinc-900 p-2.5 rounded border border-zinc-700 text-xs mb-1";
+                        row.innerHTML = `
+                            <div class="flex items-center space-x-2 truncate">
+                                <img src="${item.image || 'https://via.placeholder.com/50'}" class="w-8 h-8 rounded-full object-cover shrink-0">
+                                <div class="truncate">
+                                    <span class="font-bold text-yellow-200">${item.rankName}</span>
+                                    <span class="text-gray-400 ml-2">(${item.position})</span>
+                                </div>
+                            </div>
+                            <div class="flex gap-1 shrink-0 ml-2">
+                                <button onclick="moveCommandInColumn('${col}', ${i}, -1)" class="bg-zinc-700 hover:bg-zinc-600 px-2 py-1 rounded text-white font-bold" ${i === 0 ? 'disabled style="opacity:0.4"' : ''}>⬆</button>
+                                <button onclick="moveCommandInColumn('${col}', ${i}, 1)" class="bg-zinc-700 hover:bg-zinc-600 px-2 py-1 rounded text-white font-bold" ${i === items.length - 1 ? 'disabled style="opacity:0.4"' : ''}>⬇</button>
+                                <button onclick="editCommand(${origIndex})" class="bg-amber-600 hover:bg-amber-700 px-2 py-1 rounded text-white font-bold">แก้ไข</button>
+                                <button onclick="deleteCommand(${origIndex})" class="bg-red-600 hover:bg-red-700 px-2 py-1 rounded text-white font-bold">ลบ</button>
+                            </div>
+                        `;
+                        adminList.appendChild(row);
+                    });
+                });
+            }
         }
 
-        function moveCommand(index, direction) {
-            let targetIndex = index + direction;
-            if (targetIndex < 0 || targetIndex >= commandData.length) return;
-            let temp = commandData[index];
-            commandData[index] = commandData[targetIndex];
-            commandData[targetIndex] = temp;
+        function moveCommandInColumn(col, indexInCol, direction) {
+            let items = getColumnItems(col);
+            let targetIndexInCol = indexInCol + direction;
+            if (targetIndexInCol < 0 || targetIndexInCol >= items.length) return;
+            let a = items[indexInCol].origIndex;
+            let b = items[targetIndexInCol].origIndex;
+            let temp = commandData[a];
+            commandData[a] = commandData[b];
+            commandData[b] = temp;
             saveDataToStorage();
             renderCommandBoard();
+        }
+
+        const calendarSvg = `<svg class="w-4 h-4 inline-block mr-1 -mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>`;
+
+        function newsCardHtml(item) {
+            return `
+                <div class="bg-zinc-800 rounded-xl overflow-hidden border border-zinc-700 shadow-lg flex flex-col">
+                    <div class="relative">
+                        <img src="${item.image || 'https://via.placeholder.com/400x220?text=%E0%B8%9E%E0%B8%B1%E0%B8%99.%E0%B8%99%E0%B8%A8%E0%B8%97.'}" alt="${item.title}" onclick="${item.image ? `openLightbox('${item.image}')` : ''}" class="w-full h-44 object-cover ${item.image ? 'cursor-pointer' : ''}">
+                        <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 to-transparent p-3 pt-8">
+                            <h4 class="font-bold text-yellow-300 text-base leading-snug">${item.title}</h4>
+                        </div>
+                    </div>
+                    <div class="p-4 flex flex-col flex-1">
+                        <div class="text-xs text-gray-400 mb-2">${calendarSvg}${item.date || ''}</div>
+                        <p class="text-sm text-gray-300 whitespace-pre-line line-clamp-4 flex-1">${item.desc}</p>
+                        ${item.image ? `<button onclick="openLightbox('${item.image}')" class="mt-3 bg-zinc-700 hover:bg-zinc-600 text-yellow-300 text-sm font-bold py-2 rounded-lg border border-zinc-600 transition">ภาพกิจกรรม</button>` : ''}
+                    </div>
+                </div>`;
         }
 
         function renderNews() {
@@ -944,13 +1112,8 @@
             newsData.forEach((item, index) => {
                 if (list) {
                     let div = document.createElement('div');
-                    div.className = "bg-zinc-800 p-4 rounded-xl border border-zinc-700";
-                    div.innerHTML = `
-                        <h4 class="font-bold text-yellow-300 text-lg">${item.title}</h4>
-                        <p class="text-sm text-gray-300 mt-2 whitespace-pre-line">${item.desc}</p>
-                        ${item.image ? `<div class="mt-3 overflow-hidden rounded-lg border border-zinc-700 max-h-72 flex justify-center bg-black/40"><img src="${item.image}" alt="รูปข่าว" onclick="openLightbox('${item.image}')" class="object-contain max-h-72 w-full cursor-pointer hover:opacity-95 transition"></div>` : ''}
-                    `;
-                    list.appendChild(div);
+                    div.innerHTML = newsCardHtml(item);
+                    list.appendChild(div.firstElementChild);
                 }
 
                 if (adminList) {
@@ -980,6 +1143,114 @@
             renderNews();
         }
 
+        // ===== PR News (ข่าวประชาสัมพันธ์) — separate manageable list, poster-style cards =====
+        function renderPrNews() {
+            let grid = document.getElementById('prNewsGrid');
+            let adminList = document.getElementById('adminPrNewsList');
+            if (grid) grid.innerHTML = '';
+            if (adminList) adminList.innerHTML = '';
+
+            if (grid && prNewsData.length === 0) {
+                grid.innerHTML = `<p class="text-gray-400 text-sm col-span-full text-center">ยังไม่มีข่าวประชาสัมพันธ์</p>`;
+            }
+
+            prNewsData.forEach((item, index) => {
+                if (grid) {
+                    let div = document.createElement('div');
+                    div.className = "bg-zinc-900 rounded-xl overflow-hidden border border-zinc-700 shadow-lg cursor-pointer group";
+                    div.onclick = () => openLightbox(item.image);
+                    div.innerHTML = `
+                        <div class="relative overflow-hidden">
+                            <img src="${item.image || 'https://via.placeholder.com/400x260?text=%E0%B8%82%E0%B9%88%E0%B8%B2%E0%B8%A7'}" alt="${item.title || ''}" class="w-full h-48 object-cover group-hover:scale-105 transition duration-300">
+                        </div>
+                        ${item.title ? `<div class="p-3"><p class="text-sm text-yellow-300 font-semibold line-clamp-2">${item.title}</p></div>` : ''}
+                    `;
+                    grid.appendChild(div);
+                }
+                if (adminList) {
+                    let row = document.createElement('div');
+                    row.className = "flex justify-between items-center bg-zinc-900 p-2.5 rounded border border-zinc-700 text-xs";
+                    row.innerHTML = `
+                        <div class="flex items-center space-x-2 truncate">
+                            <img src="${item.image || 'https://via.placeholder.com/50'}" class="w-8 h-8 rounded object-cover shrink-0">
+                            <span class="truncate text-gray-300">${item.title || '(ไม่มีหัวข้อ)'}</span>
+                        </div>
+                        <div class="flex gap-1 shrink-0 ml-2">
+                            <button onclick="movePrNews(${index}, -1)" class="bg-zinc-700 hover:bg-zinc-600 px-2 py-1 rounded text-white font-bold" ${index === 0 ? 'disabled style="opacity:0.4"' : ''}>⬆</button>
+                            <button onclick="movePrNews(${index}, 1)" class="bg-zinc-700 hover:bg-zinc-600 px-2 py-1 rounded text-white font-bold" ${index === prNewsData.length - 1 ? 'disabled style="opacity:0.4"' : ''}>⬇</button>
+                            <button onclick="editPrNews(${index})" class="bg-amber-600 hover:bg-amber-700 px-2 py-1 rounded text-white font-bold">แก้ไข</button>
+                            <button onclick="deletePrNews(${index})" class="bg-red-600 hover:bg-red-700 px-2 py-1 rounded text-white font-bold">ลบ</button>
+                        </div>
+                    `;
+                    adminList.appendChild(row);
+                }
+            });
+        }
+
+        function movePrNews(index, direction) {
+            let targetIndex = index + direction;
+            if (targetIndex < 0 || targetIndex >= prNewsData.length) return;
+            let temp = prNewsData[index];
+            prNewsData[index] = prNewsData[targetIndex];
+            prNewsData[targetIndex] = temp;
+            saveDataToStorage();
+            renderPrNews();
+        }
+
+        function savePrNews() {
+            let title = document.getElementById('prNewsTitleInput').value.trim();
+            let editIndex = parseInt(document.getElementById('editPrNewsIndex').value);
+            let finalImg = activeImageData || (editIndex !== -1 ? prNewsData[editIndex].image : '');
+
+            if (!finalImg) {
+                alert("กรุณาเลือกรูปภาพประกอบ");
+                return;
+            }
+            if (editIndex === -1) {
+                prNewsData.unshift({ title, image: finalImg });
+                alert("เพิ่มข่าวประชาสัมพันธ์สำเร็จ!");
+            } else {
+                prNewsData[editIndex] = { title, image: finalImg };
+                alert("แก้ไขข่าวประชาสัมพันธ์สำเร็จ!");
+            }
+            saveDataToStorage();
+            resetPrNewsForm();
+        }
+
+        function editPrNews(index) {
+            let item = prNewsData[index];
+            document.getElementById('prNewsTitleInput').value = item.title || '';
+            document.getElementById('editPrNewsIndex').value = index;
+            activeImageData = item.image;
+            if (item.image) {
+                let box = document.getElementById('prNewsPreviewBox');
+                box.classList.remove('hidden');
+                box.querySelector('img').src = item.image;
+            }
+            document.getElementById('prNewsFormTitle').innerText = "แก้ไขข่าวประชาสัมพันธ์";
+            document.getElementById('savePrNewsBtn').innerText = "อัปเดตข่าวประชาสัมพันธ์";
+            document.getElementById('cancelPrNewsBtn').classList.remove('hidden');
+        }
+
+        function resetPrNewsForm() {
+            document.getElementById('prNewsTitleInput').value = '';
+            document.getElementById('prNewsFile').value = '';
+            document.getElementById('prNewsPreviewBox').classList.add('hidden');
+            document.getElementById('editPrNewsIndex').value = '-1';
+            activeImageData = null;
+            document.getElementById('prNewsFormTitle').innerText = "เพิ่มข่าวประชาสัมพันธ์ใหม่";
+            document.getElementById('savePrNewsBtn').innerText = "บันทึกข่าวประชาสัมพันธ์";
+            document.getElementById('cancelPrNewsBtn').classList.add('hidden');
+        }
+
+        function deletePrNews(index) {
+            if (confirm("คุณต้องการลบข่าวประชาสัมพันธ์นี้ใช่หรือไม่?")) {
+                prNewsData.splice(index, 1);
+                saveDataToStorage();
+                alert("ลบข่าวประชาสัมพันธ์สำเร็จ!");
+            }
+        }
+
         function enterMainSite() {
             document.getElementById('introPage').classList.add('hidden');
             document.getElementById('registerPage').classList.add('hidden');
@@ -994,6 +1265,10 @@
         }
 
         function openRegisterPage() {
+            if (!regOpen) {
+                alert("ขณะนี้ปิดรับสมัครนักศึกษาวิชาทหารชั่วคราว กรุณาติดตามประกาศเปิดรับสมัครอีกครั้ง");
+                return;
+            }
             document.getElementById('introPage').classList.add('hidden');
             document.getElementById('registerPage').classList.remove('hidden');
         }
@@ -1035,15 +1310,16 @@
         function saveCommandStaff() {
             let rankName = document.getElementById('cmdRankName').value;
             let position = document.getElementById('cmdPosition').value;
+            let column = document.getElementById('cmdColumn').value;
             let editIndex = parseInt(document.getElementById('editCommandIndex').value);
 
             if (rankName && position) {
                 let finalImg = activeImageData || (editIndex !== -1 ? commandData[editIndex].image : '');
                 if (editIndex === -1) {
-                    commandData.push({ rankName, position, image: finalImg });
+                    commandData.push({ rankName, position, image: finalImg, column });
                     alert("เพิ่มข้อมูลกำลังพลสำเร็จ!");
                 } else {
-                    commandData[editIndex] = { rankName, position, image: finalImg };
+                    commandData[editIndex] = { rankName, position, image: finalImg, column };
                     alert("แก้ไขข้อมูลกำลังพลสำเร็จ!");
                 }
                 saveDataToStorage();
@@ -1057,6 +1333,7 @@
             let item = commandData[index];
             document.getElementById('cmdRankName').value = item.rankName;
             document.getElementById('cmdPosition').value = item.position;
+            document.getElementById('cmdColumn').value = item.column || "ผกท.";
             document.getElementById('editCommandIndex').value = index;
             activeImageData = item.image;
             if(item.image) {
@@ -1072,6 +1349,7 @@
         function resetCommandForm() {
             document.getElementById('cmdRankName').value = '';
             document.getElementById('cmdPosition').value = '';
+            document.getElementById('cmdColumn').value = 'ผกท.';
             document.getElementById('cmdFile').value = '';
             document.getElementById('cmdPreviewBox').classList.add('hidden');
             document.getElementById('editCommandIndex').value = '-1';
@@ -1091,16 +1369,18 @@
 
         function saveNews() {
             let title = document.getElementById('newsTitleInput').value;
+            let dateVal = document.getElementById('newsDateInput').value.trim();
             let desc = document.getElementById('newsDescInput').value;
             let editIndex = parseInt(document.getElementById('editNewsIndex').value);
 
             if (title && desc) {
                 let finalImg = activeImageData || (editIndex !== -1 ? newsData[editIndex].image : '');
+                let finalDate = dateVal || new Date().toLocaleDateString('th-TH', {day:'numeric', month:'long', year:'numeric'});
                 if (editIndex === -1) {
-                    newsData.push({ title, desc, image: finalImg });
+                    newsData.unshift({ title, date: finalDate, desc, image: finalImg });
                     alert("เพิ่มข่าวสารสำเร็จ!");
                 } else {
-                    newsData[editIndex] = { title, desc, image: finalImg };
+                    newsData[editIndex] = { title, date: finalDate, desc, image: finalImg };
                     alert("แก้ไขข่าวสารสำเร็จ!");
                 }
                 saveDataToStorage();
@@ -1113,6 +1393,7 @@
         function editNews(index) {
             let item = newsData[index];
             document.getElementById('newsTitleInput').value = item.title;
+            document.getElementById('newsDateInput').value = item.date || '';
             document.getElementById('newsDescInput').value = item.desc;
             document.getElementById('editNewsIndex').value = index;
             activeImageData = item.image;
@@ -1128,6 +1409,7 @@
 
         function resetNewsForm() {
             document.getElementById('newsTitleInput').value = '';
+            document.getElementById('newsDateInput').value = '';
             document.getElementById('newsDescInput').value = '';
             document.getElementById('newsFile').value = '';
             document.getElementById('newsPreviewBox').classList.add('hidden');
@@ -1148,6 +1430,11 @@
 
         function submitRegister(e) {
             e.preventDefault();
+            if (!regOpen) {
+                alert("ขณะนี้ปิดรับสมัครนักศึกษาวิชาทหารชั่วคราว");
+                goToIntro();
+                return;
+            }
             let prefix = document.getElementById('regPrefix').value;
             let rawName = document.getElementById('regName').value.trim();
             let name = prefix + " " + rawName;
