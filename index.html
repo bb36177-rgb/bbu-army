@@ -572,7 +572,6 @@
             if (doc.exists) {
                 let data = doc.data();
                 newsData = data.news || defaultNews;
-                // ปรับปรุงข้อมูลเก่าที่เป็น image เดี่ยว ให้รองรับ images อาเรย์
                 newsData = newsData.map(n => {
                     if(!n.images) {
                         n.images = n.image ? [n.image] : [];
@@ -625,7 +624,6 @@
                         let vw = viewport.clientWidth;
                         let vh = viewport.clientHeight;
 
-                        // คำนวณ Scale เริ่มต้นให้ครอบคลุมกรอบพอดี (เหมือนแกลเลอรี)
                         let scaleX = vw / cropImgObj.width;
                         let scaleY = vh / cropImgObj.height;
                         minScale = Math.max(scaleX, scaleY);
@@ -771,8 +769,6 @@
         function handleMultiNewsImages(input) {
             if (input.files) {
                 let files = Array.from(input.files);
-                let container = document.getElementById('newsMultiPreviewContainer');
-                
                 files.forEach(file => {
                     let reader = new FileReader();
                     reader.onload = function(e) {
@@ -1119,13 +1115,11 @@
 
                 let html = `<div class="flex flex-col items-center">`;
 
-                // ผกท.
                 html += `<div class="flex flex-col items-center gap-2">${topCol.map(x => commandCardHtml(x.item)).join('')}</div>`;
                 if (topCol.length && (deputyCol.length || staffCols.some(c => c.people.length) || subStaff.length)) {
                     html += `<div class="w-0.5 h-6 bg-yellow-500/70"></div>`;
                 }
 
-                // รอง.ผกท.
                 if (deputyCol.length) {
                     html += `<div class="flex flex-col items-center gap-2">${deputyCol.map(x => commandCardHtml(x.item)).join('')}</div>`;
                     if (staffCols.some(c => c.people.length) || subStaff.length) {
@@ -1133,7 +1127,6 @@
                     }
                 }
 
-                // รอง หน.ฝ. 1-4
                 if (staffCols.some(c => c.people.length)) {
                     html += `<div class="w-full relative" style="height:1px;">
                         <div class="absolute bg-yellow-500/70" style="left:12.5%; right:12.5%; top:0; height:2px;"></div>
@@ -1152,7 +1145,6 @@
                     html += `</div>`;
                 }
 
-                // ลูก ฝ. (ไม่จำกัดจำนวน เพิ่มต่อลงมาด้านล่างได้)
                 if (subStaff.length) {
                     html += `<div class="w-0.5 h-6 bg-yellow-500/70 mt-4"></div>`;
                     html += `<div class="text-yellow-400 font-bold text-sm my-2 bg-zinc-800 px-4 py-1.5 rounded-full border border-yellow-500/50">กำลังพล ลูก ฝ. (ไม่จำกัดจำนวน)</div>`;
@@ -1227,7 +1219,6 @@
 
         const calendarSvg = `<svg class="w-4 h-4 inline-block mr-1 -mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>`;
 
-        // ตัวแปรสำหรับเก็บตำแหน่งภาพปัจจุบันใน Slider ของการ์ดข่าว
         let currentNewsImageIndex = {};
 
         function newsCardHtml(item, globalIndex) {
@@ -1310,7 +1301,6 @@
             renderNews();
         }
 
-        // ===== PR News (ข่าวประชาสัมพันธ์) =====
         function renderPrNews() {
             let grid = document.getElementById('prNewsGrid');
             let adminList = document.getElementById('adminPrNewsList');
@@ -1670,51 +1660,43 @@
 
             let tbody = document.getElementById('applicantTableBody');
             if (filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="8" class="p-3 text-center text-gray-500">ยังไม่มีผู้สมัครในระบบตามเงื่อนไข</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="8" class="p-3 text-center text-gray-500">ยังไม่มีผู้สมัครในระบบ</td></tr>`;
                 return;
             }
-            tbody.innerHTML = '';
-            filtered.forEach((app, index) => {
-                let tr = document.createElement('tr');
-                tr.className = "border-b border-zinc-700/50 hover:bg-zinc-700/20";
-                tr.innerHTML = `
-                    <td class="p-2">${index + 1}</td>
-                    <td class="p-2">${app.name}</td>
-                    <td class="p-2 font-bold text-yellow-300">${app.room || '-'}</td>
-                    <td class="p-2">${app.year}</td>
-                    <td class="p-2">${app.phone}</td>
-                    <td class="p-2">${app.contact}</td>
-                    <td class="p-2">${app.date}</td>
-                    <td class="p-2 text-center">
-                        <button onclick="deleteApplicant(${index}, ${app.origIndex})" class="bg-red-600 hover:bg-red-700 text-white text-xs px-2 py-1 rounded">ลบ</button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
+
+            let html = '';
+            filtered.forEach((app, idx) => {
+                html += `
+                    <tr class="border-b border-zinc-800 hover:bg-zinc-900/50">
+                        <td class="p-2">${idx + 1}</td>
+                        <td class="p-2 font-medium text-white">${app.name}</td>
+                        <td class="p-2">${app.room}</td>
+                        <td class="p-2">${app.year}</td>
+                        <td class="p-2">${app.phone}</td>
+                        <td class="p-2">${app.contact}</td>
+                        <td class="p-2">${app.date}</td>
+                        <td class="p-2 text-center">
+                            <button onclick="deleteApplicant(${idx}, ${app.origIndex})" class="bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded text-xs font-bold">ลบ</button>
+                        </td>
+                    </tr>`;
             });
+            tbody.innerHTML = html;
         }
 
         function exportToCSV() {
             if (applicants.length === 0) {
-                alert("ยังไม่มีข้อมูลผู้สมัครสำหรับส่งออก");
+                alert("ไม่มีข้อมูลผู้สมัครสำหรับส่งออก");
                 return;
             }
             let csvContent = "\uFEFFลำดับ,ชื่อ-สกุล,ห้อง,ชั้นปีที่สมัคร,เบอร์โทรศัพท์,ช่องทางติดต่อ,วันที่สมัคร\n";
-            
-            let sorted = [...applicants].sort((a, b) => {
-                let numA = parseInt((a.room || "ม.4/0").replace('ม.4/', '')) || 0;
-                let numB = parseInt((b.room || "ม.4/0").replace('ม.4/', '')) || 0;
-                if (numA !== numB) return numA - numB;
-                return a.name.localeCompare(b.name, 'th');
-            });
-
-            sorted.forEach((app, index) => {
-                csvContent += `${index + 1},"${app.name}","${app.room || '-'}","${app.year}","${app.phone}","${app.contact}",${app.date}\n`;
+            applicants.forEach((app, idx) => {
+                csvContent += `${idx + 1},"${app.name}","${app.room}","${app.year}","${app.phone}","${app.contact}","${app.date}"\n`;
             });
             let blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             let url = URL.createObjectURL(blob);
             let a = document.createElement('a');
             a.href = url;
-            a.download = `รายชื่อผู้สมัคร_นศท_รร.บบ_${new Date().toLocaleDateString()}.csv`;
+            a.download = `รายชื่อผู้สมัคร_นศท_โรงเรียนบ้านบึง_${new Date().toLocaleDateString('th-TH')}.csv`;
             a.click();
         }
     </script>
