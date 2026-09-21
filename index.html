@@ -8,7 +8,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { font-family: 'Sarabun', sans-serif; line-height: 1.8; }
-        h1, h2, h3, h4, h5, h6 { line-height: 1.6; padding-top: 0.15em; }
+        h1, h2, h3, h4, h5, h6 { line-height: 1.7 !important; padding-top: 0.2em; padding-bottom: 0.05em; }
+        p { line-height: 1.9 !important; }
         .military-bg {
             background: linear-gradient(rgba(10, 25, 12, 0.88), rgba(5, 15, 8, 0.92)), 
                         url('https://st.depositphotos.com/1868209/3939/i/450/depositphotos_39398843-Thai-army-green-woodland-digital-camouflage-fabric-texture-backg.jpg');
@@ -209,11 +210,26 @@
                                     <select id="cmdColumn" class="bg-zinc-800 border border-zinc-700 rounded p-2 text-white text-sm">
                                         <option value="ผกท.">ผกท. (ผู้กำกับ)</option>
                                         <option value="รอง.ผกท.">รอง.ผกท. (รองผู้กำกับ)</option>
-                                        <option value="รอง หน.ฝ.1">รอง หน.ฝ.1</option>
-                                        <option value="รอง หน.ฝ.2">รอง หน.ฝ.2</option>
-                                        <option value="รอง หน.ฝ.3">รอง หน.ฝ.3</option>
-                                        <option value="รอง หน.ฝ.4">รอง หน.ฝ.4</option>
-                                        <option value="ลูก ฝ.">ลูก ฝ. (ฝ่ายอำนวยการ)</option>
+                                        <optgroup label="ฝ.1">
+                                            <option value="หน.ฝ.1">หน.ฝ.1 (หัวหน้า)</option>
+                                            <option value="รอง หน.ฝ.1">รอง หน.ฝ.1</option>
+                                            <option value="ลูก ฝ.1">ลูก ฝ.1 (สมาชิก ไม่จำกัดจำนวน)</option>
+                                        </optgroup>
+                                        <optgroup label="ฝ.2">
+                                            <option value="หน.ฝ.2">หน.ฝ.2 (หัวหน้า)</option>
+                                            <option value="รอง หน.ฝ.2">รอง หน.ฝ.2</option>
+                                            <option value="ลูก ฝ.2">ลูก ฝ.2 (สมาชิก ไม่จำกัดจำนวน)</option>
+                                        </optgroup>
+                                        <optgroup label="ฝ.3">
+                                            <option value="หน.ฝ.3">หน.ฝ.3 (หัวหน้า)</option>
+                                            <option value="รอง หน.ฝ.3">รอง หน.ฝ.3</option>
+                                            <option value="ลูก ฝ.3">ลูก ฝ.3 (สมาชิก ไม่จำกัดจำนวน)</option>
+                                        </optgroup>
+                                        <optgroup label="ฝ.4">
+                                            <option value="หน.ฝ.4">หน.ฝ.4 (หัวหน้า)</option>
+                                            <option value="รอง หน.ฝ.4">รอง หน.ฝ.4</option>
+                                            <option value="ลูก ฝ.4">ลูก ฝ.4 (สมาชิก ไม่จำกัดจำนวน)</option>
+                                        </optgroup>
                                     </select>
                                 </div>
                                 
@@ -298,24 +314,32 @@
                         <h4 class="text-lg font-bold text-yellow-400 mb-4 border-l-4 border-yellow-500 pl-2">📊 สถิติและรายชื่อผู้สมัคร นศท.</h4>
                         
                         <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700 mb-6">
-                            <h5 class="font-bold text-yellow-300 text-sm mb-3">📈 กราฟสรุปสถิติผู้สมัครแยกตามชั้นปี</h5>
-                            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
-                                <div class="bg-zinc-900 p-3 rounded-lg border border-zinc-700 text-center">
-                                    <span class="text-xs text-gray-400 block">ผู้สมัครทั้งหมด</span>
-                                    <span id="applicantCount" class="text-2xl font-bold text-blue-400">0</span> <span class="text-xs text-gray-300">คน</span>
+                            <h5 class="font-bold text-yellow-300 text-sm mb-4">📈 กราฟสรุปสถิติผู้สมัครแยกตามชั้นปี</h5>
+                            <div class="flex flex-col sm:flex-row items-center gap-6">
+                                <div class="relative w-40 h-40 shrink-0">
+                                    <svg viewBox="0 0 100 100" class="w-full h-full -rotate-90">
+                                        <circle cx="50" cy="50" r="40" fill="none" stroke="#27272a" stroke-width="14"></circle>
+                                        <circle id="donutY3" cx="50" cy="50" r="40" fill="none" stroke="#f59e0b" stroke-width="14" stroke-dasharray="0 251.3"></circle>
+                                        <circle id="donutY2" cx="50" cy="50" r="40" fill="none" stroke="#22c55e" stroke-width="14" stroke-dasharray="0 251.3"></circle>
+                                        <circle id="donutY1" cx="50" cy="50" r="40" fill="none" stroke="#3b82f6" stroke-width="14" stroke-dasharray="0 251.3"></circle>
+                                    </svg>
+                                    <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                        <span id="applicantCount" class="text-3xl font-extrabold text-white">0</span>
+                                        <span class="text-[10px] text-gray-400">ผู้สมัครทั้งหมด</span>
+                                    </div>
                                 </div>
-                                <div class="md:col-span-3 space-y-2 text-xs">
-                                    <div>
-                                        <div class="flex justify-between mb-1 text-gray-300"><span>ชั้นปีที่ 1</span><span id="chartY1Count">0 คน</span></div>
-                                        <div class="w-full bg-zinc-900 rounded-full h-3.5 overflow-hidden border border-zinc-700"><div id="chartY1Bar" class="bg-blue-500 h-3.5 rounded-full transition-all duration-500" style="width: 0%"></div></div>
+                                <div class="flex-1 w-full space-y-2 text-xs">
+                                    <div class="flex items-center justify-between bg-zinc-900 px-3 py-2.5 rounded-lg border border-zinc-700">
+                                        <span class="flex items-center gap-2 text-gray-200"><span class="w-2.5 h-2.5 rounded-full bg-blue-500 shrink-0"></span>ชั้นปีที่ 1</span>
+                                        <span id="chartY1Count" class="font-bold text-blue-300">0 คน</span>
                                     </div>
-                                    <div>
-                                        <div class="flex justify-between mb-1 text-gray-300"><span>ชั้นปีที่ 2</span><span id="chartY2Count">0 คน</span></div>
-                                        <div class="w-full bg-zinc-900 rounded-full h-3.5 overflow-hidden border border-zinc-700"><div id="chartY2Bar" class="bg-green-500 h-3.5 rounded-full transition-all duration-500" style="width: 0%"></div></div>
+                                    <div class="flex items-center justify-between bg-zinc-900 px-3 py-2.5 rounded-lg border border-zinc-700">
+                                        <span class="flex items-center gap-2 text-gray-200"><span class="w-2.5 h-2.5 rounded-full bg-green-500 shrink-0"></span>ชั้นปีที่ 2</span>
+                                        <span id="chartY2Count" class="font-bold text-green-300">0 คน</span>
                                     </div>
-                                    <div>
-                                        <div class="flex justify-between mb-1 text-gray-300"><span>ชั้นปีที่ 3</span><span id="chartY3Count">0 คน</span></div>
-                                        <div class="w-full bg-zinc-900 rounded-full h-3.5 overflow-hidden border border-zinc-700"><div id="chartY3Bar" class="bg-amber-500 h-3.5 rounded-full transition-all duration-500" style="width: 0%"></div></div>
+                                    <div class="flex items-center justify-between bg-zinc-900 px-3 py-2.5 rounded-lg border border-zinc-700">
+                                        <span class="flex items-center gap-2 text-gray-200"><span class="w-2.5 h-2.5 rounded-full bg-amber-500 shrink-0"></span>ชั้นปีที่ 3</span>
+                                        <span id="chartY3Count" class="font-bold text-amber-300">0 คน</span>
                                     </div>
                                 </div>
                             </div>
@@ -467,14 +491,15 @@
     <div id="cropperModal" class="hidden fixed inset-0 bg-black/90 z-50 flex flex-col items-center justify-center p-4">
         <div class="bg-zinc-900 border border-yellow-500/50 p-5 rounded-2xl max-w-md w-full shadow-2xl text-center">
             <h3 class="text-lg font-bold text-yellow-400 mb-2">ปรับตำแหน่งและเลือกมุมมองรูปภาพ</h3>
-            <p class="text-xs text-gray-400 mb-4">ซูมและเลื่อนรูปภาพให้อยู่ในกรอบที่ต้องการ (สไตล์แกลเลอรี)</p>
-            
-            <div id="cropViewport" class="relative w-full h-64 bg-black rounded-lg overflow-hidden border border-zinc-700 flex items-center justify-center mb-4 cursor-grab active:grabbing select-none touch-none">
+            <p class="text-xs text-gray-400 mb-4">ลากรูปเพื่อเลื่อนตำแหน่ง • ใช้สองนิ้วบีบ/ขยายเพื่อซูม (สไตล์แกลเลอรี)</p>
+
+            <div id="cropViewport" class="relative w-full aspect-square max-w-[320px] mx-auto bg-black rounded-lg overflow-hidden border border-zinc-700 flex items-center justify-center mb-4 cursor-grab active:cursor-grabbing select-none touch-none">
                 <img id="cropSourceImg" class="absolute max-w-none pointer-events-none" alt="Crop Source">
+                <div id="cropGuideOverlay" class="absolute inset-0 pointer-events-none"></div>
             </div>
 
-            <div class="mb-4 text-left">
-                <label class="text-xs text-gray-300 block mb-1">ซูมภาพ (Zoom):</label>
+            <div class="mb-4 text-left flex items-center gap-3">
+                <span class="text-xs text-gray-300 shrink-0">🔍 ซูม:</span>
                 <input type="range" id="zoomRange" min="1" max="3" step="0.01" value="1" oninput="onZoomChange()" class="w-full accent-yellow-500">
             </div>
 
@@ -516,7 +541,8 @@
         
         let defaultNews = [{ title: "เปิดรับสมัครนักศึกษาวิชาทหาร ประจำปีการศึกษา", date: new Date().toLocaleDateString('th-TH', {day:'numeric', month:'long', year:'numeric'}), desc: "สามารถตรวจสอบรายละเอียดการสมัครผ่านหน้าสมัคร นศท. ได้ทันที", images: [] }];
         let defaultPrNews = [];
-        const COMMAND_COLUMNS = ["ผกท.", "รอง.ผกท.", "รอง หน.ฝ.1", "รอง หน.ฝ.2", "รอง หน.ฝ.3", "รอง หน.ฝ.4", "ลูก ฝ."];
+        const STAFF_NUMS = [1, 2, 3, 4];
+        const COMMAND_COLUMNS = ["ผกท.", "รอง.ผกท.", ...STAFF_NUMS.flatMap(n => [`หน.ฝ.${n}`, `รอง หน.ฝ.${n}`, `ลูก ฝ.${n}`])];
         let defaultCommand = [
             { rankName: "ผกท.ณรงค์ศักดิ์ ปิยปากร", position: "ผู้กำกับนักศึกษาวิชาทหารโรงเรียนบ้านบึง \"อุตสาหกรรมมนุเคราะห์\"", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80", column: "ผกท." },
             { rankName: "ร.ท. สมชาย ใจมั่น", position: "นายทหารฝ่ายยุทธการ", image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80", column: "รอง.ผกท." }
@@ -614,12 +640,25 @@
         }
 
         // ===== Samsung Gallery Style Cropper Logic =====
+        function renderCropGuide() {
+            let overlay = document.getElementById('cropGuideOverlay');
+            if (cropTargetType === 'command') {
+                overlay.innerHTML = `<div class="absolute inset-0 rounded-full" style="box-shadow:0 0 0 9999px rgba(0,0,0,0.55); border:2px solid rgba(250,204,21,0.85);"></div>`;
+            } else {
+                overlay.innerHTML = `<div class="absolute inset-0" style="border:2px solid rgba(250,204,21,0.6);"></div>`;
+            }
+        }
+
         function openCropper(input, type) {
             if (input.files && input.files[0]) {
                 cropTargetType = type;
                 let reader = new FileReader();
                 reader.onload = function(e) {
                     cropImgObj.onload = function() {
+                        // Show the modal FIRST so the viewport has real layout dimensions to measure.
+                        document.getElementById('cropperModal').classList.remove('hidden');
+                        renderCropGuide();
+
                         let viewport = document.getElementById('cropViewport');
                         let vw = viewport.clientWidth;
                         let vh = viewport.clientHeight;
@@ -632,7 +671,7 @@
                         let zoomRange = document.getElementById('zoomRange');
                         zoomRange.min = minScale;
                         zoomRange.max = minScale * 3;
-                        zoomRange.step = 0.01;
+                        zoomRange.step = 0.001;
                         zoomRange.value = scale;
 
                         posX = (vw - cropImgObj.width * scale) / 2;
@@ -640,7 +679,6 @@
 
                         initCropTransformEvents(viewport);
                         updateCropTransformUI();
-                        document.getElementById('cropperModal').classList.remove('hidden');
                     }
                     cropImgObj.src = e.target.result;
                 }
@@ -648,9 +686,16 @@
             }
         }
 
+        function pinchDist(touches) {
+            let dx = touches[0].clientX - touches[1].clientX;
+            let dy = touches[0].clientY - touches[1].clientY;
+            return Math.sqrt(dx * dx + dy * dy);
+        }
+
         function initCropTransformEvents(viewport) {
             let imgEl = document.getElementById('cropSourceImg');
-            
+            let pinchStartDist = 0, pinchStartScale = 1;
+
             imgEl.onmousedown = null;
             viewport.onmousedown = function(e) {
                 isDraggingCrop = true;
@@ -665,6 +710,13 @@
                 constrainCropPosition(viewport);
                 updateCropTransformUI();
             };
+            viewport.onwheel = function(e) {
+                e.preventDefault();
+                let zoomRange = document.getElementById('zoomRange');
+                let delta = -e.deltaY * 0.001 * minScale;
+                zoomRange.value = Math.min(parseFloat(zoomRange.max), Math.max(parseFloat(zoomRange.min), parseFloat(zoomRange.value) + delta));
+                onZoomChange();
+            };
 
             viewport.ontouchstart = function(e) {
                 if (e.touches.length === 1) {
@@ -672,16 +724,34 @@
                     let touch = e.touches[0];
                     startDragX = touch.clientX - posX;
                     startDragY = touch.clientY - posY;
+                } else if (e.touches.length === 2) {
+                    isDraggingCrop = false;
+                    pinchStartDist = pinchDist(e.touches);
+                    pinchStartScale = scale;
                 }
             };
-            window.ontouchend = function() { isDraggingCrop = false; };
-            window.ontouchmove = function(e) {
-                if (!isDraggingCrop || e.touches.length !== 1) return;
-                let touch = e.touches[0];
-                posX = touch.clientX - startDragX;
-                posY = touch.clientY - startDragY;
-                constrainCropPosition(viewport);
-                updateCropTransformUI();
+            window.ontouchend = function(e) {
+                if (!e.touches || e.touches.length < 2) pinchStartDist = 0;
+                if (!e.touches || e.touches.length === 0) isDraggingCrop = false;
+            };
+            viewport.ontouchmove = function(e) {
+                e.preventDefault();
+                if (e.touches.length === 2) {
+                    let dist = pinchDist(e.touches);
+                    if (pinchStartDist > 0) {
+                        let zoomRange = document.getElementById('zoomRange');
+                        let newScale = pinchStartScale * (dist / pinchStartDist);
+                        newScale = Math.min(parseFloat(zoomRange.max), Math.max(parseFloat(zoomRange.min), newScale));
+                        zoomRange.value = newScale;
+                        onZoomChange();
+                    }
+                } else if (e.touches.length === 1 && isDraggingCrop) {
+                    let touch = e.touches[0];
+                    posX = touch.clientX - startDragX;
+                    posY = touch.clientY - startDragY;
+                    constrainCropPosition(viewport);
+                    updateCropTransformUI();
+                }
             };
         }
 
@@ -1107,56 +1177,60 @@
             if (grid) {
                 let topCol = getColumnItems("ผกท.");
                 let deputyCol = getColumnItems("รอง.ผกท.");
-                let staffCols = [
-                    { label: "รอง หน.ฝ.1", people: getColumnItems("รอง หน.ฝ.1") },
-                    { label: "รอง หน.ฝ.2", people: getColumnItems("รอง หน.ฝ.2") },
-                    { label: "รอง หน.ฝ.3", people: getColumnItems("รอง หน.ฝ.3") },
-                    { label: "รอง หน.ฝ.4", people: getColumnItems("รอง หน.ฝ.4") }
-                ];
-                let subStaff = getColumnItems("ลูก ฝ.");
+                let staffCols = STAFF_NUMS.map(n => ({
+                    num: n,
+                    head: getColumnItems(`หน.ฝ.${n}`),
+                    deputy: getColumnItems(`รอง หน.ฝ.${n}`),
+                    members: getColumnItems(`ลูก ฝ.${n}`)
+                }));
+                let anyStaff = staffCols.some(c => c.head.length || c.deputy.length || c.members.length);
 
                 let html = `<div class="flex flex-col items-center">`;
 
                 // ผกท.
                 html += `<div class="flex flex-col items-center gap-2">${topCol.map(x => commandCardHtml(x.item)).join('')}</div>`;
-                if (topCol.length && (deputyCol.length || staffCols.some(c => c.people.length) || subStaff.length)) {
+                if (topCol.length && (deputyCol.length || anyStaff)) {
                     html += `<div class="w-0.5 h-6 bg-yellow-500/70"></div>`;
                 }
 
                 // รอง.ผกท.
                 if (deputyCol.length) {
                     html += `<div class="flex flex-col items-center gap-2">${deputyCol.map(x => commandCardHtml(x.item)).join('')}</div>`;
-                    if (staffCols.some(c => c.people.length) || subStaff.length) {
+                    if (anyStaff) {
                         html += `<div class="w-0.5 h-6 bg-yellow-500/70"></div>`;
                     }
                 }
 
-                // รอง หน.ฝ. 1-4
-                if (staffCols.some(c => c.people.length)) {
+                // ฝ.1-4 (หน. -> รอง หน. -> ลูก ฝ. ไม่จำกัดจำนวน)
+                if (anyStaff) {
                     html += `<div class="w-full relative" style="height:1px;">
                         <div class="absolute bg-yellow-500/70" style="left:12.5%; right:12.5%; top:0; height:2px;"></div>
                     </div>`;
-                    html += `<div class="grid grid-cols-4 gap-4 w-full pt-6">`;
+                    html += `<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full pt-6">`;
                     staffCols.forEach(col => {
-                        html += `<div class="flex flex-col items-center gap-3 relative">
-                            <div class="w-0.5 h-4 bg-yellow-500/70 absolute -top-6"></div>
-                            <div class="text-yellow-400 font-bold text-xs mb-1 bg-zinc-800 px-3 py-1 rounded-full border border-yellow-500/50 text-center">${col.label}</div>`;
-                        col.people.forEach((x, i) => {
-                            if (i > 0) html += `<div class="w-0.5 h-3 bg-yellow-500/50"></div>`;
-                            html += commandCardHtml(x.item);
-                        });
-                        html += `</div>`;
-                    });
-                    html += `</div>`;
-                }
+                        html += `<div class="flex flex-col items-center gap-2 relative bg-zinc-950/30 rounded-xl p-3 border border-zinc-800">
+                            <div class="w-0.5 h-4 bg-yellow-500/70 absolute -top-6 hidden lg:block"></div>
+                            <div class="text-yellow-400 font-bold text-xs mb-1 bg-zinc-800 px-3 py-1 rounded-full border border-yellow-500/50 text-center">ฝ.${col.num}</div>`;
 
-                // ลูก ฝ. (ไม่จำกัดจำนวน เพิ่มต่อลงมาด้านล่างได้)
-                if (subStaff.length) {
-                    html += `<div class="w-0.5 h-6 bg-yellow-500/70 mt-4"></div>`;
-                    html += `<div class="text-yellow-400 font-bold text-sm my-2 bg-zinc-800 px-4 py-1.5 rounded-full border border-yellow-500/50">กำลังพล ลูก ฝ. (ไม่จำกัดจำนวน)</div>`;
-                    html += `<div class="flex flex-wrap justify-center gap-4 mt-2 max-w-3xl">`;
-                    subStaff.forEach(x => {
-                        html += commandCardHtml(x.item);
+                        // หัวหน้า ฝ.น
+                        if (col.head.length) {
+                            html += `<div class="flex flex-col items-center gap-2">${col.head.map(x => commandCardHtml(x.item)).join('')}</div>`;
+                            if (col.deputy.length || col.members.length) html += `<div class="w-0.5 h-4 bg-yellow-500/50"></div>`;
+                        }
+                        // รอง หน.ฝ.น
+                        if (col.deputy.length) {
+                            html += `<div class="flex flex-col items-center gap-2">${col.deputy.map(x => commandCardHtml(x.item)).join('')}</div>`;
+                            if (col.members.length) html += `<div class="w-0.5 h-4 bg-yellow-500/50"></div>`;
+                        }
+                        // ลูก ฝ.น (ไม่จำกัดจำนวน)
+                        if (col.members.length) {
+                            html += `<div class="text-[10px] text-gray-400 font-semibold mt-1">สมาชิก ลูก ฝ.${col.num}</div>`;
+                            html += `<div class="flex flex-wrap justify-center gap-2 mt-1">${col.members.map(x => commandCardHtml(x.item)).join('')}</div>`;
+                        }
+                        if (!col.head.length && !col.deputy.length && !col.members.length) {
+                            html += `<p class="text-gray-500 text-[11px] italic">ยังไม่มีข้อมูล</p>`;
+                        }
+                        html += `</div>`;
                     });
                     html += `</div>`;
                 }
@@ -1171,7 +1245,6 @@
             if (adminList) {
                 COMMAND_COLUMNS.forEach(col => {
                     let items = getColumnItems(col);
-                    if (items.length === 0 && col !== "ลูก ฝ.") return;
                     let header = document.createElement('div');
                     header.className = "text-xs font-bold text-yellow-400 mt-3 mb-1";
                     header.innerText = `— ${col} —`;
@@ -1237,8 +1310,8 @@
             let sliderControls = '';
             if (images.length > 1) {
                 sliderControls = `
-                    <button onclick="changeNewsSlide(${globalIndex}, -1, ${images.length})" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black text-white p-1.5 rounded-full text-xs font-bold transition">❮</button>
-                    <button onclick="changeNewsSlide(${globalIndex}, 1, ${images.length})" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black text-white p-1.5 rounded-full text-xs font-bold transition">❯</button>
+                    <button onclick="changeNewsSlide(${globalIndex}, -1, ${images.length})" class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black text-white p-2 rounded-full text-sm font-bold transition shadow-lg">❮</button>
+                    <button onclick="changeNewsSlide(${globalIndex}, 1, ${images.length})" class="absolute right-3 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black text-white p-2 rounded-full text-sm font-bold transition shadow-lg">❯</button>
                     <div class="absolute top-2 right-2 bg-black/60 text-yellow-300 text-[10px] px-2 py-0.5 rounded-full font-bold">${curImgIdx + 1} / ${images.length}</div>
                 `;
             }
@@ -1255,6 +1328,7 @@
                     <div class="p-4 flex flex-col flex-1">
                         <div class="text-xs text-gray-400 mb-2">${calendarSvg}${item.date || ''}</div>
                         <p class="text-sm text-gray-300 whitespace-pre-line line-clamp-4 flex-1">${item.desc}</p>
+                        ${images.length > 0 ? `<button onclick="openLightbox('${displayImg}')" class="mt-3 bg-zinc-700 hover:bg-zinc-600 text-yellow-300 text-sm font-bold py-2 rounded-lg border border-zinc-600 transition">📷 ภาพกิจกรรม</button>` : ''}
                     </div>
                 </div>`;
         }
@@ -1638,14 +1712,26 @@
             let y1Count = applicants.filter(a => a.year.includes('ปีที่ 1')).length;
             let y2Count = applicants.filter(a => a.year.includes('ปีที่ 2')).length;
             let y3Count = applicants.filter(a => a.year.includes('ปีที่ 3')).length;
-            let maxCount = Math.max(y1Count, y2Count, y3Count, 1);
+            let total = applicants.length;
 
             document.getElementById('chartY1Count').innerText = y1Count + " คน";
             document.getElementById('chartY2Count').innerText = y2Count + " คน";
             document.getElementById('chartY3Count').innerText = y3Count + " คน";
-            document.getElementById('chartY1Bar').style.width = (y1Count / maxCount * 100) + "%";
-            document.getElementById('chartY2Bar').style.width = (y2Count / maxCount * 100) + "%";
-            document.getElementById('chartY3Bar').style.width = (y3Count / maxCount * 100) + "%";
+
+            let circumference = 2 * Math.PI * 40; // r=40
+            let y1Len = total ? (y1Count / total) * circumference : 0;
+            let y2Len = total ? (y2Count / total) * circumference : 0;
+            let y3Len = total ? (y3Count / total) * circumference : 0;
+
+            let d1 = document.getElementById('donutY1');
+            let d2 = document.getElementById('donutY2');
+            let d3 = document.getElementById('donutY3');
+            d1.setAttribute('stroke-dasharray', `${y1Len} ${circumference - y1Len}`);
+            d1.setAttribute('stroke-dashoffset', '0');
+            d2.setAttribute('stroke-dasharray', `${y2Len} ${circumference - y2Len}`);
+            d2.setAttribute('stroke-dashoffset', `${-y1Len}`);
+            d3.setAttribute('stroke-dasharray', `${y3Len} ${circumference - y3Len}`);
+            d3.setAttribute('stroke-dashoffset', `${-(y1Len + y2Len)}`);
 
             let selectedRoom = document.getElementById('filterRoom').value;
 
