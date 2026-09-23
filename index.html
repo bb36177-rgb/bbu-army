@@ -159,8 +159,57 @@
 
                     <!-- Super Admin panel: source code + backup/restore. Hidden unless unlocked. -->
                     <div id="superAdminPanel" class="hidden mb-8 p-4 bg-purple-950/30 rounded-xl border border-purple-600/50">
-                        <h4 class="text-lg font-bold text-purple-300 mb-1 border-l-4 border-purple-500 pl-2">🔐 โซนผู้ดูแลระบบขั้นสูง (Admin Leader)</h4>
+                        <div class="flex flex-wrap justify-between items-center gap-2 mb-1">
+                            <h4 class="text-lg font-bold text-purple-300 border-l-4 border-purple-500 pl-2">🔐 โซนผู้ดูแลระบบขั้นสูง (Admin Leader)</h4>
+                            <button onclick="superAdminLogout()" class="bg-zinc-700 hover:bg-zinc-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg">🚪 ออกจากโซน Admin Leader</button>
+                        </div>
                         <p class="text-xs text-gray-400 mb-4 pl-2">พื้นที่นี้มองเห็นได้เฉพาะผู้ที่ทราบรหัสผ่านขั้นสูงเท่านั้น</p>
+
+                        <!-- ความปลอดภัยของเว็บ -->
+                        <div class="bg-zinc-900 p-4 rounded-lg border border-zinc-700 mb-4">
+                            <h5 class="font-bold text-purple-200 text-sm mb-2">🛡️ ระบบป้องกันเว็บ / ความปลอดภัย</h5>
+                            <p class="text-xs text-gray-500 mb-3">มาตรการที่เปิดใช้งานอยู่: ป้องกัน XSS จากข้อมูลผู้เยี่ยมชม, ล็อกการเข้าสู่ระบบชั่วคราวเมื่อกรอกรหัสผิดซ้ำ, บันทึกประวัติการเข้าใช้งานทุกครั้ง</p>
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <button onclick="runSecurityCheck()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold px-4 py-2 rounded-lg">🔄 ตรวจสอบ/อัปเดตระบบความปลอดภัย</button>
+                                <button onclick="changeAdminPassword()" class="bg-zinc-700 hover:bg-zinc-600 text-white text-sm font-bold px-4 py-2 rounded-lg">🔑 เปลี่ยนรหัสผ่าน Admin</button>
+                                <button onclick="changeSuperAdminPassword()" class="bg-zinc-700 hover:bg-zinc-600 text-white text-sm font-bold px-4 py-2 rounded-lg">🔑 เปลี่ยนรหัสผ่าน Admin Leader</button>
+                            </div>
+                            <details class="text-xs text-gray-400">
+                                <summary class="cursor-pointer text-purple-300 font-semibold">📋 คำแนะนำ: ตัวอย่าง Firestore Security Rules (ป้องกันจริงต้องตั้งค่าที่ Firebase Console)</summary>
+                                <pre class="mt-2 bg-black text-emerald-400 text-[10px] p-3 rounded-lg overflow-x-auto">rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /siteData/{doc} {
+      allow read: if true;
+      allow write: if false; // เขียนได้เฉพาะผ่าน Cloud Functions/แอดมินที่ยืนยันตัวตนจริงเท่านั้น
+    }
+    match /siteConfig/{doc} {
+      allow read, write: if false; // ห้ามเข้าถึงรหัสผ่านจากภายนอกโดยตรง
+    }
+  }
+}</pre>
+                                <p class="mt-2">โค้ดหน้าเว็บ (ฝั่ง Client) ไม่สามารถ "ยิงกลับ" ผู้โจมตีหรือหยุด DDoS ระดับเครือข่ายได้ — การป้องกันจริงต้องตั้งค่าที่ Firebase Hosting / Cloudflare และ Firestore Rules ข้างต้นเท่านั้น</p>
+                            </details>
+                        </div>
+
+                        <!-- ประวัติการใช้งาน -->
+                        <div class="bg-zinc-900 p-4 rounded-lg border border-zinc-700 mb-4">
+                            <div class="flex flex-wrap justify-between items-center gap-2 mb-2">
+                                <h5 class="font-bold text-purple-200 text-sm">📜 ประวัติการเข้าใช้งาน (ย้อนหลัง 3 เดือน)</h5>
+                                <button onclick="refreshActivityLog()" class="bg-zinc-700 hover:bg-zinc-600 text-white text-xs font-bold px-3 py-1 rounded-lg">🔄 รีเฟรช</button>
+                            </div>
+                            <div id="activityLogList" class="max-h-56 overflow-y-auto bg-zinc-950 border border-zinc-800 rounded-lg p-2"></div>
+                        </div>
+
+                        <!-- จัดการบทบาท Admin -->
+                        <div class="bg-zinc-900 p-4 rounded-lg border border-zinc-700 mb-4">
+                            <div class="flex flex-wrap justify-between items-center gap-2 mb-2">
+                                <h5 class="font-bold text-purple-200 text-sm">👥 จัดการบทบาทผู้ใช้งาน Admin</h5>
+                                <button onclick="resetAllIdentities()" class="bg-red-700 hover:bg-red-800 text-white text-xs font-bold px-3 py-1 rounded-lg">♻️ รีเซ็ตบทบาททั้งหมด (ยกเว้นที่ล็อก)</button>
+                            </div>
+                            <p class="text-xs text-gray-500 mb-3">รายชื่อผู้ที่เคยเข้าสู่ระบบ Admin (อ้างอิงจากชื่อที่กรอกตอนล็อกอิน) — บล็อกเพื่อระงับสิทธิ์, ล็อกเพื่อป้องกันการลบ/รีเซ็ต, ลบเพื่อนำออกจากรายการ</p>
+                            <div id="adminIdentitiesList" class="max-h-56 overflow-y-auto"></div>
+                        </div>
 
                         <div class="bg-zinc-900 p-4 rounded-lg border border-zinc-700 mb-4">
                             <div class="flex flex-wrap justify-between items-center gap-2 mb-2">
@@ -398,6 +447,7 @@
                         <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700">
                             <div class="flex flex-col sm:flex-row justify-between items-center mb-3 gap-2">
                                 <h5 class="font-bold text-yellow-300 text-sm">รายชื่อผู้สมัครเข้าเป็นนักศึกษาวิชาทหาร</h5>
+                                <span class="text-[10px] bg-zinc-700 text-gray-300 px-2 py-0.5 rounded-full inline-block mt-1">📑 เรียงลำดับ ก-ฮ แบบราชการ (แยกตามห้องก่อน แล้วเรียงชื่อตามลำดับตัวอักษร)</span>
                                 <div class="flex flex-wrap gap-2 items-center w-full sm:w-auto">
                                     <select id="filterYear" onchange="updateAdminStats()" class="bg-zinc-900 border border-zinc-700 rounded p-1.5 text-white text-xs">
                                         <option value="">ทุกชั้นปี</option>
@@ -510,11 +560,8 @@
                     </div>
                     <div>
                         <label class="block text-sm text-gray-300 mb-1">ชั้นปีที่สมัคร</label>
-                        <select id="regYear" class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white">
-                            <option>นศท. ชั้นปีที่ 1</option>
-                            <option>นศท. ชั้นปีที่ 2</option>
-                            <option>นศท. ชั้นปีที่ 3</option>
-                        </select>
+                        <input type="text" id="regYear" value="นศท. ชั้นปีที่ 1" readonly class="w-full bg-zinc-800 border border-zinc-700 rounded p-2 text-gray-300 cursor-not-allowed">
+                        <p class="text-xs text-amber-400 mt-1">ขณะนี้เปิดรับสมัครเฉพาะนักศึกษาวิชาทหารชั้นปีที่ 1 เท่านั้น</p>
                     </div>
                 </div>
 
@@ -600,7 +647,67 @@
     <script>
         let isAdmin = localStorage.getItem('bbu_is_admin') === 'true';
         let isSuperAdmin = false;
+        let currentAdminName = localStorage.getItem('bbu_admin_name') || null;
         const backupDocRef = db.collection('siteBackups').doc('latest');
+        const authDocRef = db.collection('siteConfig').doc('auth');
+        const activityLogsRef = db.collection('activityLogs');
+        const adminIdentitiesRef = db.collection('adminIdentities');
+
+        let ADMIN_PASSWORD = "พัน.นศท.รร.บบ.";
+        let SUPER_ADMIN_PASSWORD = "bb-36177-banbung";
+        authDocRef.onSnapshot((doc) => {
+            if (doc.exists) {
+                let d = doc.data();
+                if (d.adminPassword) ADMIN_PASSWORD = d.adminPassword;
+                if (d.superAdminPassword) SUPER_ADMIN_PASSWORD = d.superAdminPassword;
+            } else {
+                authDocRef.set({ adminPassword: ADMIN_PASSWORD, superAdminPassword: SUPER_ADMIN_PASSWORD });
+            }
+        });
+
+        // --- Login lockout (soft, client-side deterrent against repeated password guessing) ---
+        function checkLockout(key) {
+            let lockUntil = parseInt(localStorage.getItem(key + '_lockUntil') || '0');
+            if (Date.now() < lockUntil) {
+                let mins = Math.ceil((lockUntil - Date.now()) / 60000);
+                alert(`กรอกรหัสผ่านผิดหลายครั้งเกินไป กรุณารออีกประมาณ ${mins} นาทีแล้วลองใหม่`);
+                return true;
+            }
+            return false;
+        }
+        function recordFailedAttempt(key) {
+            let count = parseInt(localStorage.getItem(key + '_failCount') || '0') + 1;
+            if (count >= 5) {
+                localStorage.setItem(key + '_lockUntil', (Date.now() + 5 * 60000).toString());
+                localStorage.setItem(key + '_failCount', '0');
+                alert("กรอกรหัสผ่านผิดครบ 5 ครั้ง ระบบล็อกการเข้าสู่ระบบชั่วคราว 5 นาที");
+            } else {
+                localStorage.setItem(key + '_failCount', count.toString());
+            }
+        }
+        function clearFailedAttempts(key) {
+            localStorage.removeItem(key + '_failCount');
+            localStorage.removeItem(key + '_lockUntil');
+        }
+
+        // --- Activity log (kept for the last 3 months) ---
+        function getDeviceInfo() {
+            return navigator.userAgent.substring(0, 150);
+        }
+        function logActivity(action, detail, by) {
+            activityLogsRef.add({
+                action, detail, by: by || 'ไม่ระบุชื่อ',
+                device: getDeviceInfo(),
+                ts: new Date().toISOString()
+            }).catch(() => {});
+        }
+        function pruneOldLogs() {
+            let cutoff = new Date();
+            cutoff.setMonth(cutoff.getMonth() - 3);
+            activityLogsRef.where('ts', '<', cutoff.toISOString()).get().then(snap => {
+                snap.forEach(doc => doc.ref.delete());
+            }).catch(() => {});
+        }
         
         let defaultNews = [{ title: "เปิดรับสมัครนักศึกษาวิชาทหาร ประจำปีการศึกษา", date: new Date().toLocaleDateString('th-TH', {day:'numeric', month:'long', year:'numeric'}), desc: "สามารถตรวจสอบรายละเอียดการสมัครผ่านหน้าสมัคร นศท. ได้ทันที", images: [] }];
         let defaultPrNews = [];
@@ -625,6 +732,20 @@
         let mottoText = defaultMotto;
         let regOpen = true;
         let activeImageData = null;
+
+        // Escapes any publicly-submitted text before it is inserted into innerHTML,
+        // so a visitor cannot store an HTML/script payload (e.g. in the registration
+        // form) that would run in an admin's browser later. This is a genuine
+        // protection against stored XSS — apply it to any value a site visitor typed.
+        function escapeHtml(str) {
+            if (str === null || str === undefined) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
         let currentMultiNewsImages = [];
 
         // Cropper variables (canvas-based: preview and export share identical draw code)
@@ -1643,24 +1764,49 @@
                 enterMainSite();
                 showSection('admin');
             } else {
+                if (checkLockout('bbu_admin')) return;
                 let pass = prompt("กรุณากรอกรหัสผ่าน Admin:");
-                if (pass === "พัน.นศท.รร.บบ.") {
-                    isAdmin = true;
-                    localStorage.setItem('bbu_is_admin', 'true');
-                    alert("เข้าสู่ระบบ Admin สำเร็จ!");
-                    updateAdminNavButton();
-                    enterMainSite();
-                    showSection('admin');
-                } else if (pass !== null) {
+                if (pass === null) return;
+                if (pass === ADMIN_PASSWORD) {
+                    let name = (prompt("กรุณาระบุชื่อผู้เข้าใช้งาน (สำหรับบันทึกประวัติการเข้าใช้งาน):") || "").trim() || "ไม่ระบุชื่อ";
+                    adminIdentitiesRef.doc(name).get().then((doc) => {
+                        if (doc.exists && doc.data().status === 'blocked') {
+                            alert("ชื่อผู้ใช้นี้ถูกระงับสิทธิ์การเข้าใช้งาน Admin โดยผู้ดูแลระดับสูง (Admin Leader)");
+                            logActivity('login_blocked', 'พยายามเข้าสู่ระบบ Admin แต่ถูกระงับสิทธิ์', name);
+                            return;
+                        }
+                        clearFailedAttempts('bbu_admin');
+                        isAdmin = true;
+                        currentAdminName = name;
+                        localStorage.setItem('bbu_is_admin', 'true');
+                        localStorage.setItem('bbu_admin_name', name);
+                        adminIdentitiesRef.doc(name).set({
+                            name: name,
+                            status: (doc.exists ? doc.data().status : 'active'),
+                            lastDevice: getDeviceInfo(),
+                            lastSeen: new Date().toLocaleString('th-TH')
+                        }, { merge: true });
+                        logActivity('login_success', 'เข้าสู่ระบบ Admin สำเร็จ', name);
+                        alert("เข้าสู่ระบบ Admin สำเร็จ!");
+                        updateAdminNavButton();
+                        enterMainSite();
+                        showSection('admin');
+                    });
+                } else {
+                    recordFailedAttempt('bbu_admin');
+                    logActivity('login_failed', 'กรอกรหัสผ่าน Admin ผิด', null);
                     alert("รหัสผ่านไม่ถูกต้อง!");
                 }
             }
         }
 
         function adminLogout() {
+            logActivity('logout', 'ออกจากระบบ Admin', currentAdminName);
             isAdmin = false;
             isSuperAdmin = false;
+            currentAdminName = null;
             localStorage.removeItem('bbu_is_admin');
+            localStorage.removeItem('bbu_admin_name');
             let panel = document.getElementById('superAdminPanel');
             if (panel) panel.classList.add('hidden');
             alert("ออกจากระบบ Admin เรียบร้อยแล้ว");
@@ -1669,23 +1815,172 @@
         }
 
         // ===== Super Admin ("Admin Leader") =====
-        const SUPER_ADMIN_PASSWORD = "bb-36177-banbung";
-
         function handleSuperAdminClick() {
             let panel = document.getElementById('superAdminPanel');
             if (isSuperAdmin) {
                 panel.classList.toggle('hidden');
+                if (!panel.classList.contains('hidden')) {
+                    refreshLastBackupInfo();
+                    refreshActivityLog();
+                    refreshAdminIdentities();
+                }
                 return;
             }
+            if (checkLockout('bbu_superadmin')) return;
             let pass = prompt("กรุณากรอกรหัสผ่าน Admin Leader:");
+            if (pass === null) return;
             if (pass === SUPER_ADMIN_PASSWORD) {
+                clearFailedAttempts('bbu_superadmin');
                 isSuperAdmin = true;
                 panel.classList.remove('hidden');
                 refreshLastBackupInfo();
+                refreshActivityLog();
+                refreshAdminIdentities();
+                logActivity('super_admin_login', 'เข้าสู่ระบบ Admin Leader สำเร็จ', currentAdminName);
                 alert("ปลดล็อกโซน Admin Leader สำเร็จ!");
-            } else if (pass !== null) {
+            } else {
+                recordFailedAttempt('bbu_superadmin');
+                logActivity('super_admin_login_failed', 'กรอกรหัสผ่าน Admin Leader ผิด', currentAdminName);
                 alert("รหัสผ่าน Admin Leader ไม่ถูกต้อง!");
             }
+        }
+
+        function superAdminLogout() {
+            isSuperAdmin = false;
+            document.getElementById('superAdminPanel').classList.add('hidden');
+            logActivity('super_admin_logout', 'ออกจากโซน Admin Leader', currentAdminName);
+            alert("ออกจากโซน Admin Leader แล้ว (ยังอยู่ในระบบ Admin ปกติ)");
+        }
+
+        // --- จัดการบทบาท Admin (บล็อก/ล็อก/ลบ/รีเซ็ต) ---
+        function refreshAdminIdentities() {
+            let container = document.getElementById('adminIdentitiesList');
+            if (!container) return;
+            adminIdentitiesRef.get().then(snap => {
+                if (snap.empty) {
+                    container.innerHTML = `<p class="text-gray-500 text-xs">ยังไม่มีประวัติผู้เข้าใช้งาน Admin</p>`;
+                    return;
+                }
+                container.innerHTML = '';
+                snap.forEach(doc => {
+                    let d = doc.data();
+                    let statusColor = d.status === 'blocked' ? 'bg-red-600' : d.status === 'locked' ? 'bg-amber-600' : 'bg-emerald-600';
+                    let statusLabel = d.status === 'blocked' ? 'ถูกระงับ' : d.status === 'locked' ? 'ล็อกไว้' : 'ใช้งานได้';
+                    let row = document.createElement('div');
+                    row.className = "flex flex-wrap justify-between items-center gap-2 bg-zinc-900 p-2.5 rounded border border-zinc-700 text-xs mb-1";
+                    row.innerHTML = `
+                        <div class="truncate">
+                            <span class="font-bold text-yellow-200">${escapeHtml(d.name)}</span>
+                            <span class="${statusColor} text-white text-[10px] px-2 py-0.5 rounded-full ml-2">${statusLabel}</span>
+                            <div class="text-gray-500 text-[10px] mt-0.5">ล่าสุด: ${escapeHtml(d.lastSeen || '-')} • ${escapeHtml((d.lastDevice || '').substring(0, 50))}</div>
+                        </div>
+                        <div class="flex gap-1 shrink-0 flex-wrap">
+                            <button onclick="setIdentityStatus('${doc.id}', 'active')" class="bg-emerald-700 hover:bg-emerald-800 px-2 py-1 rounded text-white">ปลดบล็อก</button>
+                            <button onclick="setIdentityStatus('${doc.id}', 'blocked')" class="bg-red-700 hover:bg-red-800 px-2 py-1 rounded text-white">บล็อก</button>
+                            <button onclick="setIdentityStatus('${doc.id}', 'locked')" class="bg-amber-700 hover:bg-amber-800 px-2 py-1 rounded text-white">ล็อก</button>
+                            <button onclick="deleteIdentity('${doc.id}')" class="bg-zinc-700 hover:bg-zinc-600 px-2 py-1 rounded text-white">ลบบทบาท</button>
+                        </div>
+                    `;
+                    container.appendChild(row);
+                });
+            });
+        }
+
+        function setIdentityStatus(id, status) {
+            adminIdentitiesRef.doc(id).set({ status }, { merge: true }).then(() => {
+                logActivity('identity_status_change', `เปลี่ยนสถานะของ "${id}" เป็น ${status}`, currentAdminName);
+                refreshAdminIdentities();
+            });
+        }
+
+        function deleteIdentity(id) {
+            if (!confirm(`ต้องการลบบทบาทของ "${id}" ใช่หรือไม่?`)) return;
+            adminIdentitiesRef.doc(id).delete().then(() => {
+                logActivity('identity_deleted', `ลบบทบาทของ "${id}"`, currentAdminName);
+                refreshAdminIdentities();
+            });
+        }
+
+        function resetAllIdentities() {
+            if (!confirm("ต้องการรีเซ็ตบทบาท Admin ทั้งหมด (ยกเว้นบทบาทที่ถูกล็อกไว้) ใช่หรือไม่? การกระทำนี้ไม่สามารถย้อนกลับได้")) return;
+            adminIdentitiesRef.get().then(snap => {
+                let batch = db.batch();
+                let count = 0;
+                snap.forEach(doc => {
+                    if (doc.data().status !== 'locked') {
+                        batch.delete(doc.ref);
+                        count++;
+                    }
+                });
+                batch.commit().then(() => {
+                    logActivity('identities_reset', `รีเซ็ตบทบาท Admin ทั้งหมด (${count} รายการ ยกเว้นที่ล็อกไว้)`, currentAdminName);
+                    alert(`รีเซ็ตบทบาทเรียบร้อย (${count} รายการ)`);
+                    refreshAdminIdentities();
+                });
+            });
+        }
+
+        // --- ประวัติการใช้งาน (เก็บย้อนหลัง 3 เดือน) ---
+        function refreshActivityLog() {
+            let container = document.getElementById('activityLogList');
+            if (!container) return;
+            let cutoff = new Date();
+            cutoff.setMonth(cutoff.getMonth() - 3);
+            activityLogsRef.orderBy('ts', 'desc').limit(200).get().then(snap => {
+                container.innerHTML = '';
+                let shown = 0;
+                snap.forEach(doc => {
+                    let d = doc.data();
+                    if (d.ts && d.ts < cutoff.toISOString()) return;
+                    shown++;
+                    let row = document.createElement('div');
+                    row.className = "text-[11px] border-b border-zinc-800 py-1.5 text-gray-300";
+                    row.innerHTML = `<span class="text-gray-500">${escapeHtml(d.ts || '')}</span> — <span class="font-semibold text-yellow-300">${escapeHtml(d.by || 'ไม่ระบุชื่อ')}</span>: ${escapeHtml(d.detail || d.action)} <span class="text-gray-600">(${escapeHtml((d.device || '').substring(0, 40))})</span>`;
+                    container.appendChild(row);
+                });
+                if (shown === 0) container.innerHTML = `<p class="text-gray-500 text-xs">ยังไม่มีประวัติการใช้งาน</p>`;
+            }).catch(() => {
+                container.innerHTML = `<p class="text-gray-500 text-xs">ไม่สามารถโหลดประวัติได้ในขณะนี้</p>`;
+            });
+            pruneOldLogs();
+        }
+
+        // --- เปลี่ยนรหัสผ่าน ---
+        function changeAdminPassword() {
+            let current = prompt("ยืนยันรหัสผ่าน Admin Leader ปัจจุบันเพื่อดำเนินการต่อ:");
+            if (current !== SUPER_ADMIN_PASSWORD) { if (current !== null) alert("รหัสผ่านไม่ถูกต้อง"); return; }
+            let newPass = prompt("กรอกรหัสผ่าน Admin ใหม่:");
+            if (!newPass) return;
+            authDocRef.set({ adminPassword: newPass }, { merge: true }).then(() => {
+                ADMIN_PASSWORD = newPass;
+                logActivity('password_change', 'เปลี่ยนรหัสผ่าน Admin', currentAdminName);
+                alert("เปลี่ยนรหัสผ่าน Admin สำเร็จ!");
+            });
+        }
+
+        function changeSuperAdminPassword() {
+            let current = prompt("ยืนยันรหัสผ่าน Admin Leader ปัจจุบันเพื่อดำเนินการต่อ:");
+            if (current !== SUPER_ADMIN_PASSWORD) { if (current !== null) alert("รหัสผ่านไม่ถูกต้อง"); return; }
+            let newPass = prompt("กรอกรหัสผ่าน Admin Leader ใหม่:");
+            if (!newPass) return;
+            authDocRef.set({ superAdminPassword: newPass }, { merge: true }).then(() => {
+                SUPER_ADMIN_PASSWORD = newPass;
+                logActivity('password_change', 'เปลี่ยนรหัสผ่าน Admin Leader', currentAdminName);
+                alert("เปลี่ยนรหัสผ่าน Admin Leader สำเร็จ!");
+            });
+        }
+
+        // --- ตรวจสอบ/อัปเดตมาตรการความปลอดภัยฝั่งหน้าเว็บ ---
+        function runSecurityCheck() {
+            let results = [
+                "✅ ป้องกัน XSS จากข้อมูลที่ผู้เยี่ยมชมกรอก (เช่น แบบฟอร์มสมัคร นศท.) — เปิดใช้งานอยู่",
+                "✅ ระบบล็อกการเข้าสู่ระบบชั่วคราวหลังกรอกรหัสผ่านผิดซ้ำ (5 ครั้ง / ล็อก 5 นาที) — เปิดใช้งานอยู่",
+                "✅ บันทึกประวัติการเข้าใช้งาน Admin ทุกครั้ง (ชื่อ+อุปกรณ์+เวลา) — เปิดใช้งานอยู่",
+                "⚠️ การป้องกันการยิงเว็บ/DDoS ระดับเครือข่ายต้องตั้งค่าโดยตรงที่ Firebase Hosting หรือบริการอย่าง Cloudflare — ไม่สามารถทำผ่านโค้ดหน้าเว็บ (ฝั่ง Client) ได้",
+                "⚠️ ควรตั้งค่า Firestore Security Rules ตามตัวอย่างด้านล่างเพื่อป้องกันการแก้ไขข้อมูลโดยตรงจากภายนอกโดยไม่ผ่านหน้าเว็บ"
+            ];
+            alert(results.join("\n\n"));
+            logActivity('security_check', 'กดตรวจสอบ/อัปเดตระบบความปลอดภัย', currentAdminName);
         }
 
         // --- สำรองเว็บ (Backup & Restore) ---
@@ -1875,9 +2170,6 @@
 
             if (title && desc) {
                 let finalImages = [...currentMultiNewsImages];
-                if (finalImages.length === 0 && editIndex !== -1) {
-                    finalImages = newsData[editIndex].images || (newsData[editIndex].image ? [newsData[editIndex].image] : []);
-                }
                 let finalDate = dateVal || new Date().toLocaleDateString('th-TH', {day:'numeric', month:'long', year:'numeric'});
                 
                 if (editIndex === -1) {
@@ -2028,12 +2320,12 @@
                 tr.className = "border-b border-zinc-700/50 hover:bg-zinc-700/20";
                 tr.innerHTML = `
                     <td class="p-2">${index + 1}</td>
-                    <td class="p-2">${app.name}</td>
-                    <td class="p-2 font-bold text-yellow-300">${app.room || '-'}</td>
-                    <td class="p-2">${app.year}</td>
-                    <td class="p-2">${app.phone}</td>
-                    <td class="p-2">${app.contact}</td>
-                    <td class="p-2">${app.date}</td>
+                    <td class="p-2">${escapeHtml(app.name)}</td>
+                    <td class="p-2 font-bold text-yellow-300">${escapeHtml(app.room || '-')}</td>
+                    <td class="p-2">${escapeHtml(app.year)}</td>
+                    <td class="p-2">${escapeHtml(app.phone)}</td>
+                    <td class="p-2">${escapeHtml(app.contact)}</td>
+                    <td class="p-2">${escapeHtml(app.date)}</td>
                     <td class="p-2 text-center">
                         <button onclick="deleteApplicant(${index}, ${app.origIndex})" class="bg-red-600 hover:bg-red-700 text-white text-xs px-2 py-1 rounded">ลบ</button>
                     </td>
