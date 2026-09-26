@@ -26,7 +26,8 @@
         <div class="flex justify-between items-center w-full">
             <div onclick="location.reload()" class="flex items-center space-x-3 cursor-pointer group">
                 <div id="logo-bbu-army" class="logo-bbu-army w-12 h-12 md:w-16 md:h-16 bg-yellow-500 rounded-full flex items-center justify-center border-2 border-white shadow-lg overflow-hidden group-hover:scale-105 transition">
-                    <span class="text-xs font-bold text-black text-center leading-none">พัน.นศท.</span>
+                    <img src="logo-bbu-army.jpg" alt="ตราสัญลักษณ์ พัน.นศท.รร.บบ." class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <span class="hidden w-full h-full items-center justify-center text-xs font-bold text-black text-center leading-none">พัน.นศท.</span>
                 </div>
                 <div>
                     <h1 class="text-base md:text-xl font-bold text-yellow-300">พัน.นศท.รร.บบ.</h1>
@@ -66,8 +67,9 @@
                         <span>⬅ กลับหน้าแรก</span>
                     </button>
                     <div onclick="showSection('home')" class="flex items-center space-x-2 cursor-pointer group">
-                        <div class="logo-bbu-army w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center font-bold text-black text-xs leading-none text-center group-hover:scale-105 transition border border-white">
-                            พัน.นศท.
+                        <div class="logo-bbu-army w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center font-bold text-black text-xs leading-none text-center group-hover:scale-105 transition border border-white overflow-hidden">
+                            <img src="logo-bbu-army.jpg" alt="ตราสัญลักษณ์ พัน.นศท.รร.บบ." class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <span class="hidden w-full h-full items-center justify-center">พัน.นศท.</span>
                         </div>
                         <span class="font-bold text-sm md:text-base text-yellow-400">พัน.นศท.รร.บบ.</span>
                     </div>
@@ -540,8 +542,9 @@ service cloud.firestore {
     <div id="registerPage" class="hidden min-h-screen flex flex-col justify-between text-white p-6">
         <div class="flex justify-between items-center w-full">
             <div onclick="goToIntro()" class="flex items-center space-x-2 bg-zinc-900/90 backdrop-blur border border-zinc-700 px-3 py-1.5 rounded-xl cursor-pointer hover:bg-zinc-800 transition shadow-lg">
-                <div class="logo-bbu-army w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center font-bold text-black text-[10px] leading-none text-center border border-white">
-                    พัน.นศท.
+                <div class="logo-bbu-army w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center font-bold text-black text-[10px] leading-none text-center border border-white overflow-hidden">
+                    <img src="logo-bbu-army.jpg" alt="ตราสัญลักษณ์ พัน.นศท.รร.บบ." class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <span class="hidden w-full h-full items-center justify-center">พัน.นศท.</span>
                 </div>
                 <span class="text-xs font-bold text-yellow-300">พัน.นศท.รร.บบ.</span>
             </div>
