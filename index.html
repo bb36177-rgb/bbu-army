@@ -25,7 +25,7 @@
     <div id="introPage" class="flex flex-col min-h-screen justify-between p-4 md:p-6">
         <div class="flex justify-between items-center w-full">
             <div onclick="location.reload()" class="flex items-center space-x-3 cursor-pointer group">
-                <div class="w-12 h-12 md:w-16 md:h-16 bg-yellow-500 rounded-full flex items-center justify-center border-2 border-white shadow-lg overflow-hidden group-hover:scale-105 transition">
+                <div id="logo-bbu-army" class="logo-bbu-army w-12 h-12 md:w-16 md:h-16 bg-yellow-500 rounded-full flex items-center justify-center border-2 border-white shadow-lg overflow-hidden group-hover:scale-105 transition">
                     <span class="text-xs font-bold text-black text-center leading-none">พัน.นศท.</span>
                 </div>
                 <div>
@@ -53,7 +53,7 @@
         </div>
 
         <div class="text-center text-xs md:text-sm text-gray-400 py-2">
-            จัดทำโดย ฝ่ายอำนวยการ 4
+            จัดทำโดยกองพันนักศึกษาวิชาทหารโรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"
         </div>
     </div>
 
@@ -66,7 +66,7 @@
                         <span>⬅ กลับหน้าแรก</span>
                     </button>
                     <div onclick="showSection('home')" class="flex items-center space-x-2 cursor-pointer group">
-                        <div class="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center font-bold text-black text-xs leading-none text-center group-hover:scale-105 transition border border-white">
+                        <div class="logo-bbu-army w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center font-bold text-black text-xs leading-none text-center group-hover:scale-105 transition border border-white">
                             พัน.นศท.
                         </div>
                         <span class="font-bold text-sm md:text-base text-yellow-400">พัน.นศท.รร.บบ.</span>
@@ -77,6 +77,7 @@
                     <button onclick="showSection('command')" class="hover:text-yellow-400 px-3 py-1 rounded transition">บอร์ดการบังคับบัญชา</button>
                     <button onclick="showSection('motto')" class="hover:text-yellow-400 px-3 py-1 rounded transition">คำขวัญประจำกองพัน</button>
                     <button onclick="showSection('news')" class="hover:text-yellow-400 px-3 py-1 rounded transition">ข่าวสาร</button>
+                    <button onclick="showSection('schedule')" class="hover:text-yellow-400 px-3 py-1 rounded transition">ตารางเรียนวิชาทหาร</button>
                     <button onclick="showSection('contact')" class="hover:text-yellow-400 px-3 py-1 rounded transition">ช่องทางติดต่อ</button>
                     <button onclick="showSection('hqroom')" id="hqRoomNavBtn" class="hidden bg-purple-800/60 hover:bg-purple-700 px-3 py-1.5 rounded text-purple-200 font-bold text-sm border border-purple-500/60 transition">🖥️ ห้องทำงาน ผบช.</button>
                     <button onclick="handleAdminNavClick()" id="dynamicAdminNavBtn" class="bg-blue-700 hover:bg-blue-800 px-3 py-1.5 rounded text-white font-bold text-sm border border-blue-500 transition">
@@ -125,6 +126,12 @@
                 </div>
 
                 <!-- Contact -->
+                <!-- ตารางเรียนวิชาทหาร -->
+                <div id="sec-schedule" class="content-section hidden py-6 bg-zinc-900/80 backdrop-blur rounded-2xl p-8 border border-zinc-700/50 shadow-xl">
+                    <h3 class="text-2xl font-bold text-yellow-400 mb-6 border-b border-zinc-700 pb-2">📅 ตารางเรียนวิชาทหาร (ศฝ.)</h3>
+                    <div id="scheduleGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+                </div>
+
                 <div id="sec-contact" class="content-section hidden py-6 bg-zinc-900/80 backdrop-blur rounded-2xl p-8 border border-zinc-700/50 shadow-xl text-center">
                     <h3 class="text-2xl font-bold text-yellow-400 mb-2 border-b border-zinc-700 pb-2">ช่องทางติดต่อ</h3>
                     <p class="text-gray-300 mb-8">ติดต่อสอบถามข้อมูลเพิ่มเติมได้ผ่านช่องทางโซเชียลมีเดียด้านล่างนี้</p>
@@ -153,6 +160,7 @@
                         <h3 class="text-2xl font-bold text-red-500">⚙ แผงควบคุมผู้ดูแลระบบ (Admin Dashboard)</h3>
                         <div class="flex gap-2">
                             <button onclick="handleSuperAdminClick()" id="superAdminBtn" class="bg-purple-700 hover:bg-purple-800 text-white px-3 py-1.5 rounded text-sm font-semibold border border-purple-500">🔐 Admin Leader</button>
+                            <button onclick="changeAdminDisplayName()" class="bg-zinc-700 hover:bg-zinc-600 text-white px-3 py-1.5 rounded text-sm font-semibold">✏️ เปลี่ยนชื่อที่จำไว้</button>
                             <button onclick="adminLogout()" class="bg-zinc-700 hover:bg-zinc-600 text-white px-3 py-1.5 rounded text-sm font-semibold">ออกจากระบบ Admin</button>
                         </div>
                     </div>
@@ -168,9 +176,10 @@
                         <!-- ความปลอดภัยของเว็บ -->
                         <div class="bg-zinc-900 p-4 rounded-lg border border-zinc-700 mb-4">
                             <h5 class="font-bold text-purple-200 text-sm mb-2">🛡️ ระบบป้องกันเว็บ / ความปลอดภัย</h5>
-                            <p class="text-xs text-gray-500 mb-3">มาตรการที่เปิดใช้งานอยู่: ป้องกัน XSS จากข้อมูลผู้เยี่ยมชม, ล็อกการเข้าสู่ระบบชั่วคราวเมื่อกรอกรหัสผิดซ้ำ, บันทึกประวัติการเข้าใช้งานทุกครั้ง</p>
+                            <span id="securityLevelBadge" class="inline-block text-[11px] bg-purple-800/60 text-purple-200 px-2.5 py-1 rounded-full mb-2">ระดับปัจจุบัน: 1 / 5 — พื้นฐาน</span>
+                            <p class="text-xs text-gray-500 mb-3">กดปุ่มอัปเดตเพื่อยกระดับมาตรการป้องกันจริง (ไม่ใช่ข้อความคงที่) — ทุกครั้งที่กด ระบบจะเปิดใช้งานมาตรการเพิ่มเติมจริงและจดจำระดับไว้ถาวร</p>
                             <div class="flex flex-wrap gap-2 mb-3">
-                                <button onclick="runSecurityCheck()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold px-4 py-2 rounded-lg">🔄 ตรวจสอบ/อัปเดตระบบความปลอดภัย</button>
+                                <button onclick="runSecurityCheck()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold px-4 py-2 rounded-lg">🔄 อัปเดตระบบความปลอดภัย</button>
                                 <button onclick="changeAdminPassword()" class="bg-zinc-700 hover:bg-zinc-600 text-white text-sm font-bold px-4 py-2 rounded-lg">🔑 เปลี่ยนรหัสผ่าน Admin</button>
                                 <button onclick="changeSuperAdminPassword()" class="bg-zinc-700 hover:bg-zinc-600 text-white text-sm font-bold px-4 py-2 rounded-lg">🔑 เปลี่ยนรหัสผ่าน Admin Leader</button>
                             </div>
@@ -408,52 +417,73 @@ service cloud.firestore {
                         </div>
                     </div>
 
+                    <!-- หมวดหมู่: ตารางเรียนวิชาทหาร -->
+                    <div class="mb-8 p-4 bg-zinc-950/40 rounded-xl border border-zinc-800">
+                        <h4 class="text-lg font-bold text-yellow-400 mb-4 border-l-4 border-yellow-500 pl-2">📅 จัดการตารางเรียนวิชาทหาร (ศฝ.)</h4>
+                        <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700 mb-4">
+                            <h5 id="scheduleFormTitle" class="font-bold text-yellow-400 mb-2">เพิ่มตารางเรียนวิชาทหารใหม่</h5>
+                            <input type="hidden" id="editScheduleIndex" value="-1">
+                            <label class="text-xs text-gray-400 block mb-1">1. หัวข้อตาราง</label>
+                            <input type="text" id="scheduleTitleInput" placeholder="เช่น ตารางเรียนวิชาทหาร ชั้นปีที่ 1 ภาคเรียนที่ 1" class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm mb-2">
+                            <label class="text-xs text-gray-400 block mb-1">2. รายละเอียด</label>
+                            <textarea id="scheduleDescInput" placeholder="รายละเอียดตาราง วัน-เวลา สถานที่ ฯลฯ" class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm mb-2 h-24"></textarea>
+                            <label class="text-xs text-gray-400 block mb-1">3. รูปภาพตาราง</label>
+                            <div class="bg-zinc-900 p-2.5 rounded border border-zinc-700 mb-3 text-xs">
+                                <input type="file" id="scheduleFile" accept="image/*" onchange="openCropper(this, 'schedule')" class="w-full text-gray-300 text-xs file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-zinc-700 file:text-white hover:file:bg-zinc-600 mb-2">
+                                <div id="schedulePreviewBox" class="hidden text-center mt-2">
+                                    <p class="text-emerald-400 text-[10px] mb-1">✔ เลือกรูปภาพเรียบร้อย</p>
+                                    <img class="w-24 h-24 object-cover mx-auto rounded border border-yellow-500">
+                                </div>
+                            </div>
+                            <div class="flex gap-2">
+                                <button onclick="saveSchedule()" id="saveScheduleBtn" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded text-sm font-bold text-white w-full">บันทึกตาราง</button>
+                                <button onclick="resetScheduleForm()" id="cancelScheduleBtn" class="hidden bg-zinc-700 hover:bg-zinc-600 px-3 py-2 rounded text-sm font-bold text-white">ยกเลิก</button>
+                            </div>
+                        </div>
+                        <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700">
+                            <h5 class="font-bold text-yellow-300 text-sm mb-3">รายการตารางเรียนวิชาทหาร (เพิ่มได้ไม่จำกัด)</h5>
+                            <div id="adminScheduleList" class="space-y-2 max-h-48 overflow-y-auto"></div>
+                        </div>
+                    </div>
+
                     <!-- หมวดหมู่: ข้อมูลผู้สมัครและสถิติ -->
                     <div class="p-4 bg-zinc-950/40 rounded-xl border border-zinc-800">
                         <h4 class="text-lg font-bold text-yellow-400 mb-4 border-l-4 border-yellow-500 pl-2">📊 สถิติและรายชื่อผู้สมัคร นศท.</h4>
                         
                         <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700 mb-6">
-                            <h5 class="font-bold text-yellow-300 text-sm mb-4">📈 กราฟสรุปสถิติผู้สมัครแยกตามชั้นปี</h5>
+                            <div class="flex flex-wrap justify-between items-center gap-2 mb-4">
+                                <h5 class="font-bold text-yellow-300 text-sm">📈 กราฟสรุปสถิติผู้สมัคร</h5>
+                                <select id="chartDimension" onchange="updateAdminStats()" class="bg-zinc-900 border border-zinc-700 rounded p-1.5 text-white text-xs">
+                                    <option value="gender">แยกตามเพศ (ชาย-หญิง)</option>
+                                    <option value="room">แยกตามห้องเรียน</option>
+                                </select>
+                            </div>
                             <div class="flex flex-col sm:flex-row items-center gap-6">
                                 <div class="relative w-40 h-40 shrink-0">
-                                    <svg viewBox="0 0 100 100" class="w-full h-full -rotate-90">
+                                    <svg id="statsDonutSvg" viewBox="0 0 100 100" class="w-full h-full -rotate-90">
                                         <circle cx="50" cy="50" r="40" fill="none" stroke="#27272a" stroke-width="14"></circle>
-                                        <circle id="donutY3" cx="50" cy="50" r="40" fill="none" stroke="#f59e0b" stroke-width="14" stroke-dasharray="0 251.3"></circle>
-                                        <circle id="donutY2" cx="50" cy="50" r="40" fill="none" stroke="#22c55e" stroke-width="14" stroke-dasharray="0 251.3"></circle>
-                                        <circle id="donutY1" cx="50" cy="50" r="40" fill="none" stroke="#3b82f6" stroke-width="14" stroke-dasharray="0 251.3"></circle>
                                     </svg>
                                     <div class="absolute inset-0 flex flex-col items-center justify-center">
                                         <span id="applicantCount" class="text-3xl font-extrabold text-white">0</span>
                                         <span class="text-[10px] text-gray-400">ผู้สมัครทั้งหมด</span>
                                     </div>
                                 </div>
-                                <div class="flex-1 w-full space-y-2 text-xs">
-                                    <div class="flex items-center justify-between bg-zinc-900 px-3 py-2.5 rounded-lg border border-zinc-700">
-                                        <span class="flex items-center gap-2 text-gray-200"><span class="w-2.5 h-2.5 rounded-full bg-blue-500 shrink-0"></span>ชั้นปีที่ 1</span>
-                                        <span id="chartY1Count" class="font-bold text-blue-300">0 คน</span>
-                                    </div>
-                                    <div class="flex items-center justify-between bg-zinc-900 px-3 py-2.5 rounded-lg border border-zinc-700">
-                                        <span class="flex items-center gap-2 text-gray-200"><span class="w-2.5 h-2.5 rounded-full bg-green-500 shrink-0"></span>ชั้นปีที่ 2</span>
-                                        <span id="chartY2Count" class="font-bold text-green-300">0 คน</span>
-                                    </div>
-                                    <div class="flex items-center justify-between bg-zinc-900 px-3 py-2.5 rounded-lg border border-zinc-700">
-                                        <span class="flex items-center gap-2 text-gray-200"><span class="w-2.5 h-2.5 rounded-full bg-amber-500 shrink-0"></span>ชั้นปีที่ 3</span>
-                                        <span id="chartY3Count" class="font-bold text-amber-300">0 คน</span>
-                                    </div>
-                                </div>
+                                <div id="statsLegend" class="flex-1 w-full space-y-2 text-xs"></div>
                             </div>
                         </div>
 
                         <div class="bg-zinc-800 p-4 rounded-xl border border-zinc-700">
                             <div class="flex flex-col sm:flex-row justify-between items-center mb-3 gap-2">
                                 <h5 class="font-bold text-yellow-300 text-sm">รายชื่อผู้สมัครเข้าเป็นนักศึกษาวิชาทหาร</h5>
-                                <span class="text-[10px] bg-zinc-700 text-gray-300 px-2 py-0.5 rounded-full inline-block mt-1">📑 เรียงลำดับ ก-ฮ แบบราชการ (แยกตามห้องก่อน แล้วเรียงชื่อตามลำดับตัวอักษร)</span>
                                 <div class="flex flex-wrap gap-2 items-center w-full sm:w-auto">
-                                    <select id="filterYear" onchange="updateAdminStats()" class="bg-zinc-900 border border-zinc-700 rounded p-1.5 text-white text-xs">
-                                        <option value="">ทุกชั้นปี</option>
-                                        <option value="ปีที่ 1">ชั้นปีที่ 1</option>
-                                        <option value="ปีที่ 2">ชั้นปีที่ 2</option>
-                                        <option value="ปีที่ 3">ชั้นปีที่ 3</option>
+                                    <select id="sortMode" onchange="updateAdminStats()" class="bg-zinc-900 border border-zinc-700 rounded p-1.5 text-white text-xs">
+                                        <option value="thai">📑 เรียง ก-ฮ แบบราชการ</option>
+                                        <option value="date">🕓 เรียงตามลำดับการสมัคร</option>
+                                    </select>
+                                    <select id="filterGender" onchange="updateAdminStats()" class="bg-zinc-900 border border-zinc-700 rounded p-1.5 text-white text-xs">
+                                        <option value="">ทุกเพศ</option>
+                                        <option value="ชาย">ชาย</option>
+                                        <option value="หญิง">หญิง</option>
                                     </select>
                                     <select id="filterRoom" onchange="updateAdminStats()" class="bg-zinc-900 border border-zinc-700 rounded p-1.5 text-white text-xs">
                                         <option value="">ทุกห้องเรียน</option>
@@ -481,6 +511,7 @@ service cloud.firestore {
                                         <tr>
                                             <th class="p-2">ลำดับ</th>
                                             <th class="p-2">ชื่อ - สกุล</th>
+                                            <th class="p-2">เพศ</th>
                                             <th class="p-2">ห้อง</th>
                                             <th class="p-2">ชั้นปีที่สมัคร</th>
                                             <th class="p-2">เบอร์โทรศัพท์</th>
@@ -509,7 +540,7 @@ service cloud.firestore {
     <div id="registerPage" class="hidden min-h-screen flex flex-col justify-between text-white p-6">
         <div class="flex justify-between items-center w-full">
             <div onclick="goToIntro()" class="flex items-center space-x-2 bg-zinc-900/90 backdrop-blur border border-zinc-700 px-3 py-1.5 rounded-xl cursor-pointer hover:bg-zinc-800 transition shadow-lg">
-                <div class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center font-bold text-black text-[10px] leading-none text-center border border-white">
+                <div class="logo-bbu-army w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center font-bold text-black text-[10px] leading-none text-center border border-white">
                     พัน.นศท.
                 </div>
                 <span class="text-xs font-bold text-yellow-300">พัน.นศท.รร.บบ.</span>
@@ -523,6 +554,7 @@ service cloud.firestore {
             <button onclick="goToIntro()" class="mb-4 bg-zinc-800 hover:bg-zinc-700 px-3 py-1.5 rounded text-sm text-yellow-400">⬅ กลับหน้าแรก</button>
             <h2 class="text-2xl font-bold text-yellow-400 mb-4">สมัครเข้าเป็นนักศึกษาวิชาทหาร โรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"</h2>
             <form onsubmit="submitRegister(event)" class="space-y-4">
+                <input type="text" id="regHoneypot" name="website" style="position:absolute;left:-9999px;top:-9999px" tabindex="-1" autocomplete="off">
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
                     <div>
                         <label class="block text-sm text-gray-300 mb-1">คำนำหน้าชื่อ</label>
@@ -537,6 +569,15 @@ service cloud.firestore {
                         <label class="block text-sm text-gray-300 mb-1">ชื่อ - สกุล (ไม่ต้องใส่คำนำหน้า)</label>
                         <input type="text" id="regName" required class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white" placeholder="รักชาติ ยิ่งชีพ">
                     </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm text-gray-300 mb-1">เพศ</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button type="button" id="genderMaleBtn" onclick="selectGender('ชาย')" class="py-2.5 rounded-lg font-bold border-2 transition bg-blue-600 border-blue-400 text-white">👦 ชาย</button>
+                        <button type="button" id="genderFemaleBtn" onclick="selectGender('หญิง')" class="py-2.5 rounded-lg font-bold border-2 transition bg-zinc-800 border-zinc-700 text-gray-300">👧 หญิง</button>
+                    </div>
+                    <input type="hidden" id="regGender" value="ชาย">
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -561,7 +602,6 @@ service cloud.firestore {
                     <div>
                         <label class="block text-sm text-gray-300 mb-1">ชั้นปีที่สมัคร</label>
                         <input type="text" id="regYear" value="นศท. ชั้นปีที่ 1" readonly class="w-full bg-zinc-800 border border-zinc-700 rounded p-2 text-gray-300 cursor-not-allowed">
-                        <p class="text-xs text-amber-400 mt-1">ขณะนี้เปิดรับสมัครเฉพาะนักศึกษาวิชาทหารชั้นปีที่ 1 เท่านั้น</p>
                     </div>
                 </div>
 
@@ -588,7 +628,7 @@ service cloud.firestore {
                 <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg shadow-lg">ยืนยันการสมัคร</button>
             </form>
         </div>
-        <footer class="text-center text-xs text-gray-500 py-2">จัดทำโดย ฝ่ายอำนวยการ 4</footer>
+        <footer class="text-center text-xs text-gray-500 py-2">จัดทำโดยกองพันนักศึกษาวิชาทหารโรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"</footer>
     </div>
 
     <!-- Image Cropper Modal (Samsung Gallery Style) -->
@@ -616,8 +656,8 @@ service cloud.firestore {
 
     <!-- Lightbox Modal -->
     <div id="lightboxModal" class="hidden fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4" onclick="closeLightbox()">
-        <div class="relative max-w-4xl w-full max-h-[90vh] flex items-center justify-center" onclick="event.stopPropagation()">
-            <img id="lightboxImg" class="max-w-full max-h-[85vh] object-contain rounded-lg border border-yellow-500/50 shadow-2xl">
+        <div class="relative max-w-4xl w-full h-[85vh] flex items-center justify-center" onclick="event.stopPropagation()">
+            <img id="lightboxImg" class="max-w-full max-h-full object-contain rounded-lg border border-yellow-500/50 shadow-2xl">
             <button id="lightboxPrevBtn" onclick="navLightbox(-1)" class="hidden absolute left-1 sm:-left-4 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-black text-white w-10 h-10 rounded-full flex items-center justify-center text-xl font-bold border border-zinc-600 shadow-lg">‹</button>
             <button id="lightboxNextBtn" onclick="navLightbox(1)" class="hidden absolute right-1 sm:-right-4 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-black text-white w-10 h-10 rounded-full flex items-center justify-center text-xl font-bold border border-zinc-600 shadow-lg">›</button>
             <div id="lightboxCounter" class="hidden absolute top-2 left-2 bg-black/70 text-yellow-300 text-xs font-bold px-3 py-1 rounded-full"></div>
@@ -665,6 +705,34 @@ service cloud.firestore {
             }
         });
 
+        // --- Security level: a genuinely-adjustable, Firestore-backed setting. Each level
+        // actually changes real runtime behavior below (lockout strictness, spam/bot
+        // filtering, submission rate limiting) — pressing "update" is not cosmetic. ---
+        const SECURITY_LEVELS = [
+            { level: 1, label: "พื้นฐาน", maxAttempts: 5, lockMinutes: 5, honeypot: false, patternBlock: false, rateLimit: false },
+            { level: 2, label: "เพิ่มตัวดักจับบอทสแปมในแบบฟอร์มสมัคร", maxAttempts: 5, lockMinutes: 5, honeypot: true, patternBlock: false, rateLimit: false },
+            { level: 3, label: "กรองข้อความรูปแบบอันตราย (เช่น สคริปต์) + ล็อกอินเข้มงวดขึ้น", maxAttempts: 4, lockMinutes: 10, honeypot: true, patternBlock: true, rateLimit: false },
+            { level: 4, label: "จำกัดความถี่การส่งแบบฟอร์ม (กันสแปม)", maxAttempts: 3, lockMinutes: 20, honeypot: true, patternBlock: true, rateLimit: true },
+            { level: 5, label: "สูงสุด — เปิดใช้งานทุกมาตรการ", maxAttempts: 3, lockMinutes: 30, honeypot: true, patternBlock: true, rateLimit: true }
+        ];
+        let securityLevel = 1;
+        const securityDocRef = db.collection('siteConfig').doc('security');
+        securityDocRef.onSnapshot((doc) => {
+            if (doc.exists) {
+                securityLevel = doc.data().level || 1;
+            } else {
+                securityDocRef.set({ level: 1, updatedAt: new Date().toLocaleString('th-TH') });
+            }
+            updateSecurityLevelBadge();
+        });
+        function getSecurityConfig() {
+            return SECURITY_LEVELS[Math.min(Math.max(securityLevel, 1), SECURITY_LEVELS.length) - 1];
+        }
+        function updateSecurityLevelBadge() {
+            let badge = document.getElementById('securityLevelBadge');
+            if (badge) badge.innerText = `ระดับปัจจุบัน: ${securityLevel} / ${SECURITY_LEVELS.length} — ${getSecurityConfig().label}`;
+        }
+
         // --- Login lockout (soft, client-side deterrent against repeated password guessing) ---
         function checkLockout(key) {
             let lockUntil = parseInt(localStorage.getItem(key + '_lockUntil') || '0');
@@ -676,11 +744,12 @@ service cloud.firestore {
             return false;
         }
         function recordFailedAttempt(key) {
+            let cfg = getSecurityConfig();
             let count = parseInt(localStorage.getItem(key + '_failCount') || '0') + 1;
-            if (count >= 5) {
-                localStorage.setItem(key + '_lockUntil', (Date.now() + 5 * 60000).toString());
+            if (count >= cfg.maxAttempts) {
+                localStorage.setItem(key + '_lockUntil', (Date.now() + cfg.lockMinutes * 60000).toString());
                 localStorage.setItem(key + '_failCount', '0');
-                alert("กรอกรหัสผ่านผิดครบ 5 ครั้ง ระบบล็อกการเข้าสู่ระบบชั่วคราว 5 นาที");
+                alert(`กรอกรหัสผ่านผิดครบ ${cfg.maxAttempts} ครั้ง ระบบล็อกการเข้าสู่ระบบชั่วคราว ${cfg.lockMinutes} นาที`);
             } else {
                 localStorage.setItem(key + '_failCount', count.toString());
             }
@@ -729,6 +798,7 @@ service cloud.firestore {
         let applicants = [];
         let commandData = [];
         let contactData = [];
+        let scheduleData = [];
         let mottoText = defaultMotto;
         let regOpen = true;
         let activeImageData = null;
@@ -780,6 +850,7 @@ service cloud.firestore {
             renderContacts();
             renderMotto();
             renderRegStatus();
+            renderSchedule();
             updateAdminStats();
         }
 
@@ -797,6 +868,7 @@ service cloud.firestore {
                 commandData = data.command || defaultCommand;
                 applicants = data.applicants || [];
                 contactData = data.contacts || defaultContacts;
+                scheduleData = data.schedule || [];
                 mottoText = data.motto || defaultMotto;
                 regOpen = (data.regOpen === undefined) ? true : data.regOpen;
             } else {
@@ -805,9 +877,10 @@ service cloud.firestore {
                 commandData = defaultCommand;
                 applicants = [];
                 contactData = defaultContacts;
+                scheduleData = [];
                 mottoText = defaultMotto;
                 regOpen = true;
-                siteDocRef.set({ news: newsData, prNews: prNewsData, command: commandData, applicants: applicants, contacts: contactData, motto: mottoText, regOpen: regOpen });
+                siteDocRef.set({ news: newsData, prNews: prNewsData, command: commandData, applicants: applicants, contacts: contactData, schedule: scheduleData, motto: mottoText, regOpen: regOpen });
             }
             renderAll();
         }, (err) => {
@@ -821,6 +894,7 @@ service cloud.firestore {
                 command: commandData,
                 applicants: applicants,
                 contacts: contactData,
+                schedule: scheduleData,
                 motto: mottoText,
                 regOpen: regOpen
             }).catch((err) => {
@@ -1005,6 +1079,10 @@ service cloud.firestore {
                 let box = document.getElementById('prNewsPreviewBox');
                 box.classList.remove('hidden');
                 box.querySelector('img').src = activeImageData;
+            } else if (cropTargetType === 'schedule') {
+                let box = document.getElementById('schedulePreviewBox');
+                box.classList.remove('hidden');
+                box.querySelector('img').src = activeImageData;
             }
             closeCropper();
         }
@@ -1014,6 +1092,7 @@ service cloud.firestore {
             if(cropTargetType === 'command') document.getElementById('cmdFile').value = '';
             if(cropTargetType === 'contact') document.getElementById('contactFile').value = '';
             if(cropTargetType === 'prnews') document.getElementById('prNewsFile').value = '';
+            if(cropTargetType === 'schedule') document.getElementById('scheduleFile').value = '';
         }
 
         // Handle Multiple Images for News
@@ -1714,6 +1793,116 @@ service cloud.firestore {
             }
         }
 
+        // ===== ตารางเรียนวิชาทหาร (Schedule) — repeatable: title, description, image =====
+        function renderSchedule() {
+            let grid = document.getElementById('scheduleGrid');
+            let adminList = document.getElementById('adminScheduleList');
+            if (grid) grid.innerHTML = '';
+            if (adminList) adminList.innerHTML = '';
+
+            if (grid && scheduleData.length === 0) {
+                grid.innerHTML = `<p class="text-gray-400 text-sm col-span-full text-center">ยังไม่มีตารางเรียนวิชาทหารที่เผยแพร่</p>`;
+            }
+
+            scheduleData.forEach((item, index) => {
+                if (grid) {
+                    let div = document.createElement('div');
+                    div.className = "bg-zinc-800 rounded-xl overflow-hidden border border-zinc-700 shadow-lg flex flex-col";
+                    div.innerHTML = `
+                        ${item.image ? `<img src="${item.image}" alt="${escapeHtml(item.title)}" onclick="openLightbox('${item.image}')" class="w-full h-44 object-cover cursor-pointer">` : ''}
+                        <div class="p-4 flex flex-col flex-1">
+                            <h4 class="font-bold text-yellow-300 text-base mb-2">${escapeHtml(item.title)}</h4>
+                            <p class="text-sm text-gray-300 whitespace-pre-line flex-1">${escapeHtml(item.desc)}</p>
+                        </div>
+                    `;
+                    grid.appendChild(div);
+                }
+                if (adminList) {
+                    let row = document.createElement('div');
+                    row.className = "flex justify-between items-center bg-zinc-900 p-2.5 rounded border border-zinc-700 text-xs";
+                    row.innerHTML = `
+                        <div class="flex items-center space-x-2 truncate">
+                            ${item.image ? `<img src="${item.image}" class="w-8 h-8 rounded object-cover shrink-0">` : ''}
+                            <span class="truncate text-gray-300">${escapeHtml(item.title)}</span>
+                        </div>
+                        <div class="flex gap-1 shrink-0 ml-2">
+                            <button onclick="moveSchedule(${index}, -1)" class="bg-zinc-700 hover:bg-zinc-600 px-2 py-1 rounded text-white font-bold" ${index === 0 ? 'disabled style="opacity:0.4"' : ''}>⬆</button>
+                            <button onclick="moveSchedule(${index}, 1)" class="bg-zinc-700 hover:bg-zinc-600 px-2 py-1 rounded text-white font-bold" ${index === scheduleData.length - 1 ? 'disabled style="opacity:0.4"' : ''}>⬇</button>
+                            <button onclick="editSchedule(${index})" class="bg-amber-600 hover:bg-amber-700 px-2 py-1 rounded text-white font-bold">แก้ไข</button>
+                            <button onclick="deleteSchedule(${index})" class="bg-red-600 hover:bg-red-700 px-2 py-1 rounded text-white font-bold">ลบ</button>
+                        </div>
+                    `;
+                    adminList.appendChild(row);
+                }
+            });
+        }
+
+        function moveSchedule(index, direction) {
+            let targetIndex = index + direction;
+            if (targetIndex < 0 || targetIndex >= scheduleData.length) return;
+            let temp = scheduleData[index];
+            scheduleData[index] = scheduleData[targetIndex];
+            scheduleData[targetIndex] = temp;
+            saveDataToStorage();
+            renderSchedule();
+        }
+
+        function saveSchedule() {
+            let title = document.getElementById('scheduleTitleInput').value.trim();
+            let desc = document.getElementById('scheduleDescInput').value.trim();
+            let editIndex = parseInt(document.getElementById('editScheduleIndex').value);
+            if (!title) {
+                alert("กรุณากรอกหัวข้อตาราง");
+                return;
+            }
+            let finalImg = activeImageData || (editIndex !== -1 ? scheduleData[editIndex].image : '');
+            if (editIndex === -1) {
+                scheduleData.push({ title, desc, image: finalImg });
+                alert("เพิ่มตารางเรียนวิชาทหารสำเร็จ!");
+            } else {
+                scheduleData[editIndex] = { title, desc, image: finalImg };
+                alert("แก้ไขตารางเรียนวิชาทหารสำเร็จ!");
+            }
+            saveDataToStorage();
+            resetScheduleForm();
+        }
+
+        function editSchedule(index) {
+            let item = scheduleData[index];
+            document.getElementById('scheduleTitleInput').value = item.title;
+            document.getElementById('scheduleDescInput').value = item.desc || '';
+            document.getElementById('editScheduleIndex').value = index;
+            activeImageData = item.image;
+            if (item.image) {
+                let box = document.getElementById('schedulePreviewBox');
+                box.classList.remove('hidden');
+                box.querySelector('img').src = item.image;
+            }
+            document.getElementById('scheduleFormTitle').innerText = "แก้ไขตารางเรียนวิชาทหาร";
+            document.getElementById('saveScheduleBtn').innerText = "อัปเดตตาราง";
+            document.getElementById('cancelScheduleBtn').classList.remove('hidden');
+        }
+
+        function resetScheduleForm() {
+            document.getElementById('scheduleTitleInput').value = '';
+            document.getElementById('scheduleDescInput').value = '';
+            document.getElementById('scheduleFile').value = '';
+            document.getElementById('schedulePreviewBox').classList.add('hidden');
+            document.getElementById('editScheduleIndex').value = '-1';
+            activeImageData = null;
+            document.getElementById('scheduleFormTitle').innerText = "เพิ่มตารางเรียนวิชาทหารใหม่";
+            document.getElementById('saveScheduleBtn').innerText = "บันทึกตาราง";
+            document.getElementById('cancelScheduleBtn').classList.add('hidden');
+        }
+
+        function deleteSchedule(index) {
+            if (confirm("คุณต้องการลบตารางนี้ใช่หรือไม่?")) {
+                scheduleData.splice(index, 1);
+                saveDataToStorage();
+                alert("ลบตารางสำเร็จ!");
+            }
+        }
+
         function enterMainSite() {
             document.getElementById('introPage').classList.add('hidden');
             document.getElementById('registerPage').classList.add('hidden');
@@ -1768,7 +1957,8 @@ service cloud.firestore {
                 let pass = prompt("กรุณากรอกรหัสผ่าน Admin:");
                 if (pass === null) return;
                 if (pass === ADMIN_PASSWORD) {
-                    let name = (prompt("กรุณาระบุชื่อผู้เข้าใช้งาน (สำหรับบันทึกประวัติการเข้าใช้งาน):") || "").trim() || "ไม่ระบุชื่อ";
+                    let remembered = localStorage.getItem('bbu_admin_name');
+                    let name = remembered || (prompt("กรุณาระบุชื่อผู้เข้าใช้งาน (จะจำไว้ให้ครั้งต่อไปไม่ต้องพิมพ์อีก):") || "").trim() || "ไม่ระบุชื่อ";
                     adminIdentitiesRef.doc(name).get().then((doc) => {
                         if (doc.exists && doc.data().status === 'blocked') {
                             alert("ชื่อผู้ใช้นี้ถูกระงับสิทธิ์การเข้าใช้งาน Admin โดยผู้ดูแลระดับสูง (Admin Leader)");
@@ -1798,6 +1988,15 @@ service cloud.firestore {
                     alert("รหัสผ่านไม่ถูกต้อง!");
                 }
             }
+        }
+
+        function changeAdminDisplayName() {
+            let newName = (prompt("กรอกชื่อผู้เข้าใช้งานใหม่ที่ต้องการให้จดจำ:", currentAdminName || "") || "").trim();
+            if (!newName) return;
+            currentAdminName = newName;
+            localStorage.setItem('bbu_admin_name', newName);
+            logActivity('name_changed', `เปลี่ยนชื่อที่จดจำเป็น "${newName}"`, newName);
+            alert("บันทึกชื่อใหม่เรียบร้อยแล้ว");
         }
 
         function adminLogout() {
@@ -1972,15 +2171,25 @@ service cloud.firestore {
 
         // --- ตรวจสอบ/อัปเดตมาตรการความปลอดภัยฝั่งหน้าเว็บ ---
         function runSecurityCheck() {
-            let results = [
-                "✅ ป้องกัน XSS จากข้อมูลที่ผู้เยี่ยมชมกรอก (เช่น แบบฟอร์มสมัคร นศท.) — เปิดใช้งานอยู่",
-                "✅ ระบบล็อกการเข้าสู่ระบบชั่วคราวหลังกรอกรหัสผ่านผิดซ้ำ (5 ครั้ง / ล็อก 5 นาที) — เปิดใช้งานอยู่",
-                "✅ บันทึกประวัติการเข้าใช้งาน Admin ทุกครั้ง (ชื่อ+อุปกรณ์+เวลา) — เปิดใช้งานอยู่",
-                "⚠️ การป้องกันการยิงเว็บ/DDoS ระดับเครือข่ายต้องตั้งค่าโดยตรงที่ Firebase Hosting หรือบริการอย่าง Cloudflare — ไม่สามารถทำผ่านโค้ดหน้าเว็บ (ฝั่ง Client) ได้",
-                "⚠️ ควรตั้งค่า Firestore Security Rules ตามตัวอย่างด้านล่างเพื่อป้องกันการแก้ไขข้อมูลโดยตรงจากภายนอกโดยไม่ผ่านหน้าเว็บ"
-            ];
-            alert(results.join("\n\n"));
-            logActivity('security_check', 'กดตรวจสอบ/อัปเดตระบบความปลอดภัย', currentAdminName);
+            if (securityLevel >= SECURITY_LEVELS.length) {
+                alert(`ระบบความปลอดภัยอยู่ในระดับสูงสุดแล้ว (ระดับ ${securityLevel}/${SECURITY_LEVELS.length})\n\nกำลังตรวจสอบองค์ประกอบทั้งหมดอีกครั้ง...\n✅ การป้องกัน XSS, ตัวดักบอทสแปม, การกรองข้อความอันตราย, การจำกัดความถี่การส่งฟอร์ม และระบบล็อกอินเข้มงวด — ทำงานปกติทุกจุด\n\n⚠️ อย่าลืม: การป้องกัน DDoS ระดับเครือข่ายยังต้องตั้งค่าที่ Firebase Hosting/Cloudflare และ Firestore Security Rules ตามคำแนะนำด้านล่าง เพราะไม่มีโค้ดฝั่งหน้าเว็บใดทำแทนได้`);
+                logActivity('security_check', `ตรวจสอบระบบความปลอดภัยซ้ำ (คงอยู่ระดับสูงสุด ${securityLevel})`, currentAdminName);
+                return;
+            }
+            let newLevel = securityLevel + 1;
+            securityDocRef.set({ level: newLevel, updatedAt: new Date().toLocaleString('th-TH') }, { merge: true }).then(() => {
+                securityLevel = newLevel;
+                let cfg = getSecurityConfig();
+                let changes = [
+                    `• ล็อกอินผิดพลาดสูงสุด ${cfg.maxAttempts} ครั้ง ก่อนล็อกชั่วคราว ${cfg.lockMinutes} นาที`,
+                    cfg.honeypot ? "• เปิดใช้งานตัวดักจับบอทสแปมในแบบฟอร์มสมัคร นศท." : null,
+                    cfg.patternBlock ? "• กรองข้อความรูปแบบอันตราย (เช่น <script>) ในข้อมูลที่ผู้เยี่ยมชมกรอกก่อนบันทึก" : null,
+                    cfg.rateLimit ? "• จำกัดความถี่การส่งแบบฟอร์มสมัคร (กันสแปมส่งรัว)" : null
+                ].filter(Boolean).join("\n");
+                alert(`✅ อัปเดตระบบความปลอดภัยสำเร็จ — ระดับ ${newLevel}/${SECURITY_LEVELS.length}: ${cfg.label}\n\nมาตรการที่ใช้งานอยู่ตอนนี้:\n${changes}\n\n⚠️ หมายเหตุ: การป้องกัน DDoS ระดับเครือข่ายยังต้องตั้งค่าที่ Firebase Hosting/Cloudflare โดยตรง`);
+                logActivity('security_update', `อัปเดตระบบความปลอดภัยเป็นระดับ ${newLevel} (${cfg.label})`, currentAdminName);
+                updateSecurityLevelBadge();
+            });
         }
 
         // --- สำรองเว็บ (Backup & Restore) ---
@@ -1991,6 +2200,7 @@ service cloud.firestore {
                 command: commandData,
                 applicants: applicants,
                 contacts: contactData,
+                schedule: scheduleData,
                 motto: mottoText,
                 regOpen: regOpen,
                 savedAt: new Date().toLocaleString('th-TH')
@@ -2058,6 +2268,7 @@ service cloud.firestore {
                 commandData = d.command || [];
                 applicants = d.applicants || [];
                 contactData = d.contacts || [];
+                scheduleData = d.schedule || [];
                 mottoText = d.motto || defaultMotto;
                 regOpen = (d.regOpen === undefined) ? true : d.regOpen;
                 saveDataToStorage();
@@ -2229,27 +2440,65 @@ service cloud.firestore {
                 goToIntro();
                 return;
             }
+            let cfg = getSecurityConfig();
+
+            if (cfg.honeypot && document.getElementById('regHoneypot').value.trim() !== '') {
+                return; // silently drop — bot filled a field a human never sees
+            }
+
             let prefix = document.getElementById('regPrefix').value;
             let rawName = document.getElementById('regName').value.trim();
             let name = prefix + " " + rawName;
+            let gender = document.getElementById('regGender').value;
             let room = document.getElementById('regRoom').value;
             let year = document.getElementById('regYear').value;
             let phone = document.getElementById('regPhone').value;
-            
+
             let platform = document.getElementById('regPlatform').value;
             let contactNameVal = document.getElementById('regContactName').value.trim();
             let contact = contactNameVal ? `${platform}: ${contactNameVal}` : '-';
-            
+
+            if (cfg.patternBlock) {
+                let dangerousPattern = /<script|javascript:|onerror\s*=|onload\s*=|<iframe/i;
+                if (dangerousPattern.test(rawName) || dangerousPattern.test(phone) || dangerousPattern.test(contactNameVal)) {
+                    alert("ข้อมูลที่กรอกมีอักขระที่ไม่อนุญาต กรุณาแก้ไขแล้วลองใหม่");
+                    return;
+                }
+            }
+
+            if (cfg.rateLimit) {
+                let lastSubmit = parseInt(localStorage.getItem('bbu_last_reg_submit') || '0');
+                if (Date.now() - lastSubmit < 60000) {
+                    alert("กรุณารออย่างน้อย 1 นาทีก่อนส่งแบบฟอร์มสมัครอีกครั้ง");
+                    return;
+                }
+                localStorage.setItem('bbu_last_reg_submit', Date.now().toString());
+            }
+
             let date = new Date().toLocaleDateString('th-TH');
 
-            applicants.push({ name, room, year, phone, contact, date });
+            applicants.push({ name, gender, room, year, phone, contact, date });
             saveDataToStorage();
             
             alert("บันทึกข้อมูลการสมัครเรียบร้อยแล้ว!");
             document.getElementById('regName').value = '';
             document.getElementById('regPhone').value = '';
             document.getElementById('regContactName').value = '';
+            selectGender('ชาย');
             goToIntro();
+        }
+
+        function selectGender(g) {
+            document.getElementById('regGender').value = g;
+            let maleBtn = document.getElementById('genderMaleBtn');
+            let femaleBtn = document.getElementById('genderFemaleBtn');
+            if (g === 'ชาย') {
+                maleBtn.className = "py-2.5 rounded-lg font-bold border-2 transition bg-blue-600 border-blue-400 text-white";
+                femaleBtn.className = "py-2.5 rounded-lg font-bold border-2 transition bg-zinc-800 border-zinc-700 text-gray-300";
+            } else {
+                femaleBtn.className = "py-2.5 rounded-lg font-bold border-2 transition bg-pink-600 border-pink-400 text-white";
+                maleBtn.className = "py-2.5 rounded-lg font-bold border-2 transition bg-zinc-800 border-zinc-700 text-gray-300";
+            }
         }
 
         function deleteApplicant(indexInFiltered, fullIndex) {
@@ -2261,57 +2510,90 @@ service cloud.firestore {
             }
         }
 
+        const CHART_COLORS = ['#3b82f6', '#ec4899', '#22c55e', '#f59e0b', '#a855f7', '#06b6d4', '#ef4444', '#84cc16', '#eab308', '#14b8a6', '#f97316', '#6366f1', '#d946ef'];
+
         function updateAdminStats() {
             document.getElementById('applicantCount').innerText = applicants.length;
-            let y1Count = applicants.filter(a => a.year.includes('ปีที่ 1')).length;
-            let y2Count = applicants.filter(a => a.year.includes('ปีที่ 2')).length;
-            let y3Count = applicants.filter(a => a.year.includes('ปีที่ 3')).length;
             let total = applicants.length;
+            let dimension = document.getElementById('chartDimension').value;
 
-            document.getElementById('chartY1Count').innerText = y1Count + " คน";
-            document.getElementById('chartY2Count').innerText = y2Count + " คน";
-            document.getElementById('chartY3Count').innerText = y3Count + " คน";
+            let groups = {};
+            if (dimension === 'gender') {
+                groups = { 'ชาย': 0, 'หญิง': 0 };
+                applicants.forEach(a => { groups[a.gender || 'ชาย'] = (groups[a.gender || 'ชาย'] || 0) + 1; });
+            } else {
+                applicants.forEach(a => {
+                    let r = a.room || 'ไม่ระบุ';
+                    groups[r] = (groups[r] || 0) + 1;
+                });
+                // Keep room order stable (ม.4/1 ... ม.4/13)
+                groups = Object.fromEntries(Object.entries(groups).sort((a, b) => {
+                    let na = parseInt(a[0].replace('ม.4/', '')) || 0;
+                    let nb = parseInt(b[0].replace('ม.4/', '')) || 0;
+                    return na - nb;
+                }));
+            }
 
-            let circumference = 2 * Math.PI * 40; // r=40
-            let y1Len = total ? (y1Count / total) * circumference : 0;
-            let y2Len = total ? (y2Count / total) * circumference : 0;
-            let y3Len = total ? (y3Count / total) * circumference : 0;
+            let circumference = 2 * Math.PI * 40;
+            let svg = document.getElementById('statsDonutSvg');
+            // Rebuild segment circles (base gray track + one circle per group)
+            svg.innerHTML = `<circle cx="50" cy="50" r="40" fill="none" stroke="#27272a" stroke-width="14"></circle>`;
+            let legend = document.getElementById('statsLegend');
+            legend.innerHTML = '';
+            let cumulative = 0;
+            let colorIndex = 0;
+            Object.entries(groups).forEach(([label, count]) => {
+                let color = CHART_COLORS[colorIndex % CHART_COLORS.length];
+                colorIndex++;
+                let segLen = total ? (count / total) * circumference : 0;
+                let circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                circle.setAttribute('cx', '50');
+                circle.setAttribute('cy', '50');
+                circle.setAttribute('r', '40');
+                circle.setAttribute('fill', 'none');
+                circle.setAttribute('stroke', color);
+                circle.setAttribute('stroke-width', '14');
+                circle.setAttribute('stroke-dasharray', `${segLen} ${circumference - segLen}`);
+                circle.setAttribute('stroke-dashoffset', `${-cumulative}`);
+                svg.appendChild(circle);
+                cumulative += segLen;
 
-            let d1 = document.getElementById('donutY1');
-            let d2 = document.getElementById('donutY2');
-            let d3 = document.getElementById('donutY3');
-            d1.setAttribute('stroke-dasharray', `${y1Len} ${circumference - y1Len}`);
-            d1.setAttribute('stroke-dashoffset', '0');
-            d2.setAttribute('stroke-dasharray', `${y2Len} ${circumference - y2Len}`);
-            d2.setAttribute('stroke-dashoffset', `${-y1Len}`);
-            d3.setAttribute('stroke-dasharray', `${y3Len} ${circumference - y3Len}`);
-            d3.setAttribute('stroke-dashoffset', `${-(y1Len + y2Len)}`);
+                let row = document.createElement('div');
+                row.className = "flex items-center justify-between bg-zinc-900 px-3 py-2.5 rounded-lg border border-zinc-700";
+                row.innerHTML = `<span class="flex items-center gap-2 text-gray-200"><span class="w-2.5 h-2.5 rounded-full shrink-0" style="background:${color}"></span>${escapeHtml(label)}</span><span class="font-bold" style="color:${color}">${count} คน</span>`;
+                legend.appendChild(row);
+            });
+            if (total === 0) legend.innerHTML = `<p class="text-gray-500 text-center">ยังไม่มีข้อมูลผู้สมัคร</p>`;
 
             let selectedRoom = document.getElementById('filterRoom').value;
-            let selectedYear = document.getElementById('filterYear').value;
+            let selectedGender = document.getElementById('filterGender').value;
+            let sortMode = document.getElementById('sortMode').value;
 
             let indexedApplicants = applicants.map((app, origIndex) => ({ ...app, origIndex }));
 
-            indexedApplicants.sort((a, b) => {
-                let roomA = a.room || "ม.4/0";
-                let roomB = b.room || "ม.4/0";
-                let numA = parseInt(roomA.replace('ม.4/', '')) || 0;
-                let numB = parseInt(roomB.replace('ม.4/', '')) || 0;
-                if (numA !== numB) return numA - numB;
-                return a.name.localeCompare(b.name, 'th');
-            });
+            if (sortMode === 'thai') {
+                indexedApplicants.sort((a, b) => {
+                    let roomA = a.room || "ม.4/0";
+                    let roomB = b.room || "ม.4/0";
+                    let numA = parseInt(roomA.replace('ม.4/', '')) || 0;
+                    let numB = parseInt(roomB.replace('ม.4/', '')) || 0;
+                    if (numA !== numB) return numA - numB;
+                    return a.name.localeCompare(b.name, 'th');
+                });
+            }
+            // sortMode === 'date' keeps original submission order (array order)
 
             let filtered = indexedApplicants;
             if (selectedRoom) {
                 filtered = filtered.filter(app => app.room === selectedRoom);
             }
-            if (selectedYear) {
-                filtered = filtered.filter(app => app.year === selectedYear);
+            if (selectedGender) {
+                filtered = filtered.filter(app => (app.gender || 'ชาย') === selectedGender);
             }
 
             let tbody = document.getElementById('applicantTableBody');
             if (filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="8" class="p-3 text-center text-gray-500">ยังไม่มีผู้สมัครในระบบตามเงื่อนไข</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="9" class="p-3 text-center text-gray-500">ยังไม่มีผู้สมัครในระบบตามเงื่อนไข</td></tr>`;
                 return;
             }
             tbody.innerHTML = '';
@@ -2321,6 +2603,7 @@ service cloud.firestore {
                 tr.innerHTML = `
                     <td class="p-2">${index + 1}</td>
                     <td class="p-2">${escapeHtml(app.name)}</td>
+                    <td class="p-2">${escapeHtml(app.gender || 'ชาย')}</td>
                     <td class="p-2 font-bold text-yellow-300">${escapeHtml(app.room || '-')}</td>
                     <td class="p-2">${escapeHtml(app.year)}</td>
                     <td class="p-2">${escapeHtml(app.phone)}</td>
@@ -2335,12 +2618,21 @@ service cloud.firestore {
         }
 
         function getSortedApplicantsForExport() {
-            return [...applicants].sort((a, b) => {
-                let numA = parseInt((a.room || "ม.4/0").replace('ม.4/', '')) || 0;
-                let numB = parseInt((b.room || "ม.4/0").replace('ม.4/', '')) || 0;
-                if (numA !== numB) return numA - numB;
-                return a.name.localeCompare(b.name, 'th');
-            });
+            let sortMode = document.getElementById('sortMode') ? document.getElementById('sortMode').value : 'thai';
+            let selectedRoom = document.getElementById('filterRoom') ? document.getElementById('filterRoom').value : '';
+            let selectedGender = document.getElementById('filterGender') ? document.getElementById('filterGender').value : '';
+            let list = [...applicants];
+            if (selectedRoom) list = list.filter(a => a.room === selectedRoom);
+            if (selectedGender) list = list.filter(a => (a.gender || 'ชาย') === selectedGender);
+            if (sortMode === 'thai') {
+                list.sort((a, b) => {
+                    let numA = parseInt((a.room || "ม.4/0").replace('ม.4/', '')) || 0;
+                    let numB = parseInt((b.room || "ม.4/0").replace('ม.4/', '')) || 0;
+                    if (numA !== numB) return numA - numB;
+                    return a.name.localeCompare(b.name, 'th');
+                });
+            }
+            return list;
         }
 
         function exportToExcel() {
@@ -2352,6 +2644,7 @@ service cloud.firestore {
             let rows = sorted.map((app, index) => ({
                 "ลำดับ": index + 1,
                 "ชื่อ-สกุล": app.name,
+                "เพศ": app.gender || 'ชาย',
                 "ห้อง": app.room || '-',
                 "ชั้นปีที่สมัคร": app.year,
                 "เบอร์โทรศัพท์": app.phone,
@@ -2359,7 +2652,7 @@ service cloud.firestore {
                 "วันที่สมัคร": app.date
             }));
             let ws = XLSX.utils.json_to_sheet(rows);
-            ws['!cols'] = [{ wch: 6 }, { wch: 24 }, { wch: 10 }, { wch: 14 }, { wch: 14 }, { wch: 24 }, { wch: 14 }];
+            ws['!cols'] = [{ wch: 6 }, { wch: 24 }, { wch: 8 }, { wch: 10 }, { wch: 14 }, { wch: 14 }, { wch: 24 }, { wch: 14 }];
             let wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, "รายชื่อผู้สมัคร");
             XLSX.writeFile(wb, `รายชื่อผู้สมัคร_นศท_รร.บบ_${new Date().toLocaleDateString('th-TH')}.xlsx`);
@@ -2370,12 +2663,12 @@ service cloud.firestore {
                 alert("ยังไม่มีข้อมูลผู้สมัครสำหรับส่งออก");
                 return;
             }
-            let csvContent = "\uFEFFลำดับ,ชื่อ-สกุล,ห้อง,ชั้นปีที่สมัคร,เบอร์โทรศัพท์,ช่องทางติดต่อ,วันที่สมัคร\n";
+            let csvContent = "\uFEFFลำดับ,ชื่อ-สกุล,เพศ,ห้อง,ชั้นปีที่สมัคร,เบอร์โทรศัพท์,ช่องทางติดต่อ,วันที่สมัคร\n";
 
             let sorted = getSortedApplicantsForExport();
 
             sorted.forEach((app, index) => {
-                csvContent += `${index + 1},"${app.name}","${app.room || '-'}","${app.year}","${app.phone}","${app.contact}",${app.date}\n`;
+                csvContent += `${index + 1},"${app.name}","${app.gender || 'ชาย'}","${app.room || '-'}","${app.year}","${app.phone}","${app.contact}",${app.date}\n`;
             });
             let blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             let url = URL.createObjectURL(blob);
@@ -2388,11 +2681,9 @@ service cloud.firestore {
         // ===== Basic front-end protection (deterrent only) =====
         // Note: this cannot fully hide or "lock" the page's HTML/CSS/JS — any browser's built-in
         // developer tools can always read a page's rendered code. This only discourages casual
-        // right-click "view source" / copying by ordinary visitors.
+        // right-click "view source" / opening dev tools by ordinary visitors. Text selection and
+        // copying of the page's visible content is intentionally left enabled.
         document.addEventListener('contextmenu', function (e) {
-            if (!['INPUT', 'TEXTAREA'].includes(e.target.tagName)) e.preventDefault();
-        });
-        document.addEventListener('selectstart', function (e) {
             if (!['INPUT', 'TEXTAREA'].includes(e.target.tagName)) e.preventDefault();
         });
         document.addEventListener('keydown', function (e) {
