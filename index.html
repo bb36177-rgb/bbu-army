@@ -123,7 +123,7 @@
 
                 <!-- News -->
                 <div id="sec-news" class="content-section hidden py-6 bg-zinc-900/80 backdrop-blur rounded-2xl p-8 border border-zinc-700/50 shadow-xl">
-                    <h3 class="text-2xl font-bold text-yellow-400 mb-6 border-b border-zinc-700 pb-2">ประมวลภาพกิจกรรม</h3>
+                    <h3 class="text-2xl font-bold text-yellow-400 mb-6 border-b border-zinc-700 pb-2">ข่าวสารกองพันนักศึกษาวิชาทหารโรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"</h3>
                     <div id="newsList" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"></div>
                 </div>
 
@@ -143,17 +143,16 @@
                 <!-- ห้องทำงาน ผบช. (Admin-only) -->
                 <div id="sec-hqroom" class="content-section hidden py-6 bg-zinc-900/90 backdrop-blur rounded-2xl p-8 border border-purple-500/40 shadow-xl">
                     <h3 class="text-2xl font-bold text-purple-300 mb-2 border-b border-zinc-700 pb-2">🖥️ ห้องทำงาน ผบช. (เฉพาะผู้ดูแลระบบ)</h3>
-                    <p class="text-gray-400 text-sm mb-6">เลือกห้องที่ต้องการเข้าใช้งาน — ขณะนี้ยังเป็นหน้าว่าง รอการพัฒนาเพิ่มเติมในอนาคต</p>
+                    <p class="text-gray-400 text-sm mb-6">เลือกห้องที่ต้องการเข้าใช้งาน</p>
                     <select id="hqRoomSelect" onchange="renderHqRoom()" class="w-full max-w-md mx-auto block bg-zinc-800 border border-zinc-700 rounded-lg p-3 text-white text-sm mb-8">
                         <option value="meeting">1. ห้องประชุมออนไลน์ ผบช.</option>
-                        <option value="staff1">2. ห้องทำงาน ฝ.1</option>
-                        <option value="staff2">3. ห้องทำงาน ฝ.2</option>
-                        <option value="staff3">4. ห้องทำงาน ฝ.3</option>
-                        <option value="staff4">5. ห้องทำงาน ฝ.4</option>
+                        <option value="fieldlib">2. ห้องคลังความรู้ภาคสนาม ปี 1</option>
+                        <option value="staff1">3. ห้องทำงาน ฝ.1 (แปลงรูปเป็นเอกสาร)</option>
+                        <option value="staff2">4. ห้องทำงาน ฝ.2 (ลิงก์งานข่าว)</option>
+                        <option value="staff3">5. ห้องทำงาน ฝ.3 (รายชื่อ/เช็คชื่อ นศท.)</option>
+                        <option value="staff4">6. ห้องทำงาน ฝ.4 (เช็คห้องตรวจ)</option>
                     </select>
-                    <div id="hqRoomContent" class="bg-zinc-950/50 border border-dashed border-zinc-700 rounded-xl p-12 text-center text-gray-500">
-                        กำลังพัฒนา...
-                    </div>
+                    <div id="hqRoomContent" class="bg-zinc-950/50 border border-dashed border-zinc-700 rounded-xl p-6"></div>
                 </div>
 
                 <!-- Admin Dashboard -->
@@ -175,31 +174,61 @@
                         </div>
                         <p class="text-xs text-gray-400 mb-4 pl-2">พื้นที่นี้มองเห็นได้เฉพาะผู้ที่ทราบรหัสผ่านขั้นสูงเท่านั้น</p>
 
+                        <!-- แชร์เว็บไซต์ -->
+                        <div class="bg-zinc-900 p-4 rounded-lg border border-zinc-700 mb-4">
+                            <h5 class="font-bold text-purple-200 text-sm mb-2">🔗 แชร์เว็บไซต์ (เฉพาะ Admin Leader)</h5>
+                            <p class="text-xs text-gray-500 mb-3">ลิงก์เต็ม, ลิงก์ย่อ, และ QR Code สำหรับแชร์เว็บไซต์นี้ให้ผู้อื่น</p>
+                            <button onclick="generateShareInfo()" class="bg-sky-700 hover:bg-sky-800 text-white text-sm font-bold px-4 py-2 rounded-lg mb-3">🔄 สร้างลิงก์แชร์ / QR Code</button>
+                            <div id="shareInfoBox" class="hidden space-y-3 text-xs">
+                                <div>
+                                    <span class="text-gray-400 block mb-1">ลิงก์เต็ม:</span>
+                                    <div class="flex gap-2">
+                                        <input id="shareFullLink" readonly class="flex-1 bg-black border border-zinc-700 rounded p-2 text-emerald-400">
+                                        <button onclick="copyShareLink('shareFullLink')" class="bg-zinc-700 hover:bg-zinc-600 text-white px-3 rounded">คัดลอก</button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <span class="text-gray-400 block mb-1">ลิงก์ย่อ:</span>
+                                    <div class="flex gap-2">
+                                        <input id="shareShortLink" readonly class="flex-1 bg-black border border-zinc-700 rounded p-2 text-emerald-400" value="กำลังสร้าง...">
+                                        <button onclick="copyShareLink('shareShortLink')" class="bg-zinc-700 hover:bg-zinc-600 text-white px-3 rounded">คัดลอก</button>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <span class="text-gray-400 block mb-2">QR Code (ลายพรางพร้อมตราหน่วยตรงกลาง):</span>
+                                    <img id="shareQrImg" class="mx-auto rounded-lg" width="220" height="220">
+                                    <div id="shareQrLoading" class="text-gray-500 text-[11px] mt-1 hidden">กำลังสร้าง QR Code...</div>
+                                    <button onclick="downloadShareQr()" class="mt-2 bg-zinc-700 hover:bg-zinc-600 text-white text-xs font-bold px-3 py-1.5 rounded">⬇️ บันทึกรูป QR</button>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- ความปลอดภัยของเว็บ -->
                         <div class="bg-zinc-900 p-4 rounded-lg border border-zinc-700 mb-4">
                             <h5 class="font-bold text-purple-200 text-sm mb-2">🛡️ ระบบป้องกันเว็บ / ความปลอดภัย</h5>
-                            <span id="securityLevelBadge" class="inline-block text-[11px] bg-purple-800/60 text-purple-200 px-2.5 py-1 rounded-full mb-2">ระดับปัจจุบัน: 1 / 5 — พื้นฐาน</span>
-                            <p class="text-xs text-gray-500 mb-3">กดปุ่มอัปเดตเพื่อยกระดับมาตรการป้องกันจริง (ไม่ใช่ข้อความคงที่) — ทุกครั้งที่กด ระบบจะเปิดใช้งานมาตรการเพิ่มเติมจริงและจดจำระดับไว้ถาวร</p>
+                            <span id="securityLevelBadge" class="inline-block text-[11px] bg-purple-800/60 text-purple-200 px-2.5 py-1 rounded-full mb-2">ระดับปัจจุบัน: 1 / 10 — พื้นฐาน</span>
+                            <p class="text-xs text-gray-500 mb-3">กดปุ่มอัปเดตเพื่อยกระดับมาตรการป้องกันจริง (ไม่ใช่ข้อความคงที่) — ทุกครั้งที่กด ระบบจะเปิดใช้งานมาตรการเพิ่มเติมจริงและจดจำระดับไว้ถาวร มีทั้งหมด 10 ระดับ ลดระดับกลับลงได้เช่นกัน</p>
                             <div class="flex flex-wrap gap-2 mb-3">
-                                <button onclick="runSecurityCheck()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold px-4 py-2 rounded-lg">🔄 อัปเดตระบบความปลอดภัย</button>
+                                <button onclick="runSecurityCheck()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold px-4 py-2 rounded-lg">🔼 เพิ่มระดับความปลอดภัย</button>
+                                <button onclick="decreaseSecurityLevel()" class="bg-amber-700 hover:bg-amber-800 text-white text-sm font-bold px-4 py-2 rounded-lg">🔽 ลดระดับความปลอดภัย</button>
                                 <button onclick="changeAdminPassword()" class="bg-zinc-700 hover:bg-zinc-600 text-white text-sm font-bold px-4 py-2 rounded-lg">🔑 เปลี่ยนรหัสผ่าน Admin</button>
                                 <button onclick="changeSuperAdminPassword()" class="bg-zinc-700 hover:bg-zinc-600 text-white text-sm font-bold px-4 py-2 rounded-lg">🔑 เปลี่ยนรหัสผ่าน Admin Leader</button>
                             </div>
-                            <details class="text-xs text-gray-400">
-                                <summary class="cursor-pointer text-purple-300 font-semibold">📋 คำแนะนำ: ตัวอย่าง Firestore Security Rules (ป้องกันจริงต้องตั้งค่าที่ Firebase Console)</summary>
+                            <details class="text-xs text-gray-400" open>
+                                <summary class="cursor-pointer text-purple-300 font-semibold">📋 Firestore Security Rules ที่ใช้ได้จริงกับเว็บนี้</summary>
+                                <div class="mt-2 bg-red-950/40 border border-red-600/60 rounded-lg p-3 text-red-300">
+                                    ⚠️ <strong>คำเตือนสำคัญ:</strong> เว็บนี้ยังไม่มีระบบ Firebase Authentication จริง (รหัสผ่าน Admin เป็นแค่การล็อกฝั่งหน้าเว็บเท่านั้น) ถ้าไปตั้งกฎใน Firebase Console ให้ <code class="bg-black px-1 rounded">allow write: if false</code> หรือจำกัดสิทธิ์แบบอื่นที่เข้มกว่านี้ เว็บจะ<strong>บันทึกข้อมูลไม่ได้เลยทันที</strong> และทุกครั้งที่โหลดหน้าใหม่จะเห็นข้อมูลตัวอย่างเริ่มต้นแทนข้อมูลจริง (อาการเหมือนข้อมูลหาย) — ห้ามใช้กฎที่บล็อก write โดยเด็ดขาดจนกว่าจะทำระบบยืนยันตัวตนจริงก่อน
+                                </div>
+                                <p class="mt-2">กฎที่ใช้ได้กับสถาปัตยกรรมปัจจุบัน (เปิดอ่าน/เขียนได้ ป้องกันด้วยรหัสผ่านหน้าเว็บแทน):</p>
                                 <pre class="mt-2 bg-black text-emerald-400 text-[10px] p-3 rounded-lg overflow-x-auto">rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /siteData/{doc} {
-      allow read: if true;
-      allow write: if false; // เขียนได้เฉพาะผ่าน Cloud Functions/แอดมินที่ยืนยันตัวตนจริงเท่านั้น
-    }
-    match /siteConfig/{doc} {
-      allow read, write: if false; // ห้ามเข้าถึงรหัสผ่านจากภายนอกโดยตรง
+    match /{document=**} {
+      allow read, write: if true;
     }
   }
 }</pre>
-                                <p class="mt-2">โค้ดหน้าเว็บ (ฝั่ง Client) ไม่สามารถ "ยิงกลับ" ผู้โจมตีหรือหยุด DDoS ระดับเครือข่ายได้ — การป้องกันจริงต้องตั้งค่าที่ Firebase Hosting / Cloudflare และ Firestore Rules ข้างต้นเท่านั้น</p>
+                                <p class="mt-2">หมายเหตุ: กฎนี้เปิดกว้าง ใครมี API key ของโปรเจกต์ก็เขียนข้อมูลตรงได้เช่นกัน (ข้อจำกัดของสถาปัตยกรรมที่ไม่มี Auth จริง) — การป้องกันจริงต่อการยิงเว็บ/DDoS ระดับเครือข่ายต้องตั้งค่าที่ Firebase Hosting หรือ Cloudflare แยกต่างหาก โค้ดฝั่งหน้าเว็บทำแทนไม่ได้</p>
                             </details>
                         </div>
 
@@ -431,7 +460,7 @@ service cloud.firestore {
                             <textarea id="scheduleDescInput" placeholder="รายละเอียดตาราง วัน-เวลา สถานที่ ฯลฯ" class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm mb-2 h-24"></textarea>
                             <label class="text-xs text-gray-400 block mb-1">3. รูปภาพตาราง</label>
                             <div class="bg-zinc-900 p-2.5 rounded border border-zinc-700 mb-3 text-xs">
-                                <input type="file" id="scheduleFile" accept="image/*" onchange="openCropper(this, 'schedule')" class="w-full text-gray-300 text-xs file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-zinc-700 file:text-white hover:file:bg-zinc-600 mb-2">
+                                <input type="file" id="scheduleFile" accept="image/*" onchange="handleScheduleFileUpload(this)" class="w-full text-gray-300 text-xs file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-zinc-700 file:text-white hover:file:bg-zinc-600 mb-2">
                                 <div id="schedulePreviewBox" class="hidden text-center mt-2">
                                     <p class="text-emerald-400 text-[10px] mb-1">✔ เลือกรูปภาพเรียบร้อย</p>
                                     <img class="w-24 h-24 object-cover mx-auto rounded border border-yellow-500">
@@ -504,7 +533,7 @@ service cloud.firestore {
                                         <option value="ม.4/13">ม.4/13</option>
                                     </select>
                                     <button onclick="exportToExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-3 py-1.5 rounded font-bold shrink-0">📥 Excel (.xlsx)</button>
-                                    <button onclick="exportToCSV()" class="bg-sky-600 hover:bg-sky-700 text-white text-xs px-3 py-1.5 rounded font-bold shrink-0">📄 CSV (Google Sheets)</button>
+                                    <button onclick="exportToGoogleSheets()" class="bg-sky-600 hover:bg-sky-700 text-white text-xs px-3 py-1.5 rounded font-bold shrink-0">📄 เปิดเป็น Google Sheets</button>
                                 </div>
                             </div>
                             <div class="overflow-x-auto">
@@ -672,6 +701,8 @@ service cloud.firestore {
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 
     <script>
         const firebaseConfig = {
@@ -689,7 +720,7 @@ service cloud.firestore {
 
     <script>
         let isAdmin = localStorage.getItem('bbu_is_admin') === 'true';
-        let isSuperAdmin = false;
+        let isSuperAdmin = localStorage.getItem('bbu_is_super_admin') === 'true';
         let currentAdminName = localStorage.getItem('bbu_admin_name') || null;
         const backupDocRef = db.collection('siteBackups').doc('latest');
         const authDocRef = db.collection('siteConfig').doc('auth');
@@ -712,11 +743,16 @@ service cloud.firestore {
         // actually changes real runtime behavior below (lockout strictness, spam/bot
         // filtering, submission rate limiting) — pressing "update" is not cosmetic. ---
         const SECURITY_LEVELS = [
-            { level: 1, label: "พื้นฐาน", maxAttempts: 5, lockMinutes: 5, honeypot: false, patternBlock: false, rateLimit: false },
-            { level: 2, label: "เพิ่มตัวดักจับบอทสแปมในแบบฟอร์มสมัคร", maxAttempts: 5, lockMinutes: 5, honeypot: true, patternBlock: false, rateLimit: false },
-            { level: 3, label: "กรองข้อความรูปแบบอันตราย (เช่น สคริปต์) + ล็อกอินเข้มงวดขึ้น", maxAttempts: 4, lockMinutes: 10, honeypot: true, patternBlock: true, rateLimit: false },
-            { level: 4, label: "จำกัดความถี่การส่งแบบฟอร์ม (กันสแปม)", maxAttempts: 3, lockMinutes: 20, honeypot: true, patternBlock: true, rateLimit: true },
-            { level: 5, label: "สูงสุด — เปิดใช้งานทุกมาตรการ", maxAttempts: 3, lockMinutes: 30, honeypot: true, patternBlock: true, rateLimit: true }
+            { level: 1,  label: "พื้นฐาน", maxAttempts: 5, lockMinutes: 5,   honeypot: false, patternBlock: false, rateLimit: false, strictValidate: false, captcha: false, idleLogout: false },
+            { level: 2,  label: "เพิ่มตัวดักจับบอทสแปมในแบบฟอร์มสมัคร", maxAttempts: 5, lockMinutes: 5,   honeypot: true,  patternBlock: false, rateLimit: false, strictValidate: false, captcha: false, idleLogout: false },
+            { level: 3,  label: "กรองข้อความรูปแบบอันตราย (เช่น สคริปต์)", maxAttempts: 4, lockMinutes: 10,  honeypot: true,  patternBlock: true,  rateLimit: false, strictValidate: false, captcha: false, idleLogout: false },
+            { level: 4,  label: "จำกัดความถี่การส่งแบบฟอร์ม (กันสแปม)", maxAttempts: 3, lockMinutes: 20,  honeypot: true,  patternBlock: true,  rateLimit: true,  strictValidate: false, captcha: false, idleLogout: false },
+            { level: 5,  label: "ตรวจสอบรูปแบบข้อมูล (ชื่อ/เบอร์โทร) เข้มงวดขึ้น", maxAttempts: 3, lockMinutes: 30,  honeypot: true,  patternBlock: true,  rateLimit: true,  strictValidate: true,  captcha: false, idleLogout: false },
+            { level: 6,  label: "เพิ่มคำถามกันบอท (captcha) ในแบบฟอร์มสมัคร", maxAttempts: 3, lockMinutes: 45,  honeypot: true,  patternBlock: true,  rateLimit: true,  strictValidate: true,  captcha: true,  idleLogout: false },
+            { level: 7,  label: "ล็อกอินเข้มงวดขึ้นอีกขั้น", maxAttempts: 2, lockMinutes: 60,  honeypot: true,  patternBlock: true,  rateLimit: true,  strictValidate: true,  captcha: true,  idleLogout: false },
+            { level: 8,  label: "ออกจากระบบ Admin อัตโนมัติเมื่อไม่ใช้งานนาน", maxAttempts: 2, lockMinutes: 60,  honeypot: true,  patternBlock: true,  rateLimit: true,  strictValidate: true,  captcha: true,  idleLogout: true },
+            { level: 9,  label: "เข้มงวดขั้นสูง", maxAttempts: 2, lockMinutes: 90,  honeypot: true,  patternBlock: true,  rateLimit: true,  strictValidate: true,  captcha: true,  idleLogout: true },
+            { level: 10, label: "สูงสุด — เปิดใช้งานทุกมาตรการ", maxAttempts: 1, lockMinutes: 120, honeypot: true,  patternBlock: true,  rateLimit: true,  strictValidate: true,  captcha: true,  idleLogout: true }
         ];
         let securityLevel = 1;
         const securityDocRef = db.collection('siteConfig').doc('security');
@@ -802,6 +838,7 @@ service cloud.firestore {
         let commandData = [];
         let contactData = [];
         let scheduleData = [];
+        let hqRoomData = { docs: [], links: [], rosters: { "ปีที่ 1": [], "ปีที่ 2": [], "ปีที่ 3": [] }, roomChecks: {} };
         let mottoText = defaultMotto;
         let regOpen = true;
         let activeImageData = null;
@@ -872,6 +909,11 @@ service cloud.firestore {
                 applicants = data.applicants || [];
                 contactData = data.contacts || defaultContacts;
                 scheduleData = data.schedule || [];
+                hqRoomData = data.hqRoom || { docs: [], links: [], rosters: { "ปีที่ 1": [], "ปีที่ 2": [], "ปีที่ 3": [] }, roomChecks: {} };
+                if (!hqRoomData.rosters) hqRoomData.rosters = { "ปีที่ 1": [], "ปีที่ 2": [], "ปีที่ 3": [] };
+                if (!hqRoomData.roomChecks) hqRoomData.roomChecks = {};
+                if (!hqRoomData.docs) hqRoomData.docs = [];
+                if (!hqRoomData.links) hqRoomData.links = [];
                 mottoText = data.motto || defaultMotto;
                 regOpen = (data.regOpen === undefined) ? true : data.regOpen;
             } else {
@@ -881,9 +923,12 @@ service cloud.firestore {
                 applicants = [];
                 contactData = defaultContacts;
                 scheduleData = [];
+                hqRoomData = { docs: [], links: [], rosters: { "ปีที่ 1": [], "ปีที่ 2": [], "ปีที่ 3": [] }, roomChecks: {} };
                 mottoText = defaultMotto;
                 regOpen = true;
-                siteDocRef.set({ news: newsData, prNews: prNewsData, command: commandData, applicants: applicants, contacts: contactData, schedule: scheduleData, motto: mottoText, regOpen: regOpen });
+                siteDocRef.set({ news: newsData, prNews: prNewsData, command: commandData, applicants: applicants, contacts: contactData, schedule: scheduleData, hqRoom: hqRoomData, motto: mottoText, regOpen: regOpen }).catch((err) => {
+                    alert("⚠️ ไม่สามารถบันทึกข้อมูลลง Firestore ได้ (" + err.message + ")\nสาเหตุที่พบบ่อยที่สุด: กฎความปลอดภัย (Security Rules) ใน Firebase Console บล็อกการเขียนข้อมูลไว้ กรุณาตรวจสอบที่ Firebase Console > Firestore Database > Rules");
+                });
             }
             renderAll();
         }, (err) => {
@@ -898,10 +943,11 @@ service cloud.firestore {
                 applicants: applicants,
                 contacts: contactData,
                 schedule: scheduleData,
+                hqRoom: hqRoomData,
                 motto: mottoText,
                 regOpen: regOpen
             }).catch((err) => {
-                alert("บันทึกข้อมูลไม่สำเร็จ กรุณาตรวจสอบอินเทอร์เน็ต");
+                alert("⚠️ บันทึกข้อมูลไม่สำเร็จ: " + err.message + "\nถ้าไม่ใช่ปัญหาอินเทอร์เน็ต ให้ตรวจสอบ Firestore Security Rules ใน Firebase Console ว่าอนุญาตให้เขียนข้อมูลหรือไม่");
             });
         }
 
@@ -1654,6 +1700,10 @@ service cloud.firestore {
             if(list) list.innerHTML = '';
             if (adminList) adminList.innerHTML = '';
 
+            if (list && newsData.length === 0) {
+                list.innerHTML = `<p class="text-gray-400 text-sm col-span-full text-center py-6">ยังไม่มีข่าวสารในขณะนี้ โปรดติดตามข่าวสารใหม่เร็วๆ นี้</p>`;
+            }
+
             newsData.forEach((item, index) => {
                 if (list) {
                     let div = document.createElement('div');
@@ -1850,6 +1900,17 @@ service cloud.firestore {
             renderSchedule();
         }
 
+        // ตารางเรียนใช้รูปต้นฉบับเต็ม ไม่ครอบตัดเป็นสี่เหลี่ยมจัตุรัสเหมือนรูปอื่นๆ ในเว็บ
+        function handleScheduleFileUpload(input) {
+            if (!input.files || !input.files[0]) return;
+            resizeImageFile(input.files[0], 1800, 0.9, (dataUrl) => {
+                activeImageData = dataUrl;
+                let box = document.getElementById('schedulePreviewBox');
+                box.classList.remove('hidden');
+                box.querySelector('img').src = dataUrl;
+            });
+        }
+
         function saveSchedule() {
             let title = document.getElementById('scheduleTitleInput').value.trim();
             let desc = document.getElementById('scheduleDescInput').value.trim();
@@ -1924,20 +1985,412 @@ service cloud.firestore {
                 alert("ขณะนี้ปิดรับสมัครนักศึกษาวิชาทหารชั่วคราว กรุณาติดตามประกาศเปิดรับสมัครอีกครั้ง");
                 return;
             }
+            let a = Math.floor(Math.random() * 8) + 1;
+            let b = Math.floor(Math.random() * 8) + 1;
+            window.regCaptchaQuestion = `${a} + ${b} = ?`;
+            window.regCaptchaAnswer = a + b;
             document.getElementById('introPage').classList.add('hidden');
             document.getElementById('registerPage').classList.remove('hidden');
         }
 
         function renderHqRoom() {
-            let select = document.getElementById('hqRoomSelect');
-            let labels = {
-                meeting: "ห้องประชุมออนไลน์ ผบช.",
-                staff1: "ห้องทำงาน ฝ.1",
-                staff2: "ห้องทำงาน ฝ.2",
-                staff3: "ห้องทำงาน ฝ.3",
-                staff4: "ห้องทำงาน ฝ.4"
+            let room = document.getElementById('hqRoomSelect').value;
+            let box = document.getElementById('hqRoomContent');
+            if (room === 'meeting') return renderMeetingRoom(box);
+            if (room === 'fieldlib') return renderFieldLibRoom(box);
+            if (room === 'staff1') return renderOcrRoom(box);
+            if (room === 'staff2') return renderLinkRoom(box);
+            if (room === 'staff3') return renderRosterRoom(box);
+            if (room === 'staff4') return renderRoomCheckRoom(box);
+        }
+
+        // Shrinks an image file client-side before storing/processing, so documents don't bloat.
+        function resizeImageFile(file, maxDim, quality, callback) {
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                let img = new Image();
+                img.onload = function () {
+                    let scale = Math.min(1, maxDim / Math.max(img.width, img.height));
+                    let canvas = document.createElement('canvas');
+                    canvas.width = Math.round(img.width * scale);
+                    canvas.height = Math.round(img.height * scale);
+                    let ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    callback(canvas.toDataURL('image/jpeg', quality || 0.85), canvas);
+                };
+                img.src = e.target.result;
             };
-            document.getElementById('hqRoomContent').innerHTML = `<p class="text-lg font-semibold text-gray-400 mb-1">${labels[select.value]}</p><p class="text-sm text-gray-600">ยังไม่มีการพัฒนาฟังก์ชันสำหรับห้องนี้ในขณะนี้</p>`;
+            reader.readAsDataURL(file);
+        }
+
+        // ===== 1. ห้องประชุมออนไลน์ ผบช. (Jitsi Meet embed — free, real, no backend needed) =====
+        function renderMeetingRoom(box) {
+            box.innerHTML = `
+                <div class="text-center">
+                    <p class="text-gray-300 text-sm mb-1">ห้องประชุมวิดีโอออนไลน์สำหรับผู้บังคับบัญชา</p>
+                    <p class="text-gray-500 text-xs mb-4">ใช้ระบบ Jitsi Meet (ฟรี ไม่ต้องสมัครสมาชิก) — รองรับผู้เข้าร่วมพร้อมกันได้หลักร้อยคนในทางทฤษฎี แต่จำนวนจริงที่ลื่นไหลขึ้นอยู่กับอินเทอร์เน็ตและอุปกรณ์ของผู้เข้าร่วมแต่ละคนด้วย</p>
+                    <button onclick="joinHqMeeting()" id="joinMeetingBtn" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-3 rounded-xl mb-4">🎥 เข้าร่วมห้องประชุม</button>
+                    <div id="hqMeetingFrameBox"></div>
+                </div>
+            `;
+        }
+        function joinHqMeeting() {
+            document.getElementById('joinMeetingBtn').classList.add('hidden');
+            document.getElementById('hqMeetingFrameBox').innerHTML = `
+                <iframe src="https://meet.jit.si/BBUArmyHQOfficialMeetingRoom2569"
+                    style="width:100%; height:70vh; border:0; border-radius:12px;"
+                    allow="camera; microphone; fullscreen; display-capture; autoplay">
+                </iframe>
+            `;
+        }
+
+        // ===== 2. ห้องคลังความรู้ภาคสนาม ปี 1 — placeholder as requested =====
+        function renderFieldLibRoom(box) {
+            box.innerHTML = `<p class="text-gray-500 text-center py-10">ห้องคลังความรู้ภาคสนาม ปี 1 — ยังไม่มีการพัฒนาฟังก์ชันเพิ่มเติมในขณะนี้ตามที่แจ้งไว้</p>`;
+        }
+
+        // ===== 3. ฝ.1 — แปลงรูปภาพเป็นเอกสารที่แก้ไขได้ (OCR ด้วย Tesseract.js ฟรี ทำงานในเบราว์เซอร์) =====
+        function renderOcrRoom(box) {
+            box.innerHTML = `
+                <h4 class="font-bold text-yellow-300 mb-1">📷 แปลงรูปภาพเป็นข้อความ (OCR)</h4>
+                <p class="text-gray-500 text-xs mb-3">อัปโหลดรูปภาพเอกสาร ระบบจะพยายามอ่านข้อความไทย/อังกฤษให้อัตโนมัติ แล้วแก้ไขต่อได้ก่อนบันทึก (ความแม่นยำขึ้นอยู่กับความคมชัดของรูป รองรับเฉพาะไฟล์รูปภาพ ไม่รองรับ PDF โดยตรง — ถ้าเป็น PDF ให้แคปหน้าจอเป็นรูปก่อน)</p>
+                <input type="file" id="ocrFileInput" accept="image/*" class="text-xs text-gray-300 mb-2 block">
+                <button onclick="runOcr()" class="bg-sky-600 hover:bg-sky-700 text-white text-sm font-bold px-4 py-2 rounded-lg mb-2">🔍 เริ่มแปลงข้อความ</button>
+                <div id="ocrProgress" class="text-xs text-gray-400 mb-2"></div>
+                <input type="text" id="ocrDocTitle" placeholder="ชื่อเอกสาร" class="w-full bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm mb-2">
+                <textarea id="ocrResultText" placeholder="ข้อความที่แปลงได้จะปรากฏที่นี่ แก้ไขได้โดยตรงก่อนบันทึก" class="w-full h-40 bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm mb-2"></textarea>
+                <input type="hidden" id="ocrEditIndex" value="-1">
+                <div class="flex gap-2 mb-6">
+                    <button onclick="saveOcrDoc()" class="bg-green-600 hover:bg-green-700 text-white text-sm font-bold px-4 py-2 rounded-lg">💾 บันทึกเป็นเอกสาร</button>
+                    <button onclick="resetOcrForm()" class="bg-zinc-700 hover:bg-zinc-600 text-white text-sm font-bold px-4 py-2 rounded-lg">ล้างฟอร์ม</button>
+                </div>
+                <h5 class="font-bold text-yellow-300 text-sm mb-2">เอกสารที่บันทึกไว้ (${hqRoomData.docs.length})</h5>
+                <div id="ocrDocList" class="space-y-2"></div>
+            `;
+            renderOcrDocList();
+        }
+
+        function runOcr() {
+            let input = document.getElementById('ocrFileInput');
+            if (!input.files || !input.files[0]) { alert("กรุณาเลือกรูปภาพก่อน"); return; }
+            let progress = document.getElementById('ocrProgress');
+            progress.innerText = "กำลังโหลดตัวอ่านข้อความ...";
+            Tesseract.recognize(input.files[0], 'tha+eng', {
+                logger: m => {
+                    if (m.status === 'recognizing text') {
+                        progress.innerText = `กำลังอ่านข้อความ... ${Math.round(m.progress * 100)}%`;
+                    } else {
+                        progress.innerText = m.status;
+                    }
+                }
+            }).then(({ data: { text } }) => {
+                document.getElementById('ocrResultText').value = text.trim();
+                progress.innerText = "✅ แปลงข้อความเสร็จแล้ว ตรวจทานและแก้ไขได้ก่อนบันทึก";
+            }).catch(err => {
+                progress.innerText = "❌ แปลงข้อความไม่สำเร็จ: " + err.message;
+            });
+        }
+
+        function saveOcrDoc() {
+            let title = document.getElementById('ocrDocTitle').value.trim();
+            let content = document.getElementById('ocrResultText').value;
+            let editIndex = parseInt(document.getElementById('ocrEditIndex').value);
+            if (!title) { alert("กรุณาตั้งชื่อเอกสาร"); return; }
+            if (editIndex === -1) {
+                hqRoomData.docs.unshift({ title, content, date: new Date().toLocaleDateString('th-TH') });
+            } else {
+                hqRoomData.docs[editIndex] = { title, content, date: new Date().toLocaleDateString('th-TH') };
+            }
+            saveDataToStorage();
+            resetOcrForm();
+            renderOcrDocList();
+        }
+
+        function resetOcrForm() {
+            document.getElementById('ocrDocTitle').value = '';
+            document.getElementById('ocrResultText').value = '';
+            document.getElementById('ocrFileInput').value = '';
+            document.getElementById('ocrEditIndex').value = '-1';
+            document.getElementById('ocrProgress').innerText = '';
+        }
+
+        function editOcrDoc(index) {
+            let doc = hqRoomData.docs[index];
+            document.getElementById('ocrDocTitle').value = doc.title;
+            document.getElementById('ocrResultText').value = doc.content;
+            document.getElementById('ocrEditIndex').value = index;
+        }
+
+        function deleteOcrDoc(index) {
+            if (!confirm("ลบเอกสารนี้ใช่หรือไม่?")) return;
+            hqRoomData.docs.splice(index, 1);
+            saveDataToStorage();
+            renderOcrDocList();
+        }
+
+        function renderOcrDocList() {
+            let listEl = document.getElementById('ocrDocList');
+            if (!listEl) return;
+            if (hqRoomData.docs.length === 0) {
+                listEl.innerHTML = `<p class="text-gray-500 text-xs">ยังไม่มีเอกสาร</p>`;
+                return;
+            }
+            listEl.innerHTML = '';
+            hqRoomData.docs.forEach((doc, i) => {
+                let row = document.createElement('div');
+                row.className = "bg-zinc-900 p-2.5 rounded border border-zinc-700 text-xs flex justify-between items-center";
+                row.innerHTML = `
+                    <div class="truncate"><span class="font-bold text-yellow-200">${escapeHtml(doc.title)}</span><span class="text-gray-500 ml-2">${escapeHtml(doc.date || '')}</span></div>
+                    <div class="flex gap-1 shrink-0 ml-2">
+                        <button onclick="editOcrDoc(${i})" class="bg-amber-600 hover:bg-amber-700 px-2 py-1 rounded text-white font-bold">แก้ไข</button>
+                        <button onclick="deleteOcrDoc(${i})" class="bg-red-600 hover:bg-red-700 px-2 py-1 rounded text-white font-bold">ลบ</button>
+                    </div>
+                `;
+                listEl.appendChild(row);
+            });
+        }
+
+        // ===== 4. ฝ.2 — ที่วางลิงก์งานข่าว =====
+        function renderLinkRoom(box) {
+            box.innerHTML = `
+                <h4 class="font-bold text-yellow-300 mb-3">🔗 ลิงก์งานข่าว</h4>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2">
+                    <input type="text" id="hqLinkTitle" placeholder="ชื่อลิงก์ / หัวข้อข่าว" class="bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm">
+                    <input type="text" id="hqLinkUrl" placeholder="https://..." class="bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm">
+                </div>
+                <button onclick="addHqLink()" class="bg-green-600 hover:bg-green-700 text-white text-sm font-bold px-4 py-2 rounded-lg mb-4">+ เพิ่มลิงก์</button>
+                <div id="hqLinkList" class="space-y-2"></div>
+            `;
+            renderHqLinkList();
+        }
+
+        function addHqLink() {
+            let title = document.getElementById('hqLinkTitle').value.trim();
+            let url = document.getElementById('hqLinkUrl').value.trim();
+            if (!title || !url) { alert("กรุณากรอกชื่อและลิงก์ให้ครบ"); return; }
+            if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+            hqRoomData.links.unshift({ title, url });
+            saveDataToStorage();
+            document.getElementById('hqLinkTitle').value = '';
+            document.getElementById('hqLinkUrl').value = '';
+            renderHqLinkList();
+        }
+
+        function deleteHqLink(index) {
+            if (!confirm("ลบลิงก์นี้ใช่หรือไม่?")) return;
+            hqRoomData.links.splice(index, 1);
+            saveDataToStorage();
+            renderHqLinkList();
+        }
+
+        function renderHqLinkList() {
+            let listEl = document.getElementById('hqLinkList');
+            if (!listEl) return;
+            if (hqRoomData.links.length === 0) {
+                listEl.innerHTML = `<p class="text-gray-500 text-xs">ยังไม่มีลิงก์</p>`;
+                return;
+            }
+            listEl.innerHTML = '';
+            hqRoomData.links.forEach((link, i) => {
+                let row = document.createElement('div');
+                row.className = "bg-zinc-900 p-2.5 rounded border border-zinc-700 text-xs flex justify-between items-center";
+                row.innerHTML = `
+                    <a href="${escapeHtml(link.url)}" target="_blank" rel="noopener" class="text-sky-400 hover:underline truncate">${escapeHtml(link.title)}</a>
+                    <button onclick="deleteHqLink(${i})" class="bg-red-600 hover:bg-red-700 px-2 py-1 rounded text-white font-bold shrink-0 ml-2">ลบ</button>
+                `;
+                listEl.appendChild(row);
+            });
+        }
+
+        // ===== 5. ฝ.3 — รายชื่อ นศท. ปีที่ 1-3, เช็คชื่อ, พิมพ์, เพิ่มจากรูป =====
+        let currentRosterYear = "ปีที่ 1";
+        function renderRosterRoom(box) {
+            box.innerHTML = `
+                <h4 class="font-bold text-yellow-300 mb-3">📋 รายชื่อ นศท. และเช็คชื่อ</h4>
+                <div class="flex gap-2 mb-3" id="rosterTabs"></div>
+                <textarea id="rosterBulkAdd" placeholder="พิมพ์รายชื่อ (ขึ้นบรรทัดใหม่ทีละคน)" class="w-full h-20 bg-zinc-900 border border-zinc-700 rounded p-2 text-white text-sm mb-2"></textarea>
+                <div class="flex flex-wrap items-center gap-2 mb-2">
+                    <button onclick="addRosterNamesFromText()" class="bg-green-600 hover:bg-green-700 text-white text-sm font-bold px-3 py-1.5 rounded">+ เพิ่มจากข้อความ</button>
+                    <input type="file" id="rosterFileInput" accept="image/*" class="text-xs text-gray-300">
+                    <button onclick="runRosterOcr()" class="bg-sky-600 hover:bg-sky-700 text-white text-sm font-bold px-3 py-1.5 rounded">🔍 แปลงจากรูปภาพ</button>
+                </div>
+                <p class="text-gray-600 text-[11px] mb-2">รองรับไฟล์รูปภาพ (JPG/PNG) เท่านั้น — ถ้าเป็นไฟล์ PDF ให้แคปหน้าจอเป็นรูปก่อนอัปโหลด</p>
+                <div id="rosterOcrProgress" class="text-xs text-gray-400 mb-2"></div>
+                <div class="flex justify-between items-center mb-2">
+                    <span id="rosterCount" class="text-xs text-gray-400"></span>
+                    <button onclick="printRoster()" class="bg-zinc-700 hover:bg-zinc-600 text-white text-xs font-bold px-3 py-1.5 rounded">🖨️ พิมพ์รายชื่อ</button>
+                </div>
+                <div id="rosterList" class="space-y-1 max-h-80 overflow-y-auto"></div>
+            `;
+            renderRosterTabs();
+            renderRosterList();
+        }
+
+        function renderRosterTabs() {
+            let tabsEl = document.getElementById('rosterTabs');
+            if (!tabsEl) return;
+            tabsEl.innerHTML = '';
+            ["ปีที่ 1", "ปีที่ 2", "ปีที่ 3"].forEach(year => {
+                let btn = document.createElement('button');
+                btn.onclick = () => switchRosterYear(year);
+                btn.className = (year === currentRosterYear)
+                    ? "px-3 py-1.5 rounded text-sm font-bold bg-yellow-600 text-black"
+                    : "px-3 py-1.5 rounded text-sm font-bold bg-zinc-800 text-gray-300 border border-zinc-700";
+                btn.innerText = "ชั้น" + year;
+                tabsEl.appendChild(btn);
+            });
+        }
+
+        function switchRosterYear(year) {
+            currentRosterYear = year;
+            renderRosterTabs();
+            renderRosterList();
+        }
+
+        function addRosterNamesFromText() {
+            let text = document.getElementById('rosterBulkAdd').value;
+            let names = text.split('\n').map(n => n.trim()).filter(n => n.length > 0);
+            if (names.length === 0) { alert("กรุณาพิมพ์รายชื่ออย่างน้อย 1 คน"); return; }
+            if (!hqRoomData.rosters[currentRosterYear]) hqRoomData.rosters[currentRosterYear] = [];
+            names.forEach(name => hqRoomData.rosters[currentRosterYear].push({ name, checked: false }));
+            saveDataToStorage();
+            document.getElementById('rosterBulkAdd').value = '';
+            renderRosterList();
+        }
+
+        function runRosterOcr() {
+            let input = document.getElementById('rosterFileInput');
+            if (!input.files || !input.files[0]) { alert("กรุณาเลือกรูปภาพก่อน"); return; }
+            let progress = document.getElementById('rosterOcrProgress');
+            progress.innerText = "กำลังอ่านรายชื่อจากรูป...";
+            Tesseract.recognize(input.files[0], 'tha+eng', {
+                logger: m => { if (m.status === 'recognizing text') progress.innerText = `กำลังอ่าน... ${Math.round(m.progress * 100)}%`; }
+            }).then(({ data: { text } }) => {
+                document.getElementById('rosterBulkAdd').value = text.trim();
+                progress.innerText = "✅ อ่านข้อความเสร็จแล้ว ตรวจทานรายชื่อในกล่องข้อความก่อนกด \"เพิ่มจากข้อความ\" (อาจมีบรรทัดเกินที่ไม่ใช่ชื่อ ลบออกได้ก่อนเพิ่ม)";
+            }).catch(err => {
+                progress.innerText = "❌ อ่านข้อความไม่สำเร็จ: " + err.message;
+            });
+        }
+
+        function toggleRosterCheck(index) {
+            let item = hqRoomData.rosters[currentRosterYear][index];
+            item.checked = !item.checked;
+            saveDataToStorage();
+            renderRosterList();
+        }
+
+        function deleteRosterName(index) {
+            hqRoomData.rosters[currentRosterYear].splice(index, 1);
+            saveDataToStorage();
+            renderRosterList();
+        }
+
+        function renderRosterList() {
+            let listEl = document.getElementById('rosterList');
+            if (!listEl) return;
+            let list = hqRoomData.rosters[currentRosterYear] || [];
+            let checkedCount = list.filter(x => x.checked).length;
+            document.getElementById('rosterCount').innerText = `ทั้งหมด ${list.length} คน — เช็คชื่อแล้ว ${checkedCount} คน`;
+            if (list.length === 0) {
+                listEl.innerHTML = `<p class="text-gray-500 text-xs">ยังไม่มีรายชื่อในชั้น${currentRosterYear}</p>`;
+                return;
+            }
+            listEl.innerHTML = '';
+            list.forEach((item, i) => {
+                let row = document.createElement('div');
+                row.className = "flex justify-between items-center bg-zinc-900 px-3 py-2 rounded border border-zinc-700 text-sm";
+                row.innerHTML = `
+                    <label class="flex items-center gap-2 cursor-pointer flex-1">
+                        <input type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleRosterCheck(${i})" class="w-4 h-4 accent-emerald-500">
+                        <span class="${item.checked ? 'text-emerald-400 line-through' : 'text-gray-200'}">${i + 1}. ${escapeHtml(item.name)}</span>
+                    </label>
+                    <button onclick="deleteRosterName(${i})" class="bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-2 py-1 rounded shrink-0">ลบ</button>
+                `;
+                listEl.appendChild(row);
+            });
+        }
+
+        function printRoster() {
+            let list = hqRoomData.rosters[currentRosterYear] || [];
+            let rows = list.map((item, i) => `<tr><td style="padding:4px;border:1px solid #ccc;">${i + 1}</td><td style="padding:4px;border:1px solid #ccc;">${escapeHtml(item.name)}</td><td style="padding:4px;border:1px solid #ccc; text-align:center;">${item.checked ? '✔' : '☐'}</td></tr>`).join('');
+            let win = window.open('', '_blank');
+            win.document.write(`
+                <html><head><title>รายชื่อ นศท. ชั้น${currentRosterYear}</title></head>
+                <body style="font-family:sans-serif; padding:20px;">
+                    <h2>รายชื่อ นศท. ชั้น${currentRosterYear} — กองพันนักศึกษาวิชาทหารโรงเรียนบ้านบึง "อุตสาหกรรมมนุเคราะห์"</h2>
+                    <table style="border-collapse:collapse; width:100%;">
+                        <tr><th style="padding:4px;border:1px solid #ccc;">ลำดับ</th><th style="padding:4px;border:1px solid #ccc;">ชื่อ-สกุล</th><th style="padding:4px;border:1px solid #ccc;">เช็คชื่อ</th></tr>
+                        ${rows}
+                    </table>
+                </body></html>
+            `);
+            win.document.close();
+            win.print();
+        }
+
+        // ===== 6. ฝ.4 — เช็คห้องตรวจแล้ว ม.3/1-14 =====
+        const INSPECT_ROOMS = Array.from({ length: 14 }, (_, i) => `ม.3/${i + 1}`);
+        function renderRoomCheckRoom(box) {
+            box.innerHTML = `
+                <h4 class="font-bold text-yellow-300 mb-3">✅ เช็คห้องตรวจแล้ว (ม.3/1 - ม.3/14)</h4>
+                <div class="mb-4">
+                    <label class="text-xs text-gray-400 block mb-1">รูปตารางเวรตรวจ (ถ้ามี)</label>
+                    <input type="file" id="roomScheduleFile" accept="image/*" class="text-xs text-gray-300">
+                    <button onclick="uploadRoomScheduleImage()" class="bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold px-3 py-1.5 rounded ml-2">อัปโหลด</button>
+                </div>
+                <div id="roomScheduleImgBox" class="mb-4"></div>
+                <div id="roomCheckGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2"></div>
+            `;
+            if (hqRoomData.roomScheduleImage) {
+                document.getElementById('roomScheduleImgBox').innerHTML = `<img src="${hqRoomData.roomScheduleImage}" onclick="openLightbox('${hqRoomData.roomScheduleImage}')" class="max-h-56 rounded-lg border border-zinc-700 cursor-pointer">`;
+            }
+            renderRoomCheckGrid();
+        }
+
+        function uploadRoomScheduleImage() {
+            let input = document.getElementById('roomScheduleFile');
+            if (!input.files || !input.files[0]) { alert("กรุณาเลือกรูปภาพก่อน"); return; }
+            resizeImageFile(input.files[0], 1200, 0.85, (dataUrl) => {
+                hqRoomData.roomScheduleImage = dataUrl;
+                saveDataToStorage();
+                document.getElementById('roomScheduleImgBox').innerHTML = `<img src="${dataUrl}" onclick="openLightbox('${dataUrl}')" class="max-h-56 rounded-lg border border-zinc-700 cursor-pointer">`;
+            });
+        }
+
+        function toggleRoomCheck(room) {
+            let current = hqRoomData.roomChecks[room];
+            if (current && current.checked) {
+                hqRoomData.roomChecks[room] = { checked: false, date: '' };
+            } else {
+                let dateStr = prompt("บันทึกวันที่ตรวจ (ค่าเริ่มต้นคือวันนี้):", new Date().toLocaleDateString('th-TH'));
+                if (dateStr === null) return;
+                hqRoomData.roomChecks[room] = { checked: true, date: dateStr };
+            }
+            saveDataToStorage();
+            renderRoomCheckGrid();
+        }
+
+        function renderRoomCheckGrid() {
+            let grid = document.getElementById('roomCheckGrid');
+            if (!grid) return;
+            grid.innerHTML = '';
+            INSPECT_ROOMS.forEach(room => {
+                let status = hqRoomData.roomChecks[room] || { checked: false, date: '' };
+                let card = document.createElement('div');
+                card.className = status.checked
+                    ? "bg-emerald-900/30 border border-emerald-600/60 rounded-lg p-3 flex justify-between items-center cursor-pointer"
+                    : "bg-zinc-900 border border-zinc-700 rounded-lg p-3 flex justify-between items-center cursor-pointer";
+                card.onclick = () => toggleRoomCheck(room);
+                card.innerHTML = `
+                    <div>
+                        <span class="font-bold ${status.checked ? 'text-emerald-300' : 'text-gray-200'}">${room}</span>
+                        ${status.checked ? `<div class="text-[10px] text-emerald-400">ตรวจแล้ว: ${escapeHtml(status.date)}</div>` : `<div class="text-[10px] text-gray-500">ยังไม่ตรวจ</div>`}
+                    </div>
+                    <span class="text-xl">${status.checked ? '✅' : '⬜'}</span>
+                `;
+                grid.appendChild(card);
+            });
         }
 
         function showSection(secId) {
@@ -1949,6 +2402,7 @@ service cloud.firestore {
             document.getElementById('sec-' + secId).classList.remove('hidden');
             if(secId === 'command') renderCommandBoard();
             if(secId === 'admin') updateAdminStats();
+            if(secId === 'hqroom') renderHqRoom();
         }
 
         function handleAdminNavClick() {
@@ -1972,7 +2426,9 @@ service cloud.firestore {
                         isAdmin = true;
                         currentAdminName = name;
                         localStorage.setItem('bbu_is_admin', 'true');
-                        localStorage.setItem('bbu_admin_name', name);
+                        // Only persist a real typed name — never lock in the "ไม่ระบุชื่อ" fallback,
+                        // or every future login on this browser would silently skip the name prompt forever.
+                        if (name !== "ไม่ระบุชื่อ") localStorage.setItem('bbu_admin_name', name);
                         adminIdentitiesRef.doc(name).set({
                             name: name,
                             status: (doc.exists ? doc.data().status : 'active'),
@@ -2008,7 +2464,9 @@ service cloud.firestore {
             isSuperAdmin = false;
             currentAdminName = null;
             localStorage.removeItem('bbu_is_admin');
-            localStorage.removeItem('bbu_admin_name');
+            localStorage.removeItem('bbu_is_super_admin');
+            // Intentionally keep bbu_admin_name — the name should stay remembered across
+            // logout/login cycles on this browser; use "เปลี่ยนชื่อที่จำไว้" to change it.
             let panel = document.getElementById('superAdminPanel');
             if (panel) panel.classList.add('hidden');
             alert("ออกจากระบบ Admin เรียบร้อยแล้ว");
@@ -2034,6 +2492,7 @@ service cloud.firestore {
             if (pass === SUPER_ADMIN_PASSWORD) {
                 clearFailedAttempts('bbu_superadmin');
                 isSuperAdmin = true;
+                localStorage.setItem('bbu_is_super_admin', 'true');
                 panel.classList.remove('hidden');
                 refreshLastBackupInfo();
                 refreshActivityLog();
@@ -2049,6 +2508,7 @@ service cloud.firestore {
 
         function superAdminLogout() {
             isSuperAdmin = false;
+            localStorage.removeItem('bbu_is_super_admin');
             document.getElementById('superAdminPanel').classList.add('hidden');
             logActivity('super_admin_logout', 'ออกจากโซน Admin Leader', currentAdminName);
             alert("ออกจากโซน Admin Leader แล้ว (ยังอยู่ในระบบ Admin ปกติ)");
@@ -2195,6 +2655,142 @@ service cloud.firestore {
             });
         }
 
+        function decreaseSecurityLevel() {
+            if (securityLevel <= 1) {
+                alert("ระดับความปลอดภัยอยู่ที่ขั้นต่ำสุด (1/10) อยู่แล้ว");
+                return;
+            }
+            if (!confirm(`ต้องการลดระดับความปลอดภัยจาก ${securityLevel} เป็น ${securityLevel - 1} ใช่หรือไม่? มาตรการป้องกันบางส่วนจะถูกปิดใช้งาน`)) return;
+            let newLevel = securityLevel - 1;
+            securityDocRef.set({ level: newLevel, updatedAt: new Date().toLocaleString('th-TH') }, { merge: true }).then(() => {
+                securityLevel = newLevel;
+                let cfg = getSecurityConfig();
+                alert(`ลดระดับความปลอดภัยเป็น ${newLevel}/10: ${cfg.label}`);
+                logActivity('security_downgrade', `ลดระดับความปลอดภัยเป็น ${newLevel} (${cfg.label})`, currentAdminName);
+                updateSecurityLevelBadge();
+            });
+        }
+
+        // --- แชร์เว็บไซต์ (ลิงก์เต็ม / ลิงก์ย่อ / QR Code) ---
+        function generateShareInfo() {
+            let url = window.location.href.split('#')[0].split('?')[0];
+            document.getElementById('shareFullLink').value = url;
+            document.getElementById('shareShortLink').value = "กำลังสร้าง...";
+            document.getElementById('shareInfoBox').classList.remove('hidden');
+            renderStyledQr(url);
+
+            fetch(`https://is.gd/create.php?format=simple&url=${encodeURIComponent(url)}`)
+                .then(res => res.text())
+                .then(shortUrl => {
+                    shortUrl = (shortUrl || '').trim();
+                    if (shortUrl.startsWith('http')) {
+                        document.getElementById('shareShortLink').value = shortUrl;
+                    } else {
+                        document.getElementById('shareShortLink').value = "สร้างลิงก์ย่ออัตโนมัติไม่สำเร็จ — ใช้ลิงก์เต็มด้านบน หรือลองย่อเองที่ tinyurl.com";
+                    }
+                })
+                .catch(() => {
+                    document.getElementById('shareShortLink').value = "สร้างลิงก์ย่ออัตโนมัติไม่สำเร็จ (เครือข่าย/CORS) — ใช้ลิงก์เต็มด้านบนแทนได้";
+                });
+
+            logActivity('share_link_generated', 'สร้างลิงก์แชร์เว็บไซต์ + QR Code', currentAdminName);
+        }
+
+        function roundRectPath(ctx, x, y, w, h, r) {
+            ctx.beginPath();
+            ctx.moveTo(x + r, y);
+            ctx.arcTo(x + w, y, x + w, y + h, r);
+            ctx.arcTo(x + w, y + h, x, y + h, r);
+            ctx.arcTo(x, y + h, x, y, r);
+            ctx.arcTo(x, y, x + w, y, r);
+            ctx.closePath();
+        }
+
+        function drawCamoBackground(ctx, w, h) {
+            ctx.fillStyle = '#2d3b1f';
+            ctx.fillRect(0, 0, w, h);
+            let colors = ['#4b5320', '#708238', '#1c2614', '#6b4423', '#8a9a5b'];
+            for (let i = 0; i < 45; i++) {
+                ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)];
+                let cx = Math.random() * w;
+                let cy = Math.random() * h;
+                let r = 18 + Math.random() * 38;
+                ctx.beginPath();
+                for (let j = 0; j < 6; j++) {
+                    let ang = (j / 6) * Math.PI * 2;
+                    let rr = r * (0.6 + Math.random() * 0.6);
+                    let px = cx + Math.cos(ang) * rr;
+                    let py = cy + Math.sin(ang) * rr;
+                    if (j === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+                }
+                ctx.closePath();
+                ctx.fill();
+            }
+        }
+
+        function renderStyledQr(url) {
+            let loadingEl = document.getElementById('shareQrLoading');
+            if (loadingEl) loadingEl.classList.remove('hidden');
+            let qrCanvas = document.createElement('canvas');
+            QRCode.toCanvas(qrCanvas, url, { errorCorrectionLevel: 'H', margin: 1, width: 300 }, function (err) {
+                if (loadingEl) loadingEl.classList.add('hidden');
+                if (err) { console.error(err); return; }
+
+                let size = 360;
+                let qrSize = 280;
+                let outCanvas = document.createElement('canvas');
+                outCanvas.width = size;
+                outCanvas.height = size;
+                let ctx = outCanvas.getContext('2d');
+
+                drawCamoBackground(ctx, size, size);
+
+                let qrX = (size - qrSize) / 2;
+                let qrY = (size - qrSize) / 2;
+                ctx.fillStyle = '#ffffff';
+                roundRectPath(ctx, qrX - 12, qrY - 12, qrSize + 24, qrSize + 24, 14);
+                ctx.fill();
+                ctx.drawImage(qrCanvas, qrX, qrY, qrSize, qrSize);
+
+                function finish() {
+                    let dataUrl = outCanvas.toDataURL('image/png');
+                    document.getElementById('shareQrImg').src = dataUrl;
+                    window.shareQrDataUrl = dataUrl;
+                }
+
+                let logoImg = new Image();
+                logoImg.onload = function () {
+                    let logoSize = qrSize * 0.22;
+                    let lx = size / 2 - logoSize / 2;
+                    let ly = size / 2 - logoSize / 2;
+                    ctx.fillStyle = '#ffffff';
+                    ctx.beginPath();
+                    ctx.arc(size / 2, size / 2, logoSize / 2 + 6, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.drawImage(logoImg, lx, ly, logoSize, logoSize);
+                    finish();
+                };
+                logoImg.onerror = finish; // no logo file found — still show the QR with camo frame
+                logoImg.src = 'logo-bbu-army.jpg';
+            });
+        }
+
+        function downloadShareQr() {
+            if (!window.shareQrDataUrl) { alert("กรุณากดสร้างลิงก์แชร์ / QR Code ก่อน"); return; }
+            let a = document.createElement('a');
+            a.href = window.shareQrDataUrl;
+            a.download = 'QR_พัน_นศท_รร_บบ.png';
+            a.click();
+        }
+
+        function copyShareLink(id) {
+            let el = document.getElementById(id);
+            el.select();
+            navigator.clipboard.writeText(el.value).then(() => alert("คัดลอกลิงก์แล้ว!")).catch(() => {
+                alert("คัดลอกไม่สำเร็จ กรุณาคัดลอกด้วยตนเอง");
+            });
+        }
+
         // --- สำรองเว็บ (Backup & Restore) ---
         function buildBackupSnapshot() {
             return {
@@ -2204,6 +2800,7 @@ service cloud.firestore {
                 applicants: applicants,
                 contacts: contactData,
                 schedule: scheduleData,
+                hqRoom: hqRoomData,
                 motto: mottoText,
                 regOpen: regOpen,
                 savedAt: new Date().toLocaleString('th-TH')
@@ -2272,6 +2869,7 @@ service cloud.firestore {
                 applicants = d.applicants || [];
                 contactData = d.contacts || [];
                 scheduleData = d.schedule || [];
+                hqRoomData = d.hqRoom || { docs: [], links: [], rosters: { "ปีที่ 1": [], "ปีที่ 2": [], "ปีที่ 3": [] }, roomChecks: {} };
                 mottoText = d.motto || defaultMotto;
                 regOpen = (d.regOpen === undefined) ? true : d.regOpen;
                 saveDataToStorage();
@@ -2469,6 +3067,27 @@ service cloud.firestore {
                 }
             }
 
+            if (cfg.strictValidate) {
+                let namePattern = /^[\u0E00-\u0E7Fa-zA-Z\s.]+$/;
+                let phonePattern = /^[0-9\-\s]{9,15}$/;
+                if (!namePattern.test(rawName)) {
+                    alert("ชื่อ-สกุล กรุณากรอกเป็นตัวอักษรไทย/อังกฤษเท่านั้น");
+                    return;
+                }
+                if (!phonePattern.test(phone)) {
+                    alert("เบอร์โทรศัพท์ไม่ถูกต้อง กรุณากรอกเฉพาะตัวเลข");
+                    return;
+                }
+            }
+
+            if (cfg.captcha) {
+                let answer = prompt(`เพื่อยืนยันว่าไม่ใช่บอท กรุณาตอบคำถาม: ${window.regCaptchaQuestion || "1 + 1 = ?"}`);
+                if (answer === null || parseInt(answer) !== window.regCaptchaAnswer) {
+                    alert("คำตอบไม่ถูกต้อง กรุณาลองส่งแบบฟอร์มใหม่อีกครั้ง");
+                    return;
+                }
+            }
+
             if (cfg.rateLimit) {
                 let lastSubmit = parseInt(localStorage.getItem('bbu_last_reg_submit') || '0');
                 if (Date.now() - lastSubmit < 60000) {
@@ -2661,25 +3280,65 @@ service cloud.firestore {
             XLSX.writeFile(wb, `รายชื่อผู้สมัคร_นศท_รร.บบ_${new Date().toLocaleDateString('th-TH')}.xlsx`);
         }
 
+        function buildApplicantCsv() {
+            let csvContent = "\uFEFFลำดับ,ชื่อ-สกุล,เพศ,ห้อง,ชั้นปีที่สมัคร,เบอร์โทรศัพท์,ช่องทางติดต่อ,วันที่สมัคร\n";
+            let sorted = getSortedApplicantsForExport();
+            sorted.forEach((app, index) => {
+                csvContent += `${index + 1},"${app.name}","${app.gender || 'ชาย'}","${app.room || '-'}","${app.year}","${app.phone}","${app.contact}",${app.date}\n`;
+            });
+            return csvContent;
+        }
+
         function exportToCSV() {
             if (applicants.length === 0) {
                 alert("ยังไม่มีข้อมูลผู้สมัครสำหรับส่งออก");
                 return;
             }
-            let csvContent = "\uFEFFลำดับ,ชื่อ-สกุล,เพศ,ห้อง,ชั้นปีที่สมัคร,เบอร์โทรศัพท์,ช่องทางติดต่อ,วันที่สมัคร\n";
-
-            let sorted = getSortedApplicantsForExport();
-
-            sorted.forEach((app, index) => {
-                csvContent += `${index + 1},"${app.name}","${app.gender || 'ชาย'}","${app.room || '-'}","${app.year}","${app.phone}","${app.contact}",${app.date}\n`;
-            });
-            let blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            let blob = new Blob([buildApplicantCsv()], { type: 'text/csv;charset=utf-8;' });
             let url = URL.createObjectURL(blob);
             let a = document.createElement('a');
             a.href = url;
             a.download = `รายชื่อผู้สมัคร_นศท_รร.บบ_${new Date().toLocaleDateString()}.csv`;
             a.click();
         }
+
+        function exportToGoogleSheets() {
+            if (applicants.length === 0) {
+                alert("ยังไม่มีข้อมูลผู้สมัครสำหรับส่งออก");
+                return;
+            }
+            // Real automatic creation of a Google Sheet requires the site owner's own Google
+            // Cloud OAuth credentials (not something that can be fabricated from here). This
+            // gives the closest practical equivalent: download a ready CSV with proper headers,
+            // then open a blank Google Sheet — Google's own sign-in lets you pick which account
+            // (email) to use — and guide the one-step import.
+            let blob = new Blob([buildApplicantCsv()], { type: 'text/csv;charset=utf-8;' });
+            let url = URL.createObjectURL(blob);
+            let a = document.createElement('a');
+            a.href = url;
+            a.download = `รายชื่อผู้สมัคร_นศท_รร.บบ_${new Date().toLocaleDateString()}.csv`;
+            a.click();
+            window.open('https://docs.google.com/spreadsheets/create', '_blank');
+            alert("ไฟล์ CSV ถูกดาวน์โหลดแล้ว และเปิด Google Sheets ในแท็บใหม่ (เลือกบัญชี Gmail ที่ต้องการได้ตรงนั้น)\n\nขั้นตอนสุดท้าย: ไปที่เมนู File > Import > Upload แล้วเลือกไฟล์ CSV ที่เพิ่งดาวน์โหลด — หัวตารางจะมาครบพร้อมใช้งานทันที");
+        }
+
+        // --- Auto-logout Admin after being idle too long (only active at security level 8+) ---
+        let idleTimer = null;
+        function resetIdleTimer() {
+            if (idleTimer) clearTimeout(idleTimer);
+            let cfg = getSecurityConfig();
+            if (!isAdmin || !cfg.idleLogout) return;
+            idleTimer = setTimeout(() => {
+                if (isAdmin) {
+                    alert("ออกจากระบบ Admin อัตโนมัติ เนื่องจากไม่มีการใช้งานนานเกินไป (มาตรการความปลอดภัยระดับสูง)");
+                    adminLogout();
+                }
+            }, 15 * 60 * 1000); // 15 minutes idle
+        }
+        ['mousemove', 'keydown', 'click', 'touchstart'].forEach(evt => {
+            document.addEventListener(evt, resetIdleTimer);
+        });
+        resetIdleTimer();
 
         // ===== Basic front-end protection (deterrent only) =====
         // Note: this cannot fully hide or "lock" the page's HTML/CSS/JS — any browser's built-in
