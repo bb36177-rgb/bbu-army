@@ -2029,8 +2029,19 @@ service cloud.firestore {
                 <div class="text-center">
                     <p class="text-gray-300 text-sm mb-1">ห้องประชุมวิดีโอออนไลน์สำหรับผู้บังคับบัญชา</p>
                     <p class="text-gray-500 text-xs mb-4">ใช้ระบบ Jitsi Meet (ฟรี ไม่ต้องสมัครสมาชิก) — รองรับผู้เข้าร่วมพร้อมกันได้หลักร้อยคนในทางทฤษฎี แต่จำนวนจริงที่ลื่นไหลขึ้นอยู่กับอินเทอร์เน็ตและอุปกรณ์ของผู้เข้าร่วมแต่ละคนด้วย</p>
+                    <p class="text-emerald-400 text-xs mb-4">👥 ผู้ดูแลระบบ (Admin) ทุกคนเข้าห้องนี้ได้ ไม่จำกัดเฉพาะ Admin Leader</p>
                     <button onclick="joinHqMeeting()" id="joinMeetingBtn" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-3 rounded-xl mb-4">🎥 เข้าร่วมห้องประชุม</button>
                     <div id="hqMeetingFrameBox"></div>
+                    <details class="text-left text-xs text-gray-400 bg-zinc-900 border border-zinc-700 rounded-lg p-3 mt-6">
+                        <summary class="cursor-pointer text-purple-300 font-semibold">📖 วิธีใช้ห้องประชุม ผบช.</summary>
+                        <ol class="list-decimal list-inside space-y-1 mt-2">
+                            <li>กดปุ่ม "🎥 เข้าร่วมห้องประชุม" — ไม่ต้องสมัครสมาชิกหรือติดตั้งโปรแกรมใดๆ</li>
+                            <li>เบราว์เซอร์จะขอสิทธิ์ใช้กล้อง/ไมโครโฟน — กด "อนุญาต" ถ้าต้องการเปิดกล้อง/พูด (ปิดไว้ก็เข้าประชุมได้ปกติ)</li>
+                            <li>ทุกคนที่เป็น Admin และกดปุ่มนี้ในเวลาเดียวกัน จะเข้าห้องประชุมเดียวกันโดยอัตโนมัติ (ไม่ต้องส่งลิงก์หากัน)</li>
+                            <li>ด้านล่างของวิดีโอจะมีปุ่มเปิด/ปิดไมค์, เปิด/ปิดกล้อง, แชร์หน้าจอ, แชทข้อความ และปุ่มวางสาย</li>
+                            <li>ถ้าภาพ/เสียงกระตุก ให้ลองปิดกล้องของผู้ที่ไม่ได้พูดเพื่อประหยัดอินเทอร์เน็ต</li>
+                        </ol>
+                    </details>
                 </div>
             `;
         }
@@ -2679,7 +2690,10 @@ service cloud.firestore {
             document.getElementById('shareInfoBox').classList.remove('hidden');
             renderStyledQr(url);
 
-            fetch(`https://is.gd/create.php?format=simple&url=${encodeURIComponent(url)}`)
+            Promise.race([
+                fetch(`https://is.gd/create.php?format=simple&url=${encodeURIComponent(url)}`),
+                new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 6000))
+            ])
                 .then(res => res.text())
                 .then(shortUrl => {
                     shortUrl = (shortUrl || '').trim();
@@ -2841,14 +2855,18 @@ service cloud.firestore {
                     return;
                 }
                 let d = doc.data();
+                let hq = d.hqRoom || {};
+                let rosterCount = hq.rosters ? Object.values(hq.rosters).reduce((sum, list) => sum + (list ? list.length : 0), 0) : 0;
                 box.innerHTML = `
                     <p class="mb-2 text-yellow-300 font-bold">บันทึกสำรองล่าสุด: ${d.savedAt || '-'}</p>
                     <ul class="space-y-1">
                         <li>📰 ข่าวสาร: ${(d.news || []).length} รายการ</li>
                         <li>📣 ข่าวประชาสัมพันธ์: ${(d.prNews || []).length} รายการ</li>
                         <li>🎖 บอร์ดบังคับบัญชา: ${(d.command || []).length} รายการ</li>
+                        <li>📅 ตารางเรียนวิชาทหาร: ${(d.schedule || []).length} รายการ</li>
                         <li>📝 ผู้สมัคร นศท.: ${(d.applicants || []).length} รายการ</li>
                         <li>📞 ช่องทางติดต่อ: ${(d.contacts || []).length} รายการ</li>
+                        <li>🖥️ ห้องทำงาน ผบช. — เอกสาร: ${(hq.docs || []).length}, ลิงก์: ${(hq.links || []).length}, รายชื่อ นศท.: ${rosterCount} คน</li>
                         <li>📢 สถานะรับสมัคร: ${d.regOpen ? 'เปิดรับสมัคร' : 'ปิดรับสมัคร'}</li>
                     </ul>
                     <button onclick="restoreWebsiteBackup()" class="mt-3 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold px-3 py-2 rounded-lg">⏪ กู้คืนข้อมูลเว็บจากสำรองนี้</button>
